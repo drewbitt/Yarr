@@ -27,7 +27,7 @@ Future<List<BookSearchResult>> searchFiction(searchTerm) async {
       final info = SearchInfo.getSearchInfo(i.querySelector('div.row.stats'));
       final imageUrl = i.querySelector('img').attributes['src'];
 
-      listResults.add(BookSearchResult(link.attributes['href'], link.text, imageUrl, info));
+      listResults.add(BookSearchResult(absolute_url(link.attributes['href']), link.text, imageUrl, info));
     }
     return Future.value(listResults);
   }
