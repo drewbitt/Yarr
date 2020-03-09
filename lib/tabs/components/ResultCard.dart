@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutterroad/base/StatelessBookBase.dart';
 import 'package:intl/intl.dart';
-import 'package:royalroad_api/src/models.dart' show BookSearchInfo;
+import 'package:royalroad_api/src/models.dart' show BookSearchResult;
 
-class ResultCard extends StatelessWidget {
-  // Exact same data as BookSearchResult
-  final String url, title;
-  final String imageUrl;
-  final BookSearchInfo info;
-
-  ResultCard(this.url, this.title, this.imageUrl, this.info);
+class ResultCard extends StatelessBookBase {
+  final BookSearchResult book;
+  ResultCard(this.book): super(book);
 
 //  var _image;
 //
@@ -19,15 +16,6 @@ class ResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//    return Card(
-//        child: ListTile(
-//            title: Text(this.title),
-//            // subtitle: Text(result.title),
-//            onTap: () {
-//              Navigator.of(context).push(
-//                  MaterialPageRoute(builder: (context) => Detail()));
-//            }));
-//  },
     return Container(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +23,7 @@ class ResultCard extends StatelessWidget {
           // Image column
           Column(
             children: <Widget>[
-              _getImage(MediaQuery.of(context).size.height / 6),
+              getImage(MediaQuery.of(context).size.height / 6),
             ],
           ),
           // TODO: Look into this strat of dividing - feasible?
@@ -46,7 +34,7 @@ class ResultCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: MediaQuery.of(context).size.height / 150),
-              Text(this.title,
+              Text(this.book.title,
                   style: TextStyle(
                       color: Colors.brown,
                       fontSize: MediaQuery.of(context).size.height / 43),
@@ -62,20 +50,15 @@ class ResultCard extends StatelessWidget {
                       // TODO: Use IconTheme if not doing multiple sizes later
                       Row(children: <Widget>[
                         Icon(Icons.people, size: 22),
-                        InkWell(
-                            child: Text(
-                                this.info.followers.toString() + " Followers"))
+                        Text(this.book.info.followers.toString() + " Followers")
                       ]),
                       Row(children: <Widget>[
                         Icon(Icons.book, size: 22),
-                        InkWell(
-                            child: Text(this.info.pages.toString() + " Pages"))
+                        Text(this.book.info.pages.toString() + " Pages")
                       ]),
                       Row(children: <Widget>[
                         Icon(Icons.list, size: 22),
-                        InkWell(
-                            child: Text(
-                                this.info.chapters.toString() + " Chapters"))
+                        Text(this.book.info.chapters.toString() + " Chapters")
                       ])
                     ],
                   ),
@@ -87,23 +70,20 @@ class ResultCard extends StatelessWidget {
                     children: <Widget>[
                       Row(children: <Widget>[
                         Icon(Icons.star, size: 22),
-                        InkWell(
-                            child: Text(this.info.rating.toString() + " Stars"))
+                        Text(this.book.info.rating.toString() + " Stars")
                       ]),
                       Row(children: <Widget>[
                         Icon(Icons.visibility, size: 22),
-                        InkWell(
-                            child: Text(NumberFormat.compact()
-                                    .format(this.info.views)
-                                    .toString() +
-                                " Views"))
+                        Text(NumberFormat.compact()
+                                .format(this.book.info.views)
+                                .toString() +
+                            " Views")
                       ]),
                       Row(children: <Widget>[
                         Icon(Icons.calendar_today, size: 22),
-                        InkWell(
-                            child: Text(DateFormat('MMM, d y')
-                                .format(this.info.lastUpdate)
-                                .toString()))
+                        Text(DateFormat('MMM, d y')
+                            .format(this.book.info.lastUpdate)
+                            .toString())
                       ]),
                     ],
                   )
@@ -117,7 +97,4 @@ class ResultCard extends StatelessWidget {
           BoxDecoration(border: Border(top: BorderSide(color: Colors.black12))),
     );
   }
-
-  // Truly not async?
-  Image _getImage(height) => Image.network(this.imageUrl, height: height);
 }
