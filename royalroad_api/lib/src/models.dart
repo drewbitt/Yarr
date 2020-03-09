@@ -1,7 +1,7 @@
 class BookSearchResult {
-  String url, title;
-  String imageUrl;
-  BookSearchInfo info;
+  final String url, title;
+  final String imageUrl;
+  final BookSearchInfo info;
 
   BookSearchResult(this.url, this.title, this.imageUrl, this.info);
 }

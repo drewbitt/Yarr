@@ -1,4 +1,3 @@
-// TODO: Put public facing types in this file.
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
 import 'package:royalroad_api/src/models.dart' show BookSearchResult;
@@ -7,7 +6,7 @@ import 'package:royalroad_api/src/util.dart' show SearchInfo;
 class Base {
   static const baseUrl = 'https://www.royalroad.com/';
 }
-
+// TODO: Add genres
 Future<List<BookSearchResult>> searchFiction(searchTerm) async {
   searchTerm = searchTerm.replaceAll(' ', '+');
   final url = Base.baseUrl + 'fictions/search?title=' + searchTerm;
