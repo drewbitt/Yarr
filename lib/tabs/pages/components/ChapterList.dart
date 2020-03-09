@@ -2,17 +2,19 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
 import 'package:flutterroad/tabs/pages/chapter.dart';
+import 'package:paging/paging.dart';
 import 'package:royalroad_api/src/models.dart' show BookDetails;
 
 class ChapterList extends StatelessWidget {
-  final Future<BookDetails> chapterListFuture;
+  final Future<BookDetails> chapterFuture;
 
-  ChapterList(this.chapterListFuture);
+  ChapterList(this.chapterFuture);
 
+  // TODO: Refactor using pages - long novels are just terrible
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<BookDetails>(
-      future: chapterListFuture,
+      future: chapterFuture,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final chapterList = snapshot.data.chapterList;
@@ -26,12 +28,14 @@ class ChapterList extends StatelessWidget {
             collapsed:
               ListView.builder(
               shrinkWrap: true,
+              physics: ClampingScrollPhysics(),
               itemCount: chapterListPreview.length,
               itemBuilder: (context, index) {
                 return _buildPanel(chapterListPreview, index, context);
               }),
             expanded: ListView.builder(
                 shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
                 itemCount: chapterList.length,
                 itemBuilder: (context, index) {
                   return _buildPanel(chapterList, index, context);
@@ -51,8 +55,6 @@ class ChapterList extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Flexible(
-                child:
               InkWell(
                   child: Text(chapterList[index].name, overflow: TextOverflow.ellipsis),
                   onTap: () {
@@ -60,7 +62,6 @@ class ChapterList extends StatelessWidget {
                         builder: (context) =>
                             Chapter(chapterList[index])));
                   }),
-              ),
               Text(
                   daysAgo(chapterList[index].releaseDate).toString() +
                       " days ago")

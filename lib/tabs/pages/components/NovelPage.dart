@@ -39,27 +39,25 @@ class NovelPage extends StatelessBookBase {
               )
             ],
           ),
-          SizedBox(height: MediaQuery.of(context).size.height / 120),
+          SizedBox(height: MediaQuery.of(context).size.height / 120), // Padding
           Container(
-            padding: EdgeInsets.all(MediaQuery.of(context).size.width / 40),
+              padding: EdgeInsets.all(MediaQuery.of(context).size.width / 40),
               child: ExpandablePanel(
-            header: Text('Description',
-                style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.height / 45)),
-            collapsed: Text(
-              this.book.info.description,
-              softWrap: true,
-              maxLines: 7,
-              overflow: TextOverflow.ellipsis,
-            ),
-            expanded: Text(
-              this.book.info.description,
-              softWrap: true,
-            ),
-          )),
-            ChapterList(getBookDetails(this.book.url)),
+                header: Text('Description',
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.height / 45)),
+                collapsed: Text(
+                  this.book.info.description,
+                  softWrap: true,
+                  maxLines: 7,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                expanded: Text(
+                  this.book.info.description,
+                  softWrap: true,
+                ),
+              )),
+          ChapterList(getBookDetails(this.book.url)),
         ]);
   }
 }
-
-
