@@ -1,3 +1,4 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
 import 'package:flutterroad/tabs/pages/chapter.dart';
@@ -15,36 +16,58 @@ class ChapterList extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final chapterList = snapshot.data.chapterList;
+          minLength() => chapterList.length < 8 ? chapterList.length-1 : 8;
+          final chapterListPreview = chapterList.sublist(0, minLength());
 
-          return ListView.builder(
+          // Bad way to do this - two listviews
+          return
+            ExpandablePanel(
+            header: Text('Chapters'),
+            collapsed:
+              ListView.builder(
               shrinkWrap: true,
-              itemCount: chapterList.length,
+              itemCount: chapterListPreview.length,
               itemBuilder: (context, index) {
-                return Row(
-                    children: <Widget>[
-                  InkWell(
-                      child: Text(chapterList[index].name),
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Chapter(chapterList[index])));
-                      }),
-                  SizedBox(width: MediaQuery.of(context).size.width / 5),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(daysAgo(chapterList[index].releaseDate).toString() + " days ago")
-                    ],
-                  )
-                ]);
-              });
-        }
-        else {
+                return _buildPanel(chapterListPreview, index, context);
+              }),
+            expanded: ListView.builder(
+                shrinkWrap: true,
+                itemCount: chapterList.length,
+                itemBuilder: (context, index) {
+                  return _buildPanel(chapterList, index, context);
+                }),
+          );
+        } else {
           // TODO: This will show up at first page load... but also if it never works...
           return Text("Getting chapters");
         }
       },
     );
   }
+  _buildPanel(chapterList, index, context) {
+    return
+      Padding(
+          padding: EdgeInsets.symmetric(vertical: 13, horizontal: 4),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Flexible(
+                child:
+              InkWell(
+                  child: Text(chapterList[index].name, overflow: TextOverflow.ellipsis),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            Chapter(chapterList[index])));
+                  }),
+              ),
+              Text(
+                  daysAgo(chapterList[index].releaseDate).toString() +
+                      " days ago")
+            ],
+          ));
+  }
 
+  // TODO: RR stores the string for months/days/years - maybe steal that?
   daysAgo(DateTime d) => DateTime.now().difference(d).inDays;
 }
