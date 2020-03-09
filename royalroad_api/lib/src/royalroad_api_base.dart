@@ -28,7 +28,3 @@ Future<List<BookSearchResult>> searchFiction(searchTerm) async {
   }
   return Future.error('Could not access Royalroad');
 }
-
-main() {
-  print(searchFiction('Chest'));
-}

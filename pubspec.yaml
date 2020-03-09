@@ -23,6 +23,7 @@ dependencies:
     path: ./royalroad_api
   flappy_search_bar: any
   intl: any
+  expandable: any
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

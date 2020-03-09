@@ -25,7 +25,7 @@ class SearchInfo {
     var descriptionList = [];
     parsed.querySelector('div[id^=description]').children.forEach((element) => descriptionList.add(element.text));
     var descriptionConcat = '';
-    descriptionList.forEach((element) => descriptionConcat = descriptionConcat + element + ' ');
+    descriptionList.forEach((element) => descriptionConcat = descriptionConcat + element + '\n\n');
     return descriptionConcat.trim();
   }
 }
