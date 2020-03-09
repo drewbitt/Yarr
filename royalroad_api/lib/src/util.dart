@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
 import 'package:html/dom.dart' show Element;
 import 'package:royalroad_api/src/models.dart' show BookSearchInfo;
+import 'package:royalroad_api/src/royalroad_api_base.dart' show Base;
 
 class SearchInfo {
   static BookSearchInfo getSearchInfo(parsed) {
@@ -27,5 +28,16 @@ class SearchInfo {
     var descriptionConcat = '';
     descriptionList.forEach((element) => descriptionConcat = descriptionConcat + element + '\n\n');
     return descriptionConcat.trim();
+  }
+}
+
+String absolute_url(String url) {
+  if (url.contains(Base.baseUrl)) {
+    return url;
+  } else if (url[0] == '/') {
+    return Base.baseUrl + url;
+  }
+  else {
+    throw 'URL is messed up';
   }
 }
