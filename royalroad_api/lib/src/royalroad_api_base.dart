@@ -7,6 +7,7 @@ class Base {
   static const baseUrl = 'https://www.royalroad.com/';
 }
 // TODO: Add genres
+// TODO: Consider using RR placeholder image
 Future<List<BookSearchResult>> searchFiction(searchTerm) async {
   searchTerm = searchTerm.replaceAll(' ', '+');
   final url = Base.baseUrl + 'fictions/search?title=' + searchTerm;
@@ -26,4 +27,8 @@ Future<List<BookSearchResult>> searchFiction(searchTerm) async {
     return Future.value(listResults);
   }
   return Future.error('Could not access Royalroad');
+}
+
+main() {
+  print(searchFiction('Chest'));
 }

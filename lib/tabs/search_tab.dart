@@ -27,8 +27,8 @@ class _SearchTabState extends State<SearchTab> {
           placeHolder: Center(child: Text('Search for a novel')),
           cancellationWidget: Text("Cancel"),
           emptyWidget: Center(child: Text('No results')),
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
+          // mainAxisSpacing: 10,
+          // crossAxisSpacing: 10,
           debounceDuration: Duration(seconds: 1),
           onItemFound: (BookSearchResult result, int index) {
             return ResultCard(result.url, result.title, result.imageUrl, result.info);

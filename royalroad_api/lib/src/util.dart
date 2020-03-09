@@ -10,9 +10,9 @@ class SearchInfo {
   }
 
   static int getFollowers(Element parsed) =>
-      int.parse(parsed.querySelector('i.fa.fa-users').nextElementSibling.text.split(' Followers')[0]);
+      int.parse(parsed.querySelector('i.fa.fa-users').nextElementSibling.text.split(' Followers')[0].replaceAll(',', ''));
   static int getPages(Element parsed) =>
-      int.parse(parsed.querySelector('i.fa.fa-book').nextElementSibling.text.split(' Pages')[0]);
+      int.parse(parsed.querySelector('i.fa.fa-book').nextElementSibling.text.split(' Pages')[0].replaceAll(',', ''));
   static double getRating(Element parsed) =>
       double.parse(parsed.querySelector('i.fa.fa-star').nextElementSibling.attributes['title']);
   static int getViews(Element parsed) =>
