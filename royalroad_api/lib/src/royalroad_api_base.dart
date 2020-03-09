@@ -8,14 +8,14 @@ class Base {
   static const baseUrl = 'https://www.royalroad.com/';
 }
 
-Future<List> searchFiction(searchTerm) async {
+Future<List<BookSearchResult>> searchFiction(searchTerm) async {
   searchTerm = searchTerm.replaceAll(' ', '+');
   final url = Base.baseUrl + 'fictions/search?title=' + searchTerm;
 
   final response = await http.get(url);
   if (response.statusCode == 200) {
     var parsed = parse(response.body);
-    var listResults = [];
+    var listResults = <BookSearchResult>[];
     
     for (var i in parsed.querySelectorAll('div.row.fiction-list-item')) {
       final link = i.querySelector('h2.fiction-title').querySelector('a');
