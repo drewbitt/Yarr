@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterroad/tabs/pages/components/ChapterPage.dart';
+import 'package:royalroad_api/royalroad_api.dart';
 import 'package:royalroad_api/src/models.dart' show BookChapter;
 
 class Chapter extends StatelessWidget {
@@ -8,7 +10,6 @@ class Chapter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Test");
+    return ChapterPage(getChapter(bookChapter));
   }
-
 }

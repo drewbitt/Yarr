@@ -3,7 +3,8 @@ import 'package:html/parser.dart' show parse;
 import 'package:intl/intl.dart';
 import 'package:royalroad_api/src/models.dart'
     show BookSearchResult, BookDetails, BookChapter, BookChapterContents;
-import 'package:royalroad_api/src/util.dart' show SearchInfo, absolute_url, clean_contents;
+import 'package:royalroad_api/src/util.dart'
+    show SearchInfo, absolute_url, clean_contents;
 
 class Base {
   static const baseUrl = 'https://www.royalroad.com';
@@ -85,8 +86,7 @@ Future<BookChapterContents> getChapter(BookChapter chap) async {
     var cleaned_contents = clean_contents(contents);
 
     return Future.value(BookChapterContents(chap, title, cleaned_contents));
-  }
-  else {
-    return Future.error('Could not access Royalroad')
+  } else {
+    return Future.error('Could not access Royalroad');
   }
 }

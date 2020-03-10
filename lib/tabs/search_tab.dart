@@ -34,8 +34,8 @@ class _SearchTabState extends State<SearchTab> {
             return InkWell(
                 child: ResultCard(result),
                 onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => NovelDetails(result)));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => NovelDetails(result)));
                 });
           },
         ),

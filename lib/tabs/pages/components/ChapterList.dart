@@ -16,21 +16,19 @@ class ChapterList extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final chapterList = snapshot.data.chapterList;
-          minLength() => chapterList.length < 8 ? chapterList.length-1 : 8;
+          minLength() => chapterList.length < 8 ? chapterList.length - 1 : 8;
           final chapterListPreview = chapterList.sublist(0, minLength());
 
           // Bad way to do this - two listviews
-          return
-            ExpandablePanel(
+          return ExpandablePanel(
             header: Text('Chapters'),
-            collapsed:
-              ListView.builder(
-              shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
-              itemCount: chapterListPreview.length,
-              itemBuilder: (context, index) {
-                return _buildPanel(chapterListPreview, index, context);
-              }),
+            collapsed: ListView.builder(
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
+                itemCount: chapterListPreview.length,
+                itemBuilder: (context, index) {
+                  return _buildPanel(chapterListPreview, index, context);
+                }),
             expanded: ListView.builder(
                 shrinkWrap: true,
                 physics: ClampingScrollPhysics(),
@@ -46,27 +44,26 @@ class ChapterList extends StatelessWidget {
       },
     );
   }
+
   _buildPanel(chapterList, index, context) {
-    return
-      Padding(
-          padding: EdgeInsets.symmetric(vertical: 13, horizontal: 4),
+    return Padding(
+        padding: EdgeInsets.symmetric(vertical: 13, horizontal: 4),
+        child: InkWell(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              InkWell(
-                  child: Text(chapterList[index].name, overflow: TextOverflow.ellipsis),
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            Chapter(chapterList[index])));
-                  }),
-              Text(
-                  daysAgo(chapterList[index].releaseDate).toString() +
-                      " days ago")
+              Text(chapterList[index].name, overflow: TextOverflow.ellipsis),
+              Text(daysAgo(chapterList[index].releaseDate).toString() +
+                  " days ago")
             ],
-          ));
+          ),
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => Chapter(chapterList[index])));
+          },
+        ));
   }
-
-  // TODO: RR stores the string for months/days/years - maybe steal that?
-  daysAgo(DateTime d) => DateTime.now().difference(d).inDays;
 }
+
+// TODO: RR stores the string for months/days/years - maybe steal that?
+daysAgo(DateTime d) => DateTime.now().difference(d).inDays;
