@@ -17,7 +17,7 @@ class ChapterList extends StatelessWidget {
         if (snapshot.hasData) {
           final chapterList = snapshot.data.chapterList;
           minLength() => chapterList.length < 8 ? chapterList.length - 1 : 8;
-          final chapterListPreview = chapterList.sublist(0, minLength());
+          final chapterListPreview = chapterList.sublist(0, minLength()+1);
 
           // Bad way to do this - two listviews
           return ExpandablePanel(

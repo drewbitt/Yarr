@@ -27,15 +27,16 @@ class NovelPage extends StatelessBookBase {
                   getImage(MediaQuery.of(context).size.height / 3)
                 ],
               ),
-              SizedBox(width: MediaQuery.of(context).size.width / 40),
               Flexible(
+                  child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 6),
                 child: Text(this.book.title,
                     style: TextStyle(
                         color: Colors.brown,
                         fontSize: MediaQuery.of(context).size.height / 40),
-                    maxLines: 2,
+                    maxLines: 4,
                     overflow: TextOverflow.ellipsis),
-              )
+              ))
             ],
           ),
           SizedBox(height: MediaQuery.of(context).size.height / 120), // Padding
