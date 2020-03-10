@@ -83,7 +83,7 @@ Future<BookChapterContents> getChapter(BookChapter chap) async {
     var title;
     // Might as well grab the title inside the chapter in case different
     if (parsed.querySelector('h2').hasContent()) {
-      title = parsed.querySelector('h2').text;
+      title = parsed.querySelector('h1').text;
     } else {
       title = chap.name;
     }
