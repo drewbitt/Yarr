@@ -1,4 +1,5 @@
 import 'package:expandable/expandable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/tabs/pages/chapter.dart';
 import 'package:royalroad_api/src/models.dart' show BookDetails;
@@ -42,8 +43,19 @@ class ChapterList extends StatelessWidget {
                     }),
               ));
         } else {
-          // TODO: This will show up at first page load... but also if it never works...
-          return Text("Getting chapters");
+          // NOTE: This spinner will never time out
+          return Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: 13,
+                  horizontal: MediaQuery.of(context).size.width / 40),
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                      padding: EdgeInsets.only(right: 5),
+                      child: CupertinoActivityIndicator()),
+                  Text("Getting chapters", style: TextStyle(fontSize: 15)),
+                ],
+              ));
         }
       },
     );
@@ -56,7 +68,9 @@ class ChapterList extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Flexible(child: Text(chapterList[index].name, overflow: TextOverflow.ellipsis)),
+              Flexible(
+                  child: Text(chapterList[index].name,
+                      overflow: TextOverflow.ellipsis)),
               Text(daysAgo(chapterList[index].releaseDate).toString() +
                   " days ago")
             ],

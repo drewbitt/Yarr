@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart' show Html;
 import 'package:royalroad_api/src/models.dart' show BookChapterContents;
@@ -39,7 +40,10 @@ class ChapterPage extends StatelessWidget {
                       child: Html(data: data.contents, useRichText: true))
                 ]);
           } else {
-            return Text("I'm loading here");
+            // NOTE: This spinner will never time out
+            return Container(
+                height: MediaQuery.of(context).size.height,
+                child: CupertinoActivityIndicator(radius: 15));
           }
         });
   }
