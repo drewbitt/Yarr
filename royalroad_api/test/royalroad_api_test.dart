@@ -17,4 +17,12 @@ void main() {
     }
     expect(result.author, 'yukinekoaquaneko');
   });
+
+  test('Chapter content test', () async {
+    // Same url as novel details test
+    final result = await getBookDetails('https://www.royalroad.com/fiction/5364/from-angel-to-vampire');
+    final chap_result = await getChapter(result.chapterList[0]);
+
+    expect(chap_result.contents, startsWith('<div class="chapter-inner chapter-content">'));
+  });
 }
