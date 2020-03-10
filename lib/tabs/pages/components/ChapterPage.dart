@@ -13,9 +13,11 @@ class ChapterPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final data = snapshot.data;
-            return RichText(
-              text: TextSpan(text: data.contents),
-            );
+            return Padding(
+                padding: EdgeInsets.symmetric(vertical: 13, horizontal: 4),
+                child: RichText(
+                  text: TextSpan(text: data.contents),
+                ));
           } else {
             return Text("I'm loading here");
           }

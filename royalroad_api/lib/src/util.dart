@@ -53,9 +53,9 @@ String clean_contents(Element div) {
    if (tag.nodeType == Node.COMMENT_NODE) {
      toRemove.add(tag); // Remove comments
    }
-   else if (tag.text.trim() == '') {;
-     toRemove.add(tag); // Remove empty tags
-   }
+//   else if (tag.text.trim() == '') {;
+//     toRemove.add(tag); // Remove empty tags
+//   }
    else if (isVoidElement((tag as Element).localName)) {
      // voidElements don't contain text
 
@@ -74,5 +74,5 @@ String clean_contents(Element div) {
   div.nodes.removeWhere((e) => toRemove.contains(e));
   // div.nodes.forEach((element) {print((element as Element).localName);});
 
-  return div.toString();
+  return div.text;
 }

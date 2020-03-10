@@ -10,6 +10,7 @@ class Chapter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChapterPage(getChapter(bookChapter));
+    return Scaffold(
+        body: SafeArea(child: ChapterPage(getChapter(bookChapter))));
   }
 }
