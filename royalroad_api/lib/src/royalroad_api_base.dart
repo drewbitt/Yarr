@@ -69,6 +69,7 @@ Future<BookDetails> getBookDetails(book_url) async {
 }
 
 // Needs a BookChapter object obtained from getBookDetails(book_url)
+//TODO: Write test
 Future<BookChapterContents> getChapter(BookChapter chap) async {
   final response =
       await http.get(chap.url, headers: {'User-Agent': Base.userAgent});

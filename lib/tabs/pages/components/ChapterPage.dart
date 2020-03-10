@@ -22,9 +22,10 @@ class ChapterPage extends StatelessWidget {
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                   Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 4),
-                      child: Html(data: data.contents))
+                      padding: EdgeInsets.symmetric(horizontal: 4),
+                      // useRichText fixes status screens, but is also ugly,
+                      // just waiting on a fix from the library
+                      child: Html(data: data.contents, useRichText: true))
                 ]);
           } else {
             return Text("I'm loading here");
