@@ -33,9 +33,10 @@ class SearchInfo {
 }
 
 String absolute_url(String url) {
-  if (url.contains(Base.baseUrl)) {
+  if (url.contains(Base.baseUrl) || url.contains(Base.baseCdnUrl) ) {
     return url;
   } else if (url[0] == '/') {
+    // Only images of existing book covers use baseCdnUrl it seems
     return Base.baseUrl + url;
   }
   else {

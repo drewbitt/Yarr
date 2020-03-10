@@ -8,13 +8,13 @@ import 'package:royalroad_api/src/util.dart'
 
 class Base {
   static const baseUrl = 'https://www.royalroad.com';
+  static const baseCdnUrl = 'https://www.royalroadcdn.com';
 
   // RR doesn't sensor other scrapers but might as well be safe
   static const userAgent = 'Mozilla/5.0';
 }
 
 // TODO: Add genres
-// TODO: Consider using RR placeholder image
 Future<List<BookSearchResult>> searchFiction(searchTerm) async {
   searchTerm = searchTerm.replaceAll(' ', '+');
   // Can also search for keyword instead of title?
@@ -28,7 +28,7 @@ Future<List<BookSearchResult>> searchFiction(searchTerm) async {
     for (var i in parsed.querySelectorAll('div.row.fiction-list-item')) {
       final link = i.querySelector('h2.fiction-title').querySelector('a');
       final info = SearchInfo.getSearchInfo(i.querySelector('div.row.stats'));
-      final imageUrl = i.querySelector('img').attributes['src'];
+      final imageUrl = absolute_url(i.querySelector('img').attributes['src']);
 
       listResults.add(BookSearchResult(
           absolute_url(link.attributes['href']), link.text, imageUrl, info));
