@@ -17,26 +17,30 @@ class ChapterList extends StatelessWidget {
         if (snapshot.hasData) {
           final chapterList = snapshot.data.chapterList;
           minLength() => chapterList.length < 8 ? chapterList.length - 1 : 8;
-          final chapterListPreview = chapterList.sublist(0, minLength()+1);
+          final chapterListPreview = chapterList.sublist(0, minLength() + 1);
 
           // Bad way to do this - two listviews
-          return ExpandablePanel(
-            header: Text('Chapters'),
-            collapsed: ListView.builder(
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                itemCount: chapterListPreview.length,
-                itemBuilder: (context, index) {
-                  return _buildPanel(chapterListPreview, index, context);
-                }),
-            expanded: ListView.builder(
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                itemCount: chapterList.length,
-                itemBuilder: (context, index) {
-                  return _buildPanel(chapterList, index, context);
-                }),
-          );
+          return Padding(
+              padding: EdgeInsets.all(MediaQuery.of(context).size.width / 40),
+              child: ExpandablePanel(
+                header: Text('Chapters',
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.height / 45)),
+                collapsed: ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemCount: chapterListPreview.length,
+                    itemBuilder: (context, index) {
+                      return _buildPanel(chapterListPreview, index, context);
+                    }),
+                expanded: ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemCount: chapterList.length,
+                    itemBuilder: (context, index) {
+                      return _buildPanel(chapterList, index, context);
+                    }),
+              ));
         } else {
           // TODO: This will show up at first page load... but also if it never works...
           return Text("Getting chapters");
@@ -47,7 +51,7 @@ class ChapterList extends StatelessWidget {
 
   _buildPanel(chapterList, index, context) {
     return Padding(
-        padding: EdgeInsets.symmetric(vertical: 13, horizontal: 4),
+        padding: EdgeInsets.symmetric(vertical: 13),
         child: InkWell(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

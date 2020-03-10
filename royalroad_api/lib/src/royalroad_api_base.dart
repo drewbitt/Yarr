@@ -14,7 +14,6 @@ class Base {
   static const userAgent = 'Mozilla/5.0';
 }
 
-// TODO: Add genres
 Future<List<BookSearchResult>> searchFiction(searchTerm) async {
   searchTerm = searchTerm.replaceAll(' ', '+');
   // Can also search for keyword instead of title?

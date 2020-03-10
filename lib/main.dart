@@ -25,7 +25,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
     super.initState();
 
     // Initialize the Tab Controller
-    controller = TabController(length: 2, vsync: this);
+    controller = TabController(length: 1, vsync: this);
   }
 
   @override
@@ -48,7 +48,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
       // Set the TabBar view as the body of the Scaffold
       body: TabBarView(
         // Add tabs as widgets
-        children: <Widget>[HomeTab(), SearchTab()],
+        children: <Widget>[SearchTab()],
         // set the controller
         controller: controller,
       ),
@@ -59,10 +59,6 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
         // set the tab bar as the child of bottom navigation bar
         child: TabBar(
           tabs: <Tab>[
-            Tab(
-              // set icon to the tab
-              icon: Icon(Icons.home),
-            ),
             Tab(
               icon: Icon(Icons.search),
             )

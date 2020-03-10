@@ -12,7 +12,7 @@ class HomeTab extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(
-                Icons.favorite,
+                Icons.home,
                 size: 160.0,
                 color: Colors.white,
               ),
