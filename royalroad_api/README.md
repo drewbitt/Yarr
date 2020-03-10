@@ -1,24 +1,4 @@
-A library for Dart developers.
+# Royalroad Unofficial API
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
-
-## Usage
-
-A simple usage example:
-
-```dart
-import 'package:royalroad_api/royalroad_api.dart';
-
-main() {
-  var awesome = new Awesome();
-}
-```
-
-## Features and bugs
-
-Please file feature requests and bugs at the [issue tracker][tracker].
-
-[tracker]: http://example.com/issues/replaceme
-
-Web scraping of books done client side for obvious reasons.
+A library for getting and parsing royalroad novels. Includes search ability.
+Royalroad does not offer an API, so this is web scraping.
