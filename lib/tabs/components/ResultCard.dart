@@ -5,7 +5,8 @@ import 'package:royalroad_api/src/models.dart' show BookSearchResult;
 
 class ResultCard extends StatelessBookBase {
   final BookSearchResult book;
-  ResultCard(this.book): super(book);
+
+  ResultCard(this.book) : super(book);
 
 //  var _image;
 //
@@ -41,7 +42,10 @@ class ResultCard extends StatelessBookBase {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis),
               SizedBox(
-                  height: MediaQuery.of(context).size.height / 45), // Padding
+                  height: MediaQuery.of(context).size.height / 130), // Padding
+              Text(this.book.info.genres.sublist(0, 3).toString().substring(
+                  1, this.book.info.genres.sublist(0, 3).toString().length-1)),
+              SizedBox(height: MediaQuery.of(context).size.height / 130),
               Row(
                 children: <Widget>[
                   Column(

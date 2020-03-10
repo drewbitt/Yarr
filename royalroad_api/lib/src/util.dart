@@ -8,6 +8,7 @@ import 'package:royalroad_api/src/royalroad_api_base.dart' show Base;
 class SearchInfo {
   static BookSearchInfo getSearchInfo(parsed) {
     return BookSearchInfo(
+        [], // empty for now since not found in 'row stats', add elsewhere
         getFollowers(parsed),
         getPages(parsed),
         getChapters(parsed),

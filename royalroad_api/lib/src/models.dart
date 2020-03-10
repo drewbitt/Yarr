@@ -7,12 +7,13 @@ class BookSearchResult {
 }
 
 class BookSearchInfo {
+  List<String> genres;
   String title, description, imageUrl;
   int followers, pages, chapters, views;
   double rating;
   DateTime lastUpdate;
 
-  BookSearchInfo(this.followers, this.pages, this.chapters,
+  BookSearchInfo(this.genres, this.followers, this.pages, this.chapters,
       this.views, this.rating, this.lastUpdate, this.description);
 }
 

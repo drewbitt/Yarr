@@ -27,8 +27,14 @@ Future<List<BookSearchResult>> searchFiction(searchTerm) async {
 
     for (var i in parsed.querySelectorAll('div.row.fiction-list-item')) {
       final link = i.querySelector('h2.fiction-title').querySelector('a');
-      final info = SearchInfo.getSearchInfo(i.querySelector('div.row.stats'));
       final imageUrl = absolute_url(i.querySelector('img').attributes['src']);
+
+      var info = SearchInfo.getSearchInfo(i.querySelector('div.row.stats'));
+
+      // Genres not in same div as other info, add to object
+      var genres = <String>[];
+      i.querySelectorAll('span[class^=label]').forEach((element) { genres.add(element.text);});
+      info.genres = genres;
 
       listResults.add(BookSearchResult(
           absolute_url(link.attributes['href']), link.text, imageUrl, info));
