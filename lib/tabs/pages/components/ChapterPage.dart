@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart' show Html;
-import 'package:royalroad_api/src/models.dart' show BookChapterContents;
+import 'package:royalroad_api/models.dart' show BookChapterContents;
 
 class ChapterPage extends StatelessWidget {
   final Future<BookChapterContents> chapterContentsFuture;

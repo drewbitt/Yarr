@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
 import 'package:intl/intl.dart';
-import 'package:royalroad_api/src/models.dart'
+import 'package:royalroad_api/models.dart'
     show BookSearchResult, BookDetails, BookChapter, BookChapterContents;
 import 'package:royalroad_api/src/util.dart'
     show SearchInfo, absolute_url, clean_contents;

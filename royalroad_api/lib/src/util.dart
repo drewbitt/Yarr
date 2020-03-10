@@ -1,8 +1,6 @@
-import 'package:http/http.dart' as http;
-import 'package:html/parser.dart' show parse;
-import 'package:html/dom.dart' show Element, Node, Text;
-import 'package:html/dom_parsing.dart' show isVoidElement;
-import 'package:royalroad_api/src/models.dart' show BookSearchInfo;
+import 'package:html/dom.dart' show Element, Node;
+// import 'package:html/dom_parsing.dart' show isVoidElement;
+import 'package:royalroad_api/models.dart' show BookSearchInfo;
 import 'package:royalroad_api/src/royalroad_api_base.dart' show Base;
 
 class SearchInfo {

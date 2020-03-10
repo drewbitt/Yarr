@@ -2,7 +2,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
 import 'package:flutterroad/tabs/pages/components/ChapterList.dart';
-import 'package:royalroad_api/src/models.dart' show BookSearchResult;
+import 'package:royalroad_api/models.dart' show BookSearchResult;
 import 'package:royalroad_api/royalroad_api.dart' show getBookDetails;
 
 class NovelPage extends StatelessBookBase {
@@ -34,7 +34,7 @@ class NovelPage extends StatelessBookBase {
                     style: TextStyle(
                         color: Colors.brown,
                         fontSize: MediaQuery.of(context).size.height / 40),
-                    maxLines: 4,
+                    maxLines: 7,
                     overflow: TextOverflow.ellipsis),
               ))
             ],

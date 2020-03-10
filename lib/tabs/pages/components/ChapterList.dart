@@ -2,7 +2,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/tabs/pages/chapter.dart';
-import 'package:royalroad_api/src/models.dart' show BookDetails;
+import 'package:royalroad_api/models.dart' show BookDetails;
 
 class ChapterList extends StatelessWidget {
   final Future<BookDetails> chapterFuture;

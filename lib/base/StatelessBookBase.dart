@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:royalroad_api/src/models.dart' show BookSearchResult;
+import 'package:royalroad_api/models.dart' show BookSearchResult;
 
 abstract class StatelessBookBase extends StatelessWidget {
 

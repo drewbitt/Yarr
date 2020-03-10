@@ -2,8 +2,8 @@ import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/tabs/components/ResultCard.dart';
 import 'package:flutterroad/tabs/pages/novel_details.dart';
-import 'package:royalroad_api/src/models.dart' show BookSearchResult;
-import 'package:royalroad_api/src/royalroad_api_base.dart' show searchFiction;
+import 'package:royalroad_api/models.dart' show BookSearchResult;
+import 'package:royalroad_api/royalroad_api.dart' show searchFiction;
 
 class SearchTab extends StatefulWidget {
   @override
@@ -29,7 +29,7 @@ class _SearchTabState extends State<SearchTab> {
           emptyWidget: Center(child: Text('No results')),
           // mainAxisSpacing: 10,
           // crossAxisSpacing: 10,
-          debounceDuration: Duration(seconds: 1),
+          debounceDuration: Duration(milliseconds: 800), // default is 500
           onItemFound: (BookSearchResult result, int index) {
             return InkWell(
                 child: ResultCard(result),
