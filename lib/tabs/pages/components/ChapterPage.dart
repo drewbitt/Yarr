@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart' show Html;
 import 'package:royalroad_api/src/models.dart' show BookChapterContents;
 
 class ChapterPage extends StatelessWidget {
@@ -13,11 +14,18 @@ class ChapterPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final data = snapshot.data;
-            return Padding(
-                padding: EdgeInsets.symmetric(vertical: 13, horizontal: 4),
-                child: RichText(
-                  text: TextSpan(text: data.contents),
-                ));
+            return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 4),
+                      child: Html(data: data.contents))
+                ]);
           } else {
             return Text("I'm loading here");
           }
