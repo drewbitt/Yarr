@@ -56,7 +56,7 @@ class ChapterList extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(chapterList[index].name, overflow: TextOverflow.ellipsis),
+              Flexible(child: Text(chapterList[index].name, overflow: TextOverflow.ellipsis)),
               Text(daysAgo(chapterList[index].releaseDate).toString() +
                   " days ago")
             ],
