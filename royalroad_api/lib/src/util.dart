@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
-import 'package:html/dom.dart' show Element;
+import 'package:html/dom.dart' show Element, Node;
+import 'package:html/dom_parsing.dart' show isVoidElement;
 import 'package:royalroad_api/src/models.dart' show BookSearchInfo;
 import 'package:royalroad_api/src/royalroad_api_base.dart' show Base;
 
@@ -40,4 +41,38 @@ String absolute_url(String url) {
   else {
     throw 'URL is messed up';
   }
+}
+
+String clean_contents(Element div) {
+  //  Not sure how much this relates to RR - grabbing from lncawl and porting to Dart
+  // TODO: Stat screens are gonna be complex
+
+  var toRemove = [];
+
+  for (var tag in div.nodes) {
+   if (tag.nodeType == Node.COMMENT_NODE) {
+     toRemove.add(tag); // Remove comments
+   }
+   else if (tag.text.trim() == '') {;
+     toRemove.add(tag); // Remove empty tags
+   }
+   else if (isVoidElement((tag as Element).localName)) {
+     // voidElements don't contain text
+
+     if ((tag as Element).localName == 'br') {
+       var next_tag = (tag as Element).nextElementSibling;
+       if (next_tag.localName == 'br') {
+         toRemove.add(tag);
+       }
+     }
+     else {
+       toRemove.add(tag);
+     }
+   }
+  }
+
+  div.nodes.removeWhere((e) => toRemove.contains(e));
+  // div.nodes.forEach((element) {print((element as Element).localName);});
+
+  return div.toString();
 }

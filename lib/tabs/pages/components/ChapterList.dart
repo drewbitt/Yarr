@@ -1,8 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterroad/base/StatelessBookBase.dart';
 import 'package:flutterroad/tabs/pages/chapter.dart';
-import 'package:paging/paging.dart';
 import 'package:royalroad_api/src/models.dart' show BookDetails;
 
 class ChapterList extends StatelessWidget {

@@ -30,3 +30,11 @@ class BookChapter {
 
   BookChapter(this.name, this.url, this.releaseDate);
 }
+
+class BookChapterContents {
+  BookChapter chap;
+  // title is title inside chapter in case it's different somehow?
+  String title, contents;
+
+  BookChapterContents(this.chap, this.title, this.contents);
+}
