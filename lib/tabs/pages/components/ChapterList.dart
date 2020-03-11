@@ -32,14 +32,16 @@ class ChapterList extends StatelessWidget {
                     physics: ClampingScrollPhysics(),
                     itemCount: chapterListPreview.length,
                     itemBuilder: (context, index) {
-                      return _buildPanel(chapterListPreview, index, context);
+                      return _buildPanel(
+                          chapterListPreview, chapterList, index, context);
                     }),
                 expanded: ListView.builder(
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
                     itemCount: chapterList.length,
                     itemBuilder: (context, index) {
-                      return _buildPanel(chapterList, index, context);
+                      return _buildPanel(
+                          chapterList, chapterList, index, context);
                     }),
               ));
         } else {
@@ -61,7 +63,7 @@ class ChapterList extends StatelessWidget {
     );
   }
 
-  _buildPanel(chapterList, index, context) {
+  _buildPanel(chapterList, fullChapterList, index, context) {
     return Padding(
         padding: EdgeInsets.symmetric(vertical: 13),
         child: InkWell(
@@ -77,9 +79,20 @@ class ChapterList extends StatelessWidget {
           ),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => Chapter(chapterList[index])));
+                builder: (context) => _buildPageView(fullChapterList, index)));
           },
         ));
+  }
+
+  _buildPageView(fullChapterList, startChapterIndex) {
+    var controller = PageController(initialPage: startChapterIndex);
+    return PageView.builder(
+      itemBuilder: (context, index) {
+        return Chapter(fullChapterList[index]);
+      },
+      controller: controller,
+      itemCount: fullChapterList.length,
+    );
   }
 }
 
