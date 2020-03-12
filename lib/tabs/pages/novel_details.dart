@@ -12,8 +12,11 @@ class NovelDetails extends StatelessBookBase {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: ListView(
-        children: <Widget>[NovelPage(this.book)],
+          child: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(floating: true),
+          SliverList(delegate: SliverChildListDelegate([NovelPage(this.book)]))
+        ],
       )),
     );
   }

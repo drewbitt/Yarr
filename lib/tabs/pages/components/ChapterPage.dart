@@ -19,10 +19,7 @@ class ChapterPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
+                  BackButton(),
                   Flexible(
                       child: Padding(
                           padding: EdgeInsets.fromLTRB(6, 3, 6, 0),

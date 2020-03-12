@@ -15,10 +15,6 @@ class NovelPage extends StatelessBookBase {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
           Row(
             children: <Widget>[
               SizedBox(width: MediaQuery.of(context).size.width / 40),
