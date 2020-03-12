@@ -58,6 +58,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
         color: Colors.blue,
         // set the tab bar as the child of bottom navigation bar
         child: TabBar(
+          indicator: BoxDecoration(), // fix to remove whitespace with only 1 tab
           tabs: <Tab>[
             Tab(
               icon: Icon(Icons.search),
