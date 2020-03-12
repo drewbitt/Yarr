@@ -17,12 +17,17 @@ class NovelPage extends StatelessBookBase {
         children: <Widget>[
           Row(
             children: <Widget>[
-              SizedBox(width: MediaQuery.of(context).size.width / 40),
-              Column(
-                children: <Widget>[
-                  getImage(MediaQuery.of(context).size.height / 3)
-                ],
-              ),
+              Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      MediaQuery.of(context).size.width / 40,
+                      MediaQuery.of(context).size.width / 40,
+                      0,
+                      0),
+                  child: Column(
+                    children: <Widget>[
+                      getImage(MediaQuery.of(context).size.height / 3)
+                    ],
+                  )),
               Flexible(
                   child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 6),
