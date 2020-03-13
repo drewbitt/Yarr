@@ -35,7 +35,7 @@ class ResultCard extends StatelessBookBase {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: MediaQuery.of(context).size.height / 150),
-              Text(this.book.title,
+              Text(this.book.book.title,
                   style: TextStyle(
                       color: Colors.brown,
                       fontSize: MediaQuery.of(context).size.height / 43),

@@ -31,7 +31,7 @@ class NovelPage extends StatelessBookBase {
               Flexible(
                   child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 6),
-                child: Text(this.book.title,
+                child: Text(this.book.book.title,
                     style: TextStyle(
                         color: Colors.brown,
                         fontSize: MediaQuery.of(context).size.height / 40),
@@ -58,7 +58,7 @@ class NovelPage extends StatelessBookBase {
                   softWrap: true,
                 ),
               )),
-          ChapterList(getBookDetails(this.book.url)),
+          ChapterList(getBookDetails(this.book.book.url)),
         ]);
   }
 }

@@ -1,9 +1,15 @@
-class BookSearchResult {
+class Book {
   final String url, title;
   final String imageUrl;
+
+  Book(this.url, this.title, this.imageUrl);
+}
+
+class BookSearchResult {
+  final Book book;
   final BookSearchInfo info;
 
-  BookSearchResult(this.url, this.title, this.imageUrl, this.info);
+  BookSearchResult(this.book, this.info);
 }
 
 class BookSearchInfo {

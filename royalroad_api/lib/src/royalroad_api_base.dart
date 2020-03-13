@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
 import 'package:intl/intl.dart';
 import 'package:royalroad_api/models.dart'
-    show BookSearchResult, BookDetails, BookChapter, BookChapterContents;
+    show BookSearchResult, BookDetails, BookChapter, BookChapterContents, Book;
 import 'package:royalroad_api/src/util.dart'
     show SearchInfo, absolute_url, clean_contents;
 
@@ -36,7 +36,7 @@ Future<List<BookSearchResult>> searchFiction(searchTerm) async {
       info.genres = genres;
 
       listResults.add(BookSearchResult(
-          absolute_url(link.attributes['href']), link.text, imageUrl, info));
+          Book(absolute_url(link.attributes['href']), link.text, imageUrl), info));
     }
     return Future.value(listResults);
   }
@@ -74,7 +74,6 @@ Future<BookDetails> getBookDetails(book_url) async {
 }
 
 // Needs a BookChapter object obtained from getBookDetails(book_url)
-//TODO: Write test
 Future<BookChapterContents> getChapter(BookChapter chap) async {
   final response =
       await http.get(chap.url, headers: {'User-Agent': Base.userAgent});
@@ -96,3 +95,4 @@ Future<BookChapterContents> getChapter(BookChapter chap) async {
     return Future.error('Could not access Royalroad');
   }
 }
+
