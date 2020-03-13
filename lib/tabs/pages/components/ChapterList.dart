@@ -9,7 +9,8 @@ class ChapterList extends StatelessWidget {
 
   ChapterList(this.chapterFuture);
 
-  // TODO: Refactor using pages - long novels are just terrible
+  // TODO: Either refactor with pages or offer a reverse button
+  // Note: Listview.builder does not support reordering
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<BookDetails>(
@@ -27,22 +28,8 @@ class ChapterList extends StatelessWidget {
                 header: Text('Chapters',
                     style: TextStyle(
                         fontSize: MediaQuery.of(context).size.height / 45)),
-                collapsed: ListView.builder(
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: chapterListPreview.length,
-                    itemBuilder: (context, index) {
-                      return _buildPanel(
-                          chapterListPreview, chapterList, index, context);
-                    }),
-                expanded: ListView.builder(
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: chapterList.length,
-                    itemBuilder: (context, index) {
-                      return _buildPanel(
-                          chapterList, chapterList, index, context);
-                    }),
+                collapsed: _buildListView(chapterListPreview),
+                expanded: _buildListView(chapterList)
               ));
         } else {
           // NOTE: This spinner will never time out
@@ -63,7 +50,7 @@ class ChapterList extends StatelessWidget {
     );
   }
 
-  _buildPanel(chapterList, fullChapterList, index, context) {
+  _buildChapterEntry(chapterList, fullChapterList, index, context) {
     return Padding(
         padding: EdgeInsets.symmetric(vertical: 13),
         child: InkWell(
@@ -93,6 +80,17 @@ class ChapterList extends StatelessWidget {
       controller: controller,
       itemCount: fullChapterList.length,
     );
+  }
+
+  _buildListView(chapterList) {
+    return ListView.builder(
+        shrinkWrap: true,
+        physics: ClampingScrollPhysics(),
+        itemCount: chapterList.length,
+        itemBuilder: (context, index) {
+          return _buildChapterEntry(
+              chapterList, chapterList, index, context);
+        });
   }
 }
 
