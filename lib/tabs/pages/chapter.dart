@@ -10,13 +10,8 @@ class Chapter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-            child: Scrollbar(
-                child: ListView(
-                    // key: PageStorageKey('chapterPage'),
-                    children: <Widget>[
-          ChapterPage(getChapter(bookChapter))
-        ]))));
+    return Scaffold(body: SafeArea(child: Scrollbar(child: ListView(
+        // key: PageStorageKey('chapterPage'),
+        children: <Widget>[ChapterPage(getChapter(bookChapter))]))));
   }
 }

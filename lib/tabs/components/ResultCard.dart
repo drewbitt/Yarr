@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
 import 'package:intl/intl.dart';
+import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:royalroad_api/models.dart' show BookListResult;
+import 'package:provider/provider.dart';
 
 class ResultCard extends StatelessBookBase {
   final BookListResult book;
@@ -11,6 +13,7 @@ class ResultCard extends StatelessBookBase {
 
   @override
   Widget build(BuildContext context) {
+    final _theme = Provider.of<ThemeModel>(context);
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Row(
@@ -32,7 +35,9 @@ class ResultCard extends StatelessBookBase {
               SizedBox(height: MediaQuery.of(context).size.height / 150),
               Text(this.book.book.title,
                   style: TextStyle(
-                      color: Colors.brown,
+                      color: _theme.darkMode
+                          ? Colors.brown.shade300
+                          : Colors.brown,
                       fontSize: MediaQuery.of(context).size.height / 43),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis),
@@ -93,8 +98,13 @@ class ResultCard extends StatelessBookBase {
           ))
         ],
       ),
-      decoration:
-          this.showBorder? BoxDecoration(border: Border(top: BorderSide(color: Colors.black12))): BoxDecoration(),
+      decoration: this.showBorder
+          ? BoxDecoration(
+              border: Border(
+                  top: BorderSide(
+                      color:
+                          _theme.darkMode ? Colors.black26 : Colors.black12)))
+          : BoxDecoration(),
     );
   }
 }

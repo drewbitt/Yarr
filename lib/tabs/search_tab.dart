@@ -27,9 +27,8 @@ class _SearchTabState extends State<SearchTab> {
           placeHolder: Center(child: Text('Search for a novel')),
           cancellationWidget: Text("Cancel"),
           emptyWidget: Center(child: Text('No results')),
-          // mainAxisSpacing: 10,
-          // crossAxisSpacing: 10,
           debounceDuration: Duration(milliseconds: 800), // default is 500
+          textStyle: TextStyle(), // fixes issue in dark mode
           onItemFound: (BookListResult result, int index) {
             return InkWell(
                 child: ResultCard(result),

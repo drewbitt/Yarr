@@ -25,12 +25,11 @@ class ChapterList extends StatelessWidget {
           return Padding(
               padding: EdgeInsets.all(MediaQuery.of(context).size.width / 40),
               child: ExpandablePanel(
-                header: Text('Chapters',
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.height / 45)),
-                collapsed: _buildListView(chapterListPreview),
-                expanded: _buildListView(chapterList)
-              ));
+                  header: Text('Chapters',
+                      style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.height / 45)),
+                  collapsed: _buildListView(chapterListPreview),
+                  expanded: _buildListView(chapterList)));
         } else {
           // NOTE: This spinner will never time out
           return Padding(
@@ -60,8 +59,7 @@ class ChapterList extends StatelessWidget {
               Flexible(
                   child: Text(chapterList[index].name,
                       overflow: TextOverflow.ellipsis)),
-              Text(chapterList[index].releaseDateString +
-                  "ago")
+              Text(chapterList[index].releaseDateString + "ago")
             ],
           ),
           onTap: () {
@@ -89,8 +87,7 @@ class ChapterList extends StatelessWidget {
         physics: ClampingScrollPhysics(),
         itemCount: chapterList.length,
         itemBuilder: (context, index) {
-          return _buildChapterEntry(
-              chapterList, chapterList, index, context);
+          return _buildChapterEntry(chapterList, chapterList, index, context);
         });
   }
 }

@@ -73,8 +73,8 @@ Future<BookDetails> getFictionDetails(book_url) async {
       final date = dFormat.parse(i.querySelector('time').attributes['title']);
       final dateToString = i.querySelector('time').text;
 
-      listChapters.add(BookChapter(
-          chapter.text.trim(), absolute_url(chapter.attributes['href']), date, dateToString));
+      listChapters.add(BookChapter(chapter.text.trim(),
+          absolute_url(chapter.attributes['href']), date, dateToString));
     }
     assert(listChapters.length == numChapters);
 
@@ -128,8 +128,7 @@ Future<List<BookListResult>> getWeeksPopularFictions() async {
     final listResult = _getBookList(parsed);
 
     return Future.value(listResult);
-  }
-  else {
+  } else {
     return Future.error('Could not access Royalroad');
   }
 }
@@ -142,8 +141,7 @@ Future<List<BookListResult>> getBestRatedFictions() async {
     final listResult = _getBookList(parsed);
 
     return Future.value(listResult);
-  }
-  else {
+  } else {
     return Future.error('Could not access Royalroad');
   }
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
 import 'package:intl/intl.dart';
+import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:royalroad_api/models.dart';
+import 'package:provider/provider.dart';
 
 class BigResultCard extends StatelessBookBase {
   final BookListResult book;
@@ -12,11 +13,14 @@ class BigResultCard extends StatelessBookBase {
 
   @override
   Widget build(BuildContext context) {
+    final _theme = Provider.of<ThemeModel>(context);
     return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text('#' + (index+1).toString() + ': ' + this.book.book.title,
-              style: TextStyle(color: Colors.brown, fontSize: 22),
+          Text('#' + (index + 1).toString() + ': ' + this.book.book.title,
+              style: TextStyle(
+                  color: _theme.darkMode ? Colors.brown.shade300 : Colors.brown,
+                  fontSize: 22),
               maxLines: 1,
               overflow: TextOverflow.ellipsis),
           Padding(

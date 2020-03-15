@@ -2,8 +2,10 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
 import 'package:flutterroad/tabs/pages/components/ChapterList.dart';
+import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:royalroad_api/models.dart' show BookListResult;
 import 'package:royalroad_api/royalroad_api.dart' show getFictionDetails;
+import 'package:provider/provider.dart';
 
 class NovelPage extends StatelessBookBase {
   final BookListResult book;
@@ -12,6 +14,7 @@ class NovelPage extends StatelessBookBase {
 
   @override
   Widget build(BuildContext context) {
+    final _theme = Provider.of<ThemeModel>(context);
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -33,7 +36,9 @@ class NovelPage extends StatelessBookBase {
                 padding: EdgeInsets.symmetric(horizontal: 6),
                 child: Text(this.book.book.title,
                     style: TextStyle(
-                        color: Colors.brown,
+                        color: _theme.darkMode
+                            ? Colors.brown.shade300
+                            : Colors.brown,
                         fontSize: MediaQuery.of(context).size.height / 40),
                     maxLines: 7,
                     overflow: TextOverflow.ellipsis),

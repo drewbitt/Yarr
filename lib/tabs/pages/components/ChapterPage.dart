@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart' show Html;
+import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:royalroad_api/models.dart' show BookChapterContents;
+import 'package:provider/provider.dart';
 
 class ChapterPage extends StatelessWidget {
   final Future<BookChapterContents> chapterContentsFuture;
@@ -10,6 +12,7 @@ class ChapterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _theme = Provider.of<ThemeModel>(context);
     return FutureBuilder<BookChapterContents>(
         future: chapterContentsFuture,
         builder: (context, snapshot) {
@@ -25,7 +28,9 @@ class ChapterPage extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(15, 3, 15, 0),
                           child: Text(data.title,
                               style: TextStyle(
-                                  color: Colors.black,
+                                  color: _theme.darkMode
+                                      ? Colors.white
+                                      : Colors.black,
                                   fontSize:
                                       MediaQuery.of(context).size.height / 43),
                               maxLines: 3,
