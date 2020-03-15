@@ -34,8 +34,9 @@ class BookDetails {
 class BookChapter {
   String name, url;
   DateTime releaseDate;
+  String releaseDateString;
 
-  BookChapter(this.name, this.url, this.releaseDate);
+  BookChapter(this.name, this.url, this.releaseDate, this.releaseDateString);
 }
 
 class BookChapterContents {

@@ -70,10 +70,11 @@ Future<BookDetails> getFictionDetails(book_url) async {
       var chapter = i.querySelector('a[href]');
 
       final dFormat = DateFormat('EEEE, d MMMM y H:m');
-      var date = dFormat.parse(i.querySelector('time').attributes['title']);
+      final date = dFormat.parse(i.querySelector('time').attributes['title']);
+      final dateToString = i.querySelector('time').text;
 
       listChapters.add(BookChapter(
-          chapter.text.trim(), absolute_url(chapter.attributes['href']), date));
+          chapter.text.trim(), absolute_url(chapter.attributes['href']), date, dateToString));
     }
     assert(listChapters.length == numChapters);
 

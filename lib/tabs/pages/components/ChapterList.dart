@@ -60,8 +60,8 @@ class ChapterList extends StatelessWidget {
               Flexible(
                   child: Text(chapterList[index].name,
                       overflow: TextOverflow.ellipsis)),
-              Text(daysAgo(chapterList[index].releaseDate).toString() +
-                  " days ago")
+              Text(chapterList[index].releaseDateString +
+                  "ago")
             ],
           ),
           onTap: () {
@@ -94,6 +94,3 @@ class ChapterList extends StatelessWidget {
         });
   }
 }
-
-// TODO: RR stores the string for months/days/years - maybe steal that?
-daysAgo(DateTime d) => DateTime.now().difference(d).inDays;
