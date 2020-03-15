@@ -1,19 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/tabs/components/ResultCard.dart';
-import 'package:flutterroad/tabs/pages/novel_details.dart';
 import 'package:page_view_indicators/arrow_page_indicator.dart';
 import 'package:royalroad_api/models.dart' show BookListResult;
 import 'package:royalroad_api/royalroad_api.dart';
 
-class HomeTab extends StatefulWidget {
-  @override
-  HomeTabState createState() {
-    return new HomeTabState();
-  }
-}
-
-class HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
+class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,9 +26,6 @@ class HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 
   _buildPageView(List<BookListResult> fictions, PageController pageController,
           ValueNotifier currentPageNotifier) =>

@@ -4,7 +4,7 @@ import 'package:flutterroad/tabs/search_tab.dart';
 
 void main() {
   runApp(MaterialApp(
-    // Title
+      // Title
       title: "FlutterRoad",
       // Home
       home: MyHome()));
@@ -17,60 +17,37 @@ class MyHome extends StatefulWidget {
 
 // SingleTickerProviderStateMixin is used for animation
 class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
-  // Create a tab controller
-  TabController controller;
+  int _selectedIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-
-    // Initialize the Tab Controller
-    controller = TabController(length: 2, vsync: this);
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
-  @override
-  void dispose() {
-    // Dispose of the Tab Controller
-    controller.dispose();
-    super.dispose();
-  }
+  static List<Widget> _widgetOptions = <Widget>[HomeTab(), SearchTab()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Appbar
-      appBar: AppBar(
-        // Title
-        title: Text("FlutterRoad"),
-        // Set the background color of the App Bar
-        backgroundColor: Colors.blue,
-      ),
-      // Set the TabBar view as the body of the Scaffold
-      body: TabBarView(
-        // Add tabs as widgets
-        children: <Widget>[HomeTab(), SearchTab()],
-        // set the controller
-        controller: controller,
-      ),
-      // Set the bottom navigation bar
-      bottomNavigationBar: Material(
-        // set the color of the bottom navigation bar
-        color: Colors.blue,
-        // set the tab bar as the child of bottom navigation bar
-        child: TabBar(
-          indicator: BoxDecoration(), // fix to remove whitespace with only 1 tab
-          tabs: <Tab>[
-            Tab(
-              icon: Icon(Icons.home),
-            ),
-            Tab(
-              icon: Icon(Icons.search),
-            )
-          ],
-          // setup the controller
-          controller: controller,
+        appBar: AppBar(
+          title: Text("FlutterRoad"),
+          backgroundColor: Colors.blue,
         ),
-      ),
-    );
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _widgetOptions
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home), title: Text('Home')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.search), title: Text('Search'))
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber[800],
+          onTap: _onItemTapped,
+        ));
   }
 }
