@@ -49,7 +49,7 @@ _trendingList() => _buildList(getTrendingFictions());
 _popularList() => _buildList(getWeeksPopularFictions());
 
 _buildList(func) => Container(
-    height: 150,
+    height: 160,
     child: FutureBuilder<List<BookListResult>>(
       future: func,
       builder: (context, snapshot) {

@@ -22,7 +22,7 @@ class ChapterPage extends StatelessWidget {
                   BackButton(),
                   Flexible(
                       child: Padding(
-                          padding: EdgeInsets.fromLTRB(6, 3, 6, 0),
+                          padding: EdgeInsets.fromLTRB(15, 3, 15, 0),
                           child: Text(data.title,
                               style: TextStyle(
                                   color: Colors.black,
@@ -31,7 +31,7 @@ class ChapterPage extends StatelessWidget {
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis))),
                   Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 6),
+                      padding: EdgeInsets.symmetric(horizontal: 15),
                       // useRichText fixes status screens, but is also ugly,
                       // just waiting on a fix from the library
                       child: Html(data: data.contents, useRichText: true))
