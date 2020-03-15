@@ -1,8 +1,9 @@
+import 'package:html/dom.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
 import 'package:intl/intl.dart';
 import 'package:royalroad_api/models.dart'
-    show BookSearchResult, BookDetails, BookChapter, BookChapterContents, Book;
+    show BookListResult, BookDetails, BookChapter, BookChapterContents, Book;
 import 'package:royalroad_api/src/util.dart'
     show SearchInfo, absolute_url, clean_contents;
 
@@ -14,7 +15,30 @@ class Base {
   static const userAgent = 'Mozilla/5.0';
 }
 
-Future<List<BookSearchResult>> searchFiction(searchTerm) async {
+/// Returns list of books from the generic fiction-list-item pages on RR
+List<BookListResult> _getBookList(Document parsed) {
+  var listResults = <BookListResult>[];
+  for (var i in parsed.querySelectorAll('div.row.fiction-list-item')) {
+    final link = i.querySelector('h2.fiction-title').querySelector('a');
+    final imageUrl = absolute_url(i.querySelector('img').attributes['src']);
+
+    var info = SearchInfo.getSearchInfo(i.querySelector('div.row.stats'));
+
+    // Genres not in same div as other info, add to object
+    var genres = <String>[];
+    i.querySelectorAll('span[class^=label]').forEach((element) {
+      genres.add(element.text);
+    });
+    info.genres = genres;
+
+    listResults.add(BookListResult(
+        Book(absolute_url(link.attributes['href']), link.text, imageUrl),
+        info));
+  }
+  return listResults;
+}
+
+Future<List<BookListResult>> searchFiction(searchTerm) async {
   searchTerm = searchTerm.replaceAll(' ', '+');
   // Can also search for keyword instead of title?
   final url = Base.baseUrl + '/fictions/search?title=' + searchTerm;
@@ -22,28 +46,14 @@ Future<List<BookSearchResult>> searchFiction(searchTerm) async {
   final response = await http.get(url, headers: {'User-Agent': Base.userAgent});
   if (response.statusCode == 200) {
     final parsed = parse(response.body);
-    var listResults = <BookSearchResult>[];
 
-    for (var i in parsed.querySelectorAll('div.row.fiction-list-item')) {
-      final link = i.querySelector('h2.fiction-title').querySelector('a');
-      final imageUrl = absolute_url(i.querySelector('img').attributes['src']);
-
-      var info = SearchInfo.getSearchInfo(i.querySelector('div.row.stats'));
-
-      // Genres not in same div as other info, add to object
-      var genres = <String>[];
-      i.querySelectorAll('span[class^=label]').forEach((element) { genres.add(element.text);});
-      info.genres = genres;
-
-      listResults.add(BookSearchResult(
-          Book(absolute_url(link.attributes['href']), link.text, imageUrl), info));
-    }
+    final listResults = _getBookList(parsed);
     return Future.value(listResults);
   }
   return Future.error('Could not access Royalroad');
 }
 
-Future<BookDetails> getBookDetails(book_url) async {
+Future<BookDetails> getFictionDetails(book_url) async {
   final response =
       await http.get(book_url, headers: {'User-Agent': Base.userAgent});
   if (response.statusCode == 200) {
@@ -73,12 +83,12 @@ Future<BookDetails> getBookDetails(book_url) async {
   }
 }
 
-// Needs a BookChapter object obtained from getBookDetails(book_url)
+// Needs a BookChapter object obtained from getFictionDetails(book_url)
 Future<BookChapterContents> getChapter(BookChapter chap) async {
   final response =
       await http.get(chap.url, headers: {'User-Agent': Base.userAgent});
   if (response.statusCode == 200) {
-    var parsed = parse(response.body);
+    final parsed = parse(response.body);
     var title;
     // Might as well grab the title inside the chapter in case different
     if (parsed.querySelector('h2').hasContent()) {
@@ -96,3 +106,29 @@ Future<BookChapterContents> getChapter(BookChapter chap) async {
   }
 }
 
+Future<List<BookListResult>> getTrendingFictions() async {
+  final url = Base.baseUrl + '/fictions/trending';
+  final response = await http.get(url, headers: {'User-Agent': Base.userAgent});
+  if (response.statusCode == 200) {
+    final parsed = parse(response.body);
+    final listResult = _getBookList(parsed);
+
+    return Future.value(listResult);
+  } else {
+    return Future.error('Could not access Royalroad');
+  }
+}
+
+Future<List<BookListResult>> getWeeksPopularFictions() async {
+  final url = Base.baseUrl + '/fictions/weekly-popular';
+  final response = await http.get(url, headers: {'User-Agent': Base.userAgent});
+  if (response.statusCode == 200) {
+    final parsed = parse(response.body);
+    final listResult = _getBookList(parsed);
+
+    return Future.value(listResult);
+  }
+  else {
+    return Future.error('Could not access Royalroad');
+  }
+}

@@ -2,11 +2,11 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
 import 'package:flutterroad/tabs/pages/components/ChapterList.dart';
-import 'package:royalroad_api/models.dart' show BookSearchResult;
-import 'package:royalroad_api/royalroad_api.dart' show getBookDetails;
+import 'package:royalroad_api/models.dart' show BookListResult;
+import 'package:royalroad_api/royalroad_api.dart' show getFictionDetails;
 
 class NovelPage extends StatelessBookBase {
-  final BookSearchResult book;
+  final BookListResult book;
 
   NovelPage(this.book) : super(book);
 
@@ -58,7 +58,7 @@ class NovelPage extends StatelessBookBase {
                   softWrap: true,
                 ),
               )),
-          ChapterList(getBookDetails(this.book.book.url)),
+          ChapterList(getFictionDetails(this.book.book.url)),
         ]);
   }
 }

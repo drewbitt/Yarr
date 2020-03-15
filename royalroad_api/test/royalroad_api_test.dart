@@ -8,7 +8,7 @@ void main() {
   });
   
   test('Novel details test', () async {
-    final result = await getBookDetails('https://www.royalroad.com/fiction/5364/from-angel-to-vampire');
+    final result = await getFictionDetails('https://www.royalroad.com/fiction/5364/from-angel-to-vampire');
     expect(result.numChapters, 1);
     for (var i in result.chapterList) {
       expect(i.releaseDate.toString(), '2016-02-17 02:49:00.000');
@@ -20,9 +20,19 @@ void main() {
 
   test('Chapter content test', () async {
     // Same url as novel details test
-    final result = await getBookDetails('https://www.royalroad.com/fiction/5364/from-angel-to-vampire');
+    final result = await getFictionDetails('https://www.royalroad.com/fiction/5364/from-angel-to-vampire');
     final chap_result = await getChapter(result.chapterList[0]);
 
     expect(chap_result.contents, startsWith('<div class="chapter-inner chapter-content">'));
+  });
+
+  test('Trending fictions test', () async {
+    final result = await getTrendingFictions();
+    expect(result.length, greaterThan(0));
+  });
+
+  test('Weekly popular fictions test', () async {
+    final result = await getWeeksPopularFictions();
+    expect(result.length, greaterThan(0));
   });
 }

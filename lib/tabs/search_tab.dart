@@ -2,7 +2,7 @@ import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/tabs/components/ResultCard.dart';
 import 'package:flutterroad/tabs/pages/novel_details.dart';
-import 'package:royalroad_api/models.dart' show BookSearchResult;
+import 'package:royalroad_api/models.dart' show BookListResult;
 import 'package:royalroad_api/royalroad_api.dart' show searchFiction;
 
 class SearchTab extends StatefulWidget {
@@ -11,14 +11,14 @@ class SearchTab extends StatefulWidget {
 }
 
 class _SearchTabState extends State<SearchTab> {
-  final SearchBarController<BookSearchResult> _searchBarController =
+  final SearchBarController<BookListResult> _searchBarController =
       SearchBarController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SearchBar<BookSearchResult>(
+        child: SearchBar<BookListResult>(
           searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
           headerPadding: EdgeInsets.symmetric(horizontal: 10),
           listPadding: EdgeInsets.symmetric(horizontal: 10),
@@ -30,7 +30,7 @@ class _SearchTabState extends State<SearchTab> {
           // mainAxisSpacing: 10,
           // crossAxisSpacing: 10,
           debounceDuration: Duration(milliseconds: 800), // default is 500
-          onItemFound: (BookSearchResult result, int index) {
+          onItemFound: (BookListResult result, int index) {
             return InkWell(
                 child: ResultCard(result),
                 onTap: () {

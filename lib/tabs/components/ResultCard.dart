@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
 import 'package:intl/intl.dart';
-import 'package:royalroad_api/models.dart' show BookSearchResult;
+import 'package:royalroad_api/models.dart' show BookListResult;
 
 class ResultCard extends StatelessBookBase {
-  final BookSearchResult book;
+  final BookListResult book;
 
   ResultCard(this.book) : super(book);
 

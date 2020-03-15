@@ -74,6 +74,7 @@ class ChapterList extends StatelessWidget {
   _buildPageView(fullChapterList, startChapterIndex) {
     var controller = PageController(initialPage: startChapterIndex);
     return PageView.builder(
+      // key: PageStorageKey('chapterPage'),
       itemBuilder: (context, index) {
         return Chapter(fullChapterList[index]);
       },

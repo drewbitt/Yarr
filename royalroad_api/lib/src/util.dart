@@ -1,11 +1,11 @@
 import 'package:html/dom.dart' show Element, Node;
 // import 'package:html/dom_parsing.dart' show isVoidElement;
-import 'package:royalroad_api/models.dart' show BookSearchInfo;
+import 'package:royalroad_api/models.dart' show BookListInfo;
 import 'package:royalroad_api/src/royalroad_api_base.dart' show Base;
 
 class SearchInfo {
-  static BookSearchInfo getSearchInfo(parsed) {
-    return BookSearchInfo(
+  static BookListInfo getSearchInfo(parsed) {
+    return BookListInfo(
         [], // empty for now since not found in 'row stats', add elsewhere
         getFollowers(parsed),
         getPages(parsed),
@@ -46,7 +46,8 @@ class SearchInfo {
       .querySelector('i.fa.fa-list')
       .nextElementSibling
       .text
-      .split(' Chapters')[0]);
+      .split(' Chapters')[0]
+      .replaceAll(',', ''));
 
   static DateTime getLastUpdate(Element parsed) => DateTime.parse(parsed
       .querySelector('i.fa.fa-calendar')

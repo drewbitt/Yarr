@@ -13,8 +13,10 @@ class Chapter extends StatelessWidget {
     return Scaffold(
         body: SafeArea(
             child: Scrollbar(
-                child: ListView(children: <Widget>[
-      ChapterPage(getChapter(bookChapter))
-    ]))));
+                child: ListView(
+                    // key: PageStorageKey('chapterPage'),
+                    children: <Widget>[
+          ChapterPage(getChapter(bookChapter))
+        ]))));
   }
 }

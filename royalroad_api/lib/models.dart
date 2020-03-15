@@ -5,21 +5,21 @@ class Book {
   Book(this.url, this.title, this.imageUrl);
 }
 
-class BookSearchResult {
+class BookListResult {
   final Book book;
-  final BookSearchInfo info;
+  final BookListInfo info;
 
-  BookSearchResult(this.book, this.info);
+  BookListResult(this.book, this.info);
 }
 
-class BookSearchInfo {
+class BookListInfo {
   List<String> genres;
   String title, description, imageUrl;
   int followers, pages, chapters, views;
   double rating;
   DateTime lastUpdate;
 
-  BookSearchInfo(this.genres, this.followers, this.pages, this.chapters,
+  BookListInfo(this.genres, this.followers, this.pages, this.chapters,
       this.views, this.rating, this.lastUpdate, this.description);
 }
 
