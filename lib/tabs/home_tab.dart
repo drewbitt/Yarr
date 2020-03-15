@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/tabs/components/ResultCard.dart';
+import 'package:flutterroad/tabs/pages/novel_details.dart';
 import 'package:page_view_indicators/arrow_page_indicator.dart';
 import 'package:royalroad_api/models.dart' show BookListResult;
 import 'package:royalroad_api/royalroad_api.dart';
@@ -39,8 +40,8 @@ class HomeTab extends StatelessWidget {
                 child: InkWell(
                     child: ResultCard(fictions[index], showBorder: false),
                     onTap: () {
-//                    Navigator.of(context).push(MaterialPageRoute(
-//                        builder: (context) => NovelDetails(fictions[index])));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => NovelDetails(fictions[index])));
                     }));
           },
           onPageChanged: (int index) {
