@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterroad/tabs/components/BigResultCard.dart';
 import 'package:flutterroad/tabs/components/ResultCard.dart';
 import 'package:flutterroad/tabs/pages/novel_details.dart';
 import 'package:page_view_indicators/arrow_page_indicator.dart';
@@ -10,26 +11,31 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child:
-                  Text("Trending Fictions: ", style: TextStyle(fontSize: 20))),
-          _trendingList(),
-          Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child:
-                  Text("Popular this week: ", style: TextStyle(fontSize: 20))),
-          _popularList()
-        ],
-      ),
-    );
+        body: ListView(
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _bigFictionList(),
+            Padding(
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                child: Text("Trending Fictions: ",
+                    style: TextStyle(fontSize: 20))),
+            _trendingList(),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Text("Popular this week: ",
+                    style: TextStyle(fontSize: 20))),
+            _popularList()
+          ],
+        ),
+      ],
+    ));
   }
 
   _buildPageView(List<BookListResult> fictions, PageController pageController,
-          ValueNotifier currentPageNotifier) =>
+          ValueNotifier currentPageNotifier,
+          {big = false}) =>
       PageView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: fictions.length,
@@ -38,26 +44,30 @@ class HomeTab extends StatelessWidget {
             return Padding(
                 padding: EdgeInsets.all(10), // not sure about value rn
                 child: InkWell(
-                    child: ResultCard(fictions[index], showBorder: false),
+                    child: big
+                        ? BigResultCard(fictions[index], index: index)
+                        : ResultCard(fictions[index], showBorder: false),
                     onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => NovelDetails(fictions[index])));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => NovelDetails(fictions[index])));
                     }));
           },
           onPageChanged: (int index) {
             currentPageNotifier.value = index;
           });
 
+  _bigFictionList() => _buildList(getBestRatedFictions(), big: true);
+
   _trendingList() => _buildList(getTrendingFictions());
 
   _popularList() => _buildList(getWeeksPopularFictions());
 
-  _buildList(func) {
+  _buildList(func, {big = false}) {
     final _pageController = PageController();
     final _currentPageNotifier = ValueNotifier<int>(0);
 
     return Container(
-        height: 160,
+        height: big ? 310 : 160,
         child: FutureBuilder<List<BookListResult>>(
           future: func,
           builder: (context, snapshot) {
@@ -70,18 +80,22 @@ class HomeTab extends StatelessWidget {
                   // not a fan that on black covers, the left icon disappears. Living with it right now
                   itemCount: data.length,
                   child: _buildPageView(
-                      data, _pageController, _currentPageNotifier));
+                      data, _pageController, _currentPageNotifier,
+                      big: big));
             } else {
               return Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: 13,
                       horizontal: MediaQuery.of(context).size.width / 40),
                   child: Row(
+                    mainAxisAlignment: big
+                        ? MainAxisAlignment.center
+                        : MainAxisAlignment.start,
                     children: <Widget>[
                       Padding(
                           padding: EdgeInsets.only(right: 5),
                           child: CupertinoActivityIndicator()),
-                      Text("Getting chapters", style: TextStyle(fontSize: 15)),
+                      Text("Getting fictions", style: TextStyle(fontSize: 15)),
                     ],
                   ));
             }

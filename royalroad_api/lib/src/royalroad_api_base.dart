@@ -133,3 +133,17 @@ Future<List<BookListResult>> getWeeksPopularFictions() async {
     return Future.error('Could not access Royalroad');
   }
 }
+
+Future<List<BookListResult>> getBestRatedFictions() async {
+  final url = Base.baseUrl + '/fictions/best-rated';
+  final response = await http.get(url, headers: {'User-Agent': Base.userAgent});
+  if (response.statusCode == 200) {
+    final parsed = parse(response.body);
+    final listResult = _getBookList(parsed);
+
+    return Future.value(listResult);
+  }
+  else {
+    return Future.error('Could not access Royalroad');
+  }
+}

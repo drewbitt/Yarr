@@ -35,4 +35,10 @@ void main() {
     final result = await getWeeksPopularFictions();
     expect(result.length, greaterThan(0));
   });
+
+
+  test('Best rated fictions test', () async {
+    final result = await getBestRatedFictions();
+    expect(result.length, greaterThan(0));
+  });
 }
