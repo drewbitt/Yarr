@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/tabs/components/ResultCard.dart';
+import 'package:flutterroad/tabs/pages/novel_details.dart';
 import 'package:royalroad_api/models.dart' show BookListResult;
 import 'package:royalroad_api/royalroad_api.dart';
 
@@ -34,39 +35,23 @@ _buildPageView(List<BookListResult> fictions) {
       itemBuilder: (context, index) {
         return Padding(
             padding: EdgeInsets.all(10), // not sure about value rn
-            child: ResultCard(fictions[index], showBorder: false));
+            child: InkWell(
+                child: ResultCard(fictions[index], showBorder: false),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => NovelDetails(fictions[index])));
+                }));
       });
 }
 
-_trendingList() => Container(
-    height: 200,
-    child: FutureBuilder<List<BookListResult>>(
-      future: getTrendingFictions(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final data = snapshot.data;
-          return _buildPageView(data);
-        } else {
-          return Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: 13,
-                  horizontal: MediaQuery.of(context).size.width / 40),
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.only(right: 5),
-                      child: CupertinoActivityIndicator()),
-                  Text("Getting chapters", style: TextStyle(fontSize: 15)),
-                ],
-              ));
-        }
-      },
-    ));
+_trendingList() => _buildList(getTrendingFictions());
 
-_popularList() => Container(
-    height: 200,
+_popularList() => _buildList(getWeeksPopularFictions());
+
+_buildList(func) => Container(
+    height: 150,
     child: FutureBuilder<List<BookListResult>>(
-      future: getWeeksPopularFictions(),
+      future: func,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final data = snapshot.data;
