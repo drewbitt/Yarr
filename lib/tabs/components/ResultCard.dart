@@ -43,8 +43,9 @@ class ResultCard extends StatelessBookBase {
                   overflow: TextOverflow.ellipsis),
               SizedBox(
                   height: MediaQuery.of(context).size.height / 130), // Padding
-              Text(this.book.info.genres.sublist(0, 3).toString().substring(
-                  1, this.book.info.genres.sublist(0, 3).toString().length-1)),
+              Text(this.book.info.genres.length <= 3
+                  ? this.book.info.genres.join(", ")
+                  : this.book.info.genres.sublist(0, 3).join(", ")),
               SizedBox(height: MediaQuery.of(context).size.height / 130),
               Row(
                 children: <Widget>[
