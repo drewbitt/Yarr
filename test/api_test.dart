@@ -5,6 +5,6 @@ void main() {
   // Duplicate test inside module to ensure module usage is OK
   test('Search single novel', () async {
     final result = await searchFiction('King of Avarice');
-    expect(result[0].title, 'The King of Avarice');
+    expect(result[0].book.title, 'The King of Avarice');
   });
 }

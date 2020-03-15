@@ -5,19 +5,14 @@ import 'package:royalroad_api/models.dart' show BookListResult;
 
 class ResultCard extends StatelessBookBase {
   final BookListResult book;
+  final bool showBorder;
 
-  ResultCard(this.book) : super(book);
-
-//  var _image;
-//
-//  @override
-//  void initState() {
-//    _image = _getImage();
-//  }
+  ResultCard(this.book, {this.showBorder = true}) : super(book);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: MediaQuery.of(context).size.width,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -30,7 +25,7 @@ class ResultCard extends StatelessBookBase {
           // TODO: Look into this strat of dividing - feasible?
           SizedBox(width: MediaQuery.of(context).size.width / 50), // Padding
           // Details column 1
-          Flexible(
+          Expanded(
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -99,7 +94,7 @@ class ResultCard extends StatelessBookBase {
         ],
       ),
       decoration:
-          BoxDecoration(border: Border(top: BorderSide(color: Colors.black12))),
+          this.showBorder? BoxDecoration(border: Border(top: BorderSide(color: Colors.black12))): BoxDecoration(),
     );
   }
 }

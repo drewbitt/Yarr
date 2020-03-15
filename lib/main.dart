@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:flutterroad/tabs/home_tab.dart';
+import 'package:flutterroad/tabs/home_tab.dart';
 import 'package:flutterroad/tabs/search_tab.dart';
 
 void main() {
@@ -25,7 +25,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
     super.initState();
 
     // Initialize the Tab Controller
-    controller = TabController(length: 1, vsync: this);
+    controller = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -48,7 +48,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
       // Set the TabBar view as the body of the Scaffold
       body: TabBarView(
         // Add tabs as widgets
-        children: <Widget>[SearchTab()],
+        children: <Widget>[HomeTab(), SearchTab()],
         // set the controller
         controller: controller,
       ),
@@ -60,6 +60,9 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
         child: TabBar(
           indicator: BoxDecoration(), // fix to remove whitespace with only 1 tab
           tabs: <Tab>[
+            Tab(
+              icon: Icon(Icons.home),
+            ),
             Tab(
               icon: Icon(Icons.search),
             )
