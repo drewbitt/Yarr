@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
-import 'package:flutterroad/tabs/pages/components/NovelPage.dart';
+import 'package:flutterroad/ui/fiction/components/NovelPage.dart';
 import 'package:royalroad_api/models.dart' show BookListResult;
 
 class NovelDetails extends StatelessBookBase {

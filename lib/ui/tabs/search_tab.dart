@@ -1,7 +1,7 @@
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterroad/tabs/components/ResultCard.dart';
-import 'package:flutterroad/tabs/pages/novel_details.dart';
+import 'package:flutterroad/ui/components/ResultCard.dart';
+import 'package:flutterroad/ui/fiction/novel_details.dart';
 import 'package:royalroad_api/models.dart' show BookListResult;
 import 'package:royalroad_api/royalroad_api.dart' show searchFiction;
 

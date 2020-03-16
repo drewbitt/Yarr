@@ -1,7 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterroad/tabs/pages/chapter.dart';
+import 'package:flutterroad/ui/chapter/chapter.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:royalroad_api/models.dart' show BookDetails;
 import 'package:provider/provider.dart';

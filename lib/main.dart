@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutterroad/tabs/home_tab.dart';
-import 'package:flutterroad/tabs/pages/settings.dart';
-import 'package:flutterroad/tabs/search_tab.dart';
+import 'package:flutterroad/ui/settings.dart';
+import 'package:flutterroad/ui/tabs/home_tab.dart';
+import 'package:flutterroad/ui/tabs/search_tab.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +38,8 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
     return Scaffold(
         appBar: AppBar(
           title: Text("FlutterRoad"),
-          backgroundColor: _theme.darkMode? Colors.black26 : Colors.blue.shade600,
+          backgroundColor:
+              _theme.darkMode ? Colors.black26 : Colors.blue.shade600,
           actions: <Widget>[
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),

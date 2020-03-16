@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterroad/tabs/pages/components/ChapterPage.dart';
+import 'package:flutterroad/ui/chapter/components/ChapterPage.dart';
 import 'package:royalroad_api/royalroad_api.dart';
 import 'package:royalroad_api/models.dart' show BookChapter;
 

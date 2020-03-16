@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterroad/tabs/components/BigResultCard.dart';
-import 'package:flutterroad/tabs/components/ResultCard.dart';
-import 'package:flutterroad/tabs/pages/novel_details.dart';
+import 'package:flutterroad/ui/components/BigResultCard.dart';
+import 'package:flutterroad/ui/components/ResultCard.dart';
+import 'package:flutterroad/ui/fiction/novel_details.dart';
 import 'package:page_view_indicators/arrow_page_indicator.dart';
 import 'package:royalroad_api/models.dart' show BookListResult;
 import 'package:royalroad_api/royalroad_api.dart';
