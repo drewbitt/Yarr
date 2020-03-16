@@ -15,55 +15,47 @@ class NovelPage extends StatelessBookBase {
   @override
   Widget build(BuildContext context) {
     final _theme = Provider.of<ThemeModel>(context);
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+        Widget>[
+      Row(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      MediaQuery.of(context).size.width / 40,
-                      MediaQuery.of(context).size.width / 40,
-                      0,
-                      0),
-                  child: Column(
-                    children: <Widget>[
-                      getImage(MediaQuery.of(context).size.height / 3)
-                    ],
-                  )),
-              Flexible(
-                  child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 6),
-                child: Text(this.book.book.title,
-                    style: TextStyle(
-                        color: _theme.darkMode
-                            ? Colors.brown.shade300
-                            : Colors.brown,
-                        fontSize: MediaQuery.of(context).size.height / 40),
-                    maxLines: 7,
-                    overflow: TextOverflow.ellipsis),
-              ))
-            ],
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height / 120), // Padding
-          Container(
-              padding: EdgeInsets.all(MediaQuery.of(context).size.width / 40),
-              child: ExpandablePanel(
-                header: Text('Description',
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.height / 45)),
-                collapsed: Text(
-                  this.book.info.description,
-                  softWrap: true,
-                  maxLines: 7,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                expanded: Text(
-                  this.book.info.description,
-                  softWrap: true,
-                ),
+          Padding(
+              padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+              child: Column(
+                children: <Widget>[
+                  getImage(MediaQuery.of(context).size.height / 3)
+                ],
               )),
-          ChapterList(getFictionDetails(this.book.book.url)),
-        ]);
+          Flexible(
+              child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 6),
+            child: Text(this.book.book.title,
+                style: TextStyle(
+                    color:
+                        _theme.darkMode ? Colors.brown.shade300 : Colors.brown,
+                    fontSize: 19),
+                maxLines: 7,
+                overflow: TextOverflow.ellipsis),
+          ))
+        ],
+      ),
+      SizedBox(height: 6), // Padding
+      Container(
+          padding: EdgeInsets.all(10),
+          child: ExpandablePanel(
+              header: Text('Description', style: TextStyle(fontSize: 16)),
+              collapsed: Text(
+                this.book.info.description,
+                softWrap: true,
+                maxLines: 7,
+                overflow: TextOverflow.ellipsis,
+              ),
+              expanded: Text(
+                this.book.info.description,
+                softWrap: true,
+              ),
+              iconColor: _theme.darkMode ? Colors.white54 : Colors.black54)),
+      ChapterList(getFictionDetails(this.book.book.url)),
+    ]);
   }
 }

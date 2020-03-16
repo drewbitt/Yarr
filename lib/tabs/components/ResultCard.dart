@@ -22,31 +22,30 @@ class ResultCard extends StatelessBookBase {
           // Image column
           Column(
             children: <Widget>[
-              getImage(MediaQuery.of(context).size.height / 6),
+              Padding(
+                  padding: EdgeInsets.only(right: 8),
+                  child: getImage(MediaQuery.of(context).size.height / 6)),
             ],
           ),
-          // TODO: Look into this strat of dividing - feasible?
-          SizedBox(width: MediaQuery.of(context).size.width / 50), // Padding
           // Details column 1
           Expanded(
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: MediaQuery.of(context).size.height / 150),
+              SizedBox(height: 5), // Padding
               Text(this.book.book.title,
                   style: TextStyle(
                       color: _theme.darkMode
                           ? Colors.brown.shade300
                           : Colors.brown,
-                      fontSize: MediaQuery.of(context).size.height / 43),
+                      fontSize: 17),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis),
-              SizedBox(
-                  height: MediaQuery.of(context).size.height / 130), // Padding
+              SizedBox(height: 7), // Padding
               Text(this.book.info.genres.length <= 3
                   ? this.book.info.genres.join(", ")
                   : this.book.info.genres.sublist(0, 3).join(", ")),
-              SizedBox(height: MediaQuery.of(context).size.height / 130),
+              SizedBox(height: 7), // Padding
               Row(
                 children: <Widget>[
                   Column(
@@ -67,9 +66,7 @@ class ResultCard extends StatelessBookBase {
                       ])
                     ],
                   ),
-                  SizedBox(
-                      width:
-                          MediaQuery.of(context).size.height / 25), // Padding
+                  SizedBox(width: 30), // Padding
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[

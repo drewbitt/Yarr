@@ -31,8 +31,7 @@ class ChapterPage extends StatelessWidget {
                                   color: _theme.darkMode
                                       ? Colors.white
                                       : Colors.black,
-                                  fontSize:
-                                      MediaQuery.of(context).size.height / 43),
+                                  fontSize: 17),
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis))),
                   Padding(

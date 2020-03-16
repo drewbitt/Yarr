@@ -12,11 +12,13 @@ class HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: ListView(
+      shrinkWrap: true,
       children: <Widget>[
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _bigFictionList(),
+            Padding(
+                padding: EdgeInsets.only(top: 10), child: _bigFictionList()),
             Padding(
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: Text("Trending Fictions: ",
@@ -84,13 +86,9 @@ class HomeTab extends StatelessWidget {
                       big: big));
             } else {
               return Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: 13,
-                      horizontal: MediaQuery.of(context).size.width / 40),
+                  padding: EdgeInsets.symmetric(vertical: 13, horizontal: 10),
                   child: Row(
-                    mainAxisAlignment: big
-                        ? MainAxisAlignment.center
-                        : MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Padding(
                           padding: EdgeInsets.only(right: 5),

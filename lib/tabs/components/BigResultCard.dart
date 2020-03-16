@@ -47,8 +47,7 @@ class BigResultCard extends StatelessBookBase {
                   ])
                 ],
               ),
-              SizedBox(
-                  width: MediaQuery.of(context).size.height / 25), // Padding
+              SizedBox(width: 30), // Padding
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
