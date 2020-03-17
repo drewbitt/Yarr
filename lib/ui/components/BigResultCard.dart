@@ -25,7 +25,7 @@ class BigResultCard extends StatelessBookBase {
               overflow: TextOverflow.ellipsis),
           Padding(
               padding: EdgeInsets.only(bottom: 5),
-              child: getImage(MediaQuery.of(context).size.height / 4)),
+              child: getImage(height: 200.0)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

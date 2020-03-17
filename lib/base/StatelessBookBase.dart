@@ -6,6 +6,6 @@ abstract class StatelessBookBase extends StatelessWidget {
   StatelessBookBase(this.book);
 
   // Scale makes tiny images larger but they may look bad
-  Image getImage(height) =>
+  Image getImage({height}) =>
       Image.network(this.book.book.imageUrl, height: height, scale: 0.1);
 }

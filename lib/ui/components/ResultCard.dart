@@ -24,7 +24,7 @@ class ResultCard extends StatelessBookBase {
             children: <Widget>[
               Padding(
                   padding: EdgeInsets.only(right: 8),
-                  child: getImage(MediaQuery.of(context).size.height / 6)),
+                  child: getImage(height: 123.0)),
             ],
           ),
           // Details column 1

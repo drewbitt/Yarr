@@ -24,7 +24,7 @@ class NovelPage extends StatelessBookBase {
                   padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
                   child: Column(
                     children: <Widget>[
-                      getImage(MediaQuery.of(context).size.height / 3)
+                      getImage(height: 250.0)
                     ],
                   )),
               Flexible(

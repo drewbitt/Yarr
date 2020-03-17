@@ -69,7 +69,7 @@ class HomeTab extends StatelessWidget {
     final _currentPageNotifier = ValueNotifier<int>(0);
 
     return Container(
-        height: big ? 310 : 160,
+        height: big ? 320 : 160,
         child: FutureBuilder<List<BookListResult>>(
           future: func,
           builder: (context, snapshot) {
