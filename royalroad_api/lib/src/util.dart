@@ -80,16 +80,20 @@ String absolute_url(String url) {
 }
 
 String clean_contents(Element div) {
-  var toRemove = [];
+  var strElements = StringBuffer();
 
   for (var tag in div.nodes) {
-    if (tag.nodeType == Node.COMMENT_NODE) {
-      toRemove.add(tag); // Remove comments
+    // Remove comments. Not sure if necessary in RR actually.
+    if (tag.nodeType != Node.COMMENT_NODE) {
+      // An attempt to remove the outer div tag by concatenating children
+      try {
+        final ele = tag as Element;
+        strElements.write(ele.outerHtml);
+      } catch (_) {}
+      ;
     }
   }
 
-  // Remove like this since can't remove in-place
-  div.nodes.removeWhere((e) => toRemove.contains(e));
-
-  return div.outerHtml;
+  // Remove the div reference
+  return strElements.toString();
 }

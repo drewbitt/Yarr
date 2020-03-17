@@ -23,13 +23,11 @@ class NovelPage extends StatelessBookBase {
               Padding(
                   padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
                   child: Column(
-                    children: <Widget>[
-                      getImage(height: 250.0)
-                    ],
+                    children: <Widget>[getImage(height: 250.0)],
                   )),
               Flexible(
                   child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 6),
+                padding: EdgeInsets.only(left: 15, right: 6),
                 child: Text(this.book.book.title,
                     style: TextStyle(
                         color: _theme.darkMode

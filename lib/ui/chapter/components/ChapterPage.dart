@@ -25,20 +25,24 @@ class ChapterPage extends StatelessWidget {
                   BackButton(),
                   Flexible(
                       child: Padding(
-                          padding: EdgeInsets.fromLTRB(15, 3, 15, 0),
+                          padding: EdgeInsets.fromLTRB(15, 3, 15, 15),
                           child: Text(data.title,
                               style: TextStyle(
                                   color: _theme.darkMode
                                       ? Colors.white
                                       : Colors.black,
-                                  fontSize: 17),
+                                  fontSize: 20),
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis))),
                   Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      padding: EdgeInsets.only(left: 15, right: 15, bottom: 5),
                       // useRichText fixes status screens, but is also ugly,
                       // just waiting on a fix from the library
-                      child: Html(data: data.contents, useRichText: true))
+                      child: Html(
+                        data: data.contents,
+                        useRichText: true,
+                        defaultTextStyle: TextStyle(fontSize: 15),
+                      ))
                 ]);
           } else {
             // NOTE: This spinner will never time out
