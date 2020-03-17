@@ -31,6 +31,7 @@ dependencies:
       ref: new-parser
   page_view_indicators: ^1.3.1
   persist_theme: ^1.6.1+1
+  no_scroll_glow: ^0.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

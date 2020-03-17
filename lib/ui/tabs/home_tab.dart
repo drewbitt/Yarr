@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterroad/ui/components/BigResultCard.dart';
 import 'package:flutterroad/ui/components/ResultCard.dart';
 import 'package:flutterroad/ui/fiction/novel_details.dart';
+import 'package:no_scroll_glow/no_scroll_glow.dart';
 import 'package:page_view_indicators/arrow_page_indicator.dart';
 import 'package:royalroad_api/models.dart' show BookListResult;
 import 'package:royalroad_api/royalroad_api.dart';
@@ -11,7 +12,8 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView(
+        body: NoScrollGlow(
+            child: ListView(
       shrinkWrap: true,
       children: <Widget>[
         Column(
@@ -32,7 +34,7 @@ class HomeTab extends StatelessWidget {
           ],
         ),
       ],
-    ));
+    )));
   }
 
   _buildPageView(List<BookListResult> fictions, PageController pageController,

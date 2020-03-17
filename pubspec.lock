@@ -214,6 +214,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.4"
+  no_scroll_glow:
+    dependency: "direct main"
+    description:
+      name: no_scroll_glow
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   open_iconic_flutter:
     dependency: transitive
     description:
