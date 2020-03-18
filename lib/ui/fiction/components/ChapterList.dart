@@ -49,24 +49,26 @@ class ChapterListState extends State<ChapterList> {
           return Padding(
               padding: EdgeInsets.all(10),
               child: ExpandablePanel(
-                  header: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text('Chapters', style: TextStyle(fontSize: 16)),
-                        InkWell(
-                            onTap: _onReverseTapped,
-                            child: Icon(Icons.swap_vert,
-                                color: _theme.darkMode
-                                    ? Colors.white60
-                                    : Colors.black.withAlpha(170)))
-                      ]),
-                  collapsed: _buildListView(chapterListPreview,
-                      fullChapterList: chapterList, reverse: _reverseList),
-                  expanded: _buildListView(chapterList, reverse: _reverseList),
-                  theme: ExpandableThemeData(
-                      headerAlignment: ExpandablePanelHeaderAlignment.center,
-                      iconColor:
-                          _theme.darkMode ? Colors.white54 : Colors.black54)));
+                header: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text('Chapters', style: TextStyle(fontSize: 16)),
+                      InkWell(
+                          onTap: _onReverseTapped,
+                          child: Icon(Icons.swap_vert,
+                              color: _theme.darkMode
+                                  ? Colors.white60
+                                  : Colors.black.withAlpha(170)))
+                    ]),
+                collapsed: _buildListView(chapterListPreview,
+                    fullChapterList: chapterList, reverse: _reverseList),
+                expanded: _buildListView(chapterList, reverse: _reverseList),
+                theme: ExpandableThemeData(
+                    headerAlignment: ExpandablePanelHeaderAlignment.center,
+                    iconColor:
+                        _theme.darkMode ? Colors.white54 : Colors.black54,
+                    tapHeaderToExpand: false),
+              ));
         } else {
           // NOTE: This spinner will never time out
           return Padding(
@@ -84,9 +86,9 @@ class ChapterListState extends State<ChapterList> {
     );
   }
 
-  _buildChapterEntry(chapterList, fullChapterList, index, context) {
+  _buildChapterEntry(chapterList, {fullChapterList, index, context, reverse}) {
     // fullChapterList used for swiping between pages past the preview pages
-    final isPreview = chapterList.length != fullChapterList.length;
+    final isPreview = chapterList.length != fullChapterList.length && reverse;
     return Padding(
         padding: EdgeInsets.symmetric(vertical: 13),
         child: InkWell(
@@ -139,12 +141,12 @@ class ChapterListState extends State<ChapterList> {
         physics: ClampingScrollPhysics(),
         itemCount: chapterList.length,
         itemBuilder: (context, index) {
-          return _buildChapterEntry(
-              chapterList,
-              fullChapterList == null ? chapterList : fullChapterList,
-              // fullChapterList == null? index: fullChapterList.length - (index+1),
-              index,
-              context);
+          return _buildChapterEntry(chapterList,
+              fullChapterList:
+                  fullChapterList == null ? chapterList : fullChapterList,
+              index: index,
+              context: context,
+              reverse: reverse);
         });
   }
 }
