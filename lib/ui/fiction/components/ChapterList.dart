@@ -36,7 +36,7 @@ class ChapterListState extends State<ChapterList> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final chapterList = snapshot.data.chapterList;
-          minLength() => chapterList.length < 8 ? chapterList.length - 1 : 8;
+          minLength() => chapterList.length < 9 ? chapterList.length - 1 : 8;
           final chapterListPreview = _reverseList
               ? chapterList.reversed
                   .toList()
@@ -84,9 +84,9 @@ class ChapterListState extends State<ChapterList> {
     );
   }
 
-  _buildChapterEntry(chapterList, fullChapterList, index, context,
-      {bool reverse}) {
+  _buildChapterEntry(chapterList, fullChapterList, index, context) {
     // fullChapterList used for swiping between pages past the preview pages
+    final isPreview = chapterList.length != fullChapterList.length;
     return Padding(
         padding: EdgeInsets.symmetric(vertical: 13),
         child: InkWell(
@@ -101,10 +101,22 @@ class ChapterListState extends State<ChapterList> {
           ),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) =>
-                    _buildPageView(fullChapterList, startChapterIndex: index)));
+                builder: (context) => _buildPageView(fullChapterList,
+                    startChapterIndex: isPreview
+                        ? _translateIndex(index, fullChapterList.length)
+                        : index)));
           },
         ));
+  }
+
+  /// Method used for translating the index (used in onClick) when having a reverse preview list.
+  // I don't like this either
+  // TODO: Fix this whole reverse list mumbo jumbo
+  _translateIndex(index, fullChapterListLength) {
+    var rangeIndexList = Iterable<int>.generate(9).toList();
+    final bumpVal = fullChapterListLength - 8;
+    final indexOfIndex = rangeIndexList.indexOf(index);
+    return rangeIndexList.map((e) => e + bumpVal).toList()[indexOfIndex];
   }
 
   _buildPageView(fullChapterList, {startChapterIndex}) {
@@ -132,8 +144,7 @@ class ChapterListState extends State<ChapterList> {
               fullChapterList == null ? chapterList : fullChapterList,
               // fullChapterList == null? index: fullChapterList.length - (index+1),
               index,
-              context,
-              reverse: reverse);
+              context);
         });
   }
 }
