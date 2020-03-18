@@ -1,7 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
-import 'package:flutterroad/ui/chapter/components/ChapterList.dart';
+import 'package:flutterroad/ui/fiction/components/ChapterList.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:royalroad_api/models.dart' show BookListResult;
 import 'package:royalroad_api/royalroad_api.dart' show getFictionDetails;
@@ -50,14 +50,16 @@ _buildDescription(_theme, book) => Container(
     padding: EdgeInsets.all(10),
     child: ExpandablePanel(
         header: Text('Description', style: TextStyle(fontSize: 16)),
-        collapsed: Text(
-          book.info.description,
-          softWrap: true,
-          maxLines: 7,
-          overflow: TextOverflow.ellipsis,
-        ),
-        expanded: Text(
-          book.info.description,
-          softWrap: true,
-        ),
-        iconColor: _theme.darkMode ? Colors.white54 : Colors.black54));
+        collapsed: _buildDescriptionText(book.info.description,
+            overflow: TextOverflow.ellipsis, maxLines: 7),
+        expanded: _buildDescriptionText(book.info.description),
+        theme: ExpandableThemeData(
+            headerAlignment: ExpandablePanelHeaderAlignment.center,
+            iconColor: _theme.darkMode ? Colors.white54 : Colors.black54)));
+
+_buildDescriptionText(text, {TextOverflow overflow, int maxLines}) => Padding(
+    padding: EdgeInsets.only(top: 10),
+    child: Text(text,
+        softWrap: true,
+        maxLines: maxLines != null ? maxLines : null,
+        overflow: overflow != null ? overflow : null));

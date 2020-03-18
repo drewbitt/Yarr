@@ -3,16 +3,31 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/ui/chapter/chapter.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
-import 'package:royalroad_api/models.dart' show BookDetails;
+import 'package:royalroad_api/models.dart' show BookDetails, BookChapter;
 import 'package:provider/provider.dart';
 
-class ChapterList extends StatelessWidget {
+class ChapterList extends StatefulWidget {
   final Future<BookDetails> chapterFuture;
 
   ChapterList(this.chapterFuture);
 
-  // TODO: Either refactor with pages or offer a reverse button
-  // Note: Listview.builder does not support reordering
+  @override
+  State<StatefulWidget> createState() => ChapterListState(this.chapterFuture);
+}
+
+class ChapterListState extends State<ChapterList> {
+  final Future<BookDetails> chapterFuture;
+
+  ChapterListState(this.chapterFuture);
+
+  var _reverseList = false;
+
+  void _onReverseTapped() {
+    setState(() {
+      _reverseList = !_reverseList;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final _theme = Provider.of<ThemeModel>(context);
@@ -22,17 +37,36 @@ class ChapterList extends StatelessWidget {
         if (snapshot.hasData) {
           final chapterList = snapshot.data.chapterList;
           minLength() => chapterList.length < 8 ? chapterList.length - 1 : 8;
-          final chapterListPreview = chapterList.sublist(0, minLength() + 1);
+          final chapterListPreview = _reverseList
+              ? chapterList.reversed
+                  .toList()
+                  .sublist(0, minLength() + 1)
+                  .reversed
+                  .toList()
+              : chapterList.sublist(0, minLength() + 1);
 
           // Bad way to do this - two listviews
           return Padding(
               padding: EdgeInsets.all(10),
               child: ExpandablePanel(
-                  header: Text('Chapters', style: TextStyle(fontSize: 16)),
-                  collapsed: _buildListView(chapterListPreview, chapterList),
-                  expanded: _buildListView(chapterList),
-                  iconColor:
-                      _theme.darkMode ? Colors.white54 : Colors.black54));
+                  header: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text('Chapters', style: TextStyle(fontSize: 16)),
+                        InkWell(
+                            onTap: _onReverseTapped,
+                            child: Icon(Icons.swap_vert,
+                                color: _theme.darkMode
+                                    ? Colors.white60
+                                    : Colors.black.withAlpha(170)))
+                      ]),
+                  collapsed: _buildListView(chapterListPreview,
+                      fullChapterList: chapterList, reverse: _reverseList),
+                  expanded: _buildListView(chapterList, reverse: _reverseList),
+                  theme: ExpandableThemeData(
+                      headerAlignment: ExpandablePanelHeaderAlignment.center,
+                      iconColor:
+                          _theme.darkMode ? Colors.white54 : Colors.black54)));
         } else {
           // NOTE: This spinner will never time out
           return Padding(
@@ -50,7 +84,9 @@ class ChapterList extends StatelessWidget {
     );
   }
 
-  _buildChapterEntry(chapterList, fullChapterList, index, context) {
+  _buildChapterEntry(chapterList, fullChapterList, index, context,
+      {bool reverse}) {
+    // fullChapterList used for swiping between pages past the preview pages
     return Padding(
         padding: EdgeInsets.symmetric(vertical: 13),
         child: InkWell(
@@ -65,15 +101,15 @@ class ChapterList extends StatelessWidget {
           ),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => _buildPageView(fullChapterList, index)));
+                builder: (context) =>
+                    _buildPageView(fullChapterList, startChapterIndex: index)));
           },
         ));
   }
 
-  _buildPageView(fullChapterList, startChapterIndex) {
+  _buildPageView(fullChapterList, {startChapterIndex}) {
     var controller = PageController(initialPage: startChapterIndex);
     return PageView.builder(
-      // key: PageStorageKey('chapterPage'),
       itemBuilder: (context, index) {
         return Chapter(fullChapterList[index]);
       },
@@ -82,17 +118,22 @@ class ChapterList extends StatelessWidget {
     );
   }
 
-  _buildListView(chapterList, [fullChapterList]) {
+  _buildListView(List<BookChapter> chapterList,
+      {bool reverse, List<BookChapter> fullChapterList}) {
+    // fullChapterList = fullChapterList == null? chapterList: fullChapterList;
     return ListView.builder(
         shrinkWrap: true,
+        reverse: reverse,
         physics: ClampingScrollPhysics(),
         itemCount: chapterList.length,
         itemBuilder: (context, index) {
           return _buildChapterEntry(
               chapterList,
               fullChapterList == null ? chapterList : fullChapterList,
+              // fullChapterList == null? index: fullChapterList.length - (index+1),
               index,
-              context);
+              context,
+              reverse: reverse);
         });
   }
 }
