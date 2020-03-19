@@ -22,7 +22,7 @@ class HomeTab extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.only(top: 10), child: _bigFictionList()),
             Padding(
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                padding: EdgeInsets.fromLTRB(10, 13, 10, 0),
                 child: Text("Trending Fictions: ",
                     style: TextStyle(fontSize: 20))),
             _trendingList(),
@@ -71,7 +71,7 @@ class HomeTab extends StatelessWidget {
     final _currentPageNotifier = ValueNotifier<int>(0);
 
     return Container(
-        height: big ? 320 : 160,
+        height: big ? 320 : 165,
         child: FutureBuilder<List<BookListResult>>(
           future: func,
           builder: (context, snapshot) {
