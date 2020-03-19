@@ -116,7 +116,7 @@ class ChapterListState extends State<ChapterList> {
   // TODO: Fix this whole reverse list mumbo jumbo
   _translateIndex(index, fullChapterListLength) {
     var rangeIndexList = Iterable<int>.generate(9).toList();
-    final bumpVal = fullChapterListLength - 8;
+    final bumpVal = fullChapterListLength - 9;
     final indexOfIndex = rangeIndexList.indexOf(index);
     return rangeIndexList.map((e) => e + bumpVal).toList()[indexOfIndex];
   }
