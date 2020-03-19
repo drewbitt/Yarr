@@ -3,7 +3,13 @@ import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
 import 'package:intl/intl.dart';
 import 'package:royalroad_api/models.dart'
-    show BookListResult, BookDetails, BookChapter, BookChapterContents, Book;
+    show
+        AuthorNote,
+        BookListResult,
+        BookDetails,
+        BookChapter,
+        BookChapterContents,
+        Book;
 import 'package:royalroad_api/src/util.dart'
     show SearchInfo, absolute_url, clean_contents;
 
@@ -90,7 +96,7 @@ Future<BookChapterContents> getChapter(BookChapter chap) async {
       await http.get(chap.url, headers: {'User-Agent': Base.userAgent});
   if (response.statusCode == 200) {
     final parsed = parse(response.body);
-    var title;
+    String title;
     // Might as well grab the title inside the chapter in case different
     if (parsed.querySelector('h2').hasContent()) {
       title = parsed.querySelector('h1').text;
@@ -98,10 +104,25 @@ Future<BookChapterContents> getChapter(BookChapter chap) async {
       title = chap.name;
     }
 
-    var contents = parsed.querySelector('div.chapter-content');
-    var cleaned_contents = clean_contents(contents);
+    final contents = parsed.querySelector('div.chapter-content');
+    final cleaned_contents = clean_contents(contents);
 
-    return Future.value(BookChapterContents(chap, title, cleaned_contents));
+    AuthorNote note;
+    // Get note if present
+    // note is before comments (also a caption-subject) so OK to do
+    try {
+      note = AuthorNote(
+          parsed.querySelector('span.caption-subject').text,
+          parsed
+              .querySelector('div.portlet-body.author-note')
+              .querySelectorAll('p')
+              .map((e) => e.text)
+              .join('<br /><br />'));
+    } catch (_) {}
+    ;
+
+    return Future.value(
+        BookChapterContents(chap, title, cleaned_contents, note));
   } else {
     return Future.error('Could not access Royalroad');
   }

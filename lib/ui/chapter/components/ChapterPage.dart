@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart' show Html;
+import 'package:flutter_html/style.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
-import 'package:royalroad_api/models.dart' show BookChapterContents;
+import 'package:royalroad_api/models.dart' show AuthorNote, BookChapterContents;
 import 'package:provider/provider.dart';
 
 class ChapterPage extends StatelessWidget {
@@ -38,10 +39,15 @@ class ChapterPage extends StatelessWidget {
                       padding: EdgeInsets.only(left: 15, right: 15, bottom: 5),
                       // useRichText fixes status screens, but is also ugly,
                       // just waiting on a fix from the library
-                      child: Html(
-                        data: data.contents,
-                        useRichText: true,
-                        defaultTextStyle: TextStyle(fontSize: 15),
+                      child: Column(
+                        children: <Widget>[
+                          _htmlAuthorNote(data.note, theme: _theme),
+                          Html(
+                            data: data.contents,
+                            useRichText: true,
+                            defaultTextStyle: TextStyle(fontSize: 15),
+                          ),
+                        ],
                       ))
                 ]);
           } else {
@@ -51,5 +57,24 @@ class ChapterPage extends StatelessWidget {
                 child: CupertinoActivityIndicator(radius: 15));
           }
         });
+  }
+}
+
+_htmlAuthorNote(AuthorNote note, {theme}) {
+  if (note == null) {
+    return Container();
+  } else {
+    return Html(
+      data: '<b>' +
+          note.caption.toUpperCase() +
+          '</b><br /><br />' +
+          note.noteBody,
+      style: {
+        'html': Style(
+            backgroundColor: theme.darkMode
+                ? Color.fromRGBO(35, 35, 35, 1)
+                : Color.fromRGBO(200, 200, 200, 1))
+      },
+    );
   }
 }

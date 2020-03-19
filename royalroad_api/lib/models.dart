@@ -43,6 +43,13 @@ class BookChapterContents {
   BookChapter chap;
   // title is title inside chapter in case it's different somehow?
   String title, contents;
+  AuthorNote note;
 
-  BookChapterContents(this.chap, this.title, this.contents);
+  BookChapterContents(this.chap, this.title, this.contents, this.note);
+}
+
+class AuthorNote {
+  String caption, noteBody;
+
+  AuthorNote(this.caption, this.noteBody);
 }
