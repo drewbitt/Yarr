@@ -75,31 +75,41 @@ class HomeTab extends StatelessWidget {
         child: FutureBuilder<List<BookListResult>>(
           future: func,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final data = snapshot.data;
-              return ArrowPageIndicator(
-                  isInside: true,
-                  pageController: _pageController,
-                  currentPageNotifier: _currentPageNotifier,
-                  // not a fan that on black covers, the left icon disappears. Living with it right now
-                  itemCount: data.length,
-                  child: _buildPageView(
-                      data, _pageController, _currentPageNotifier,
-                      big: big));
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return Center(
+                    child: Text("Error getting fictions",
+                        style: TextStyle(fontSize: 15)));
+              } else if (snapshot.hasData) {
+                final data = snapshot.data;
+                return ArrowPageIndicator(
+                    isInside: true,
+                    pageController: _pageController,
+                    currentPageNotifier: _currentPageNotifier,
+                    // not a fan that on black covers, the left icon disappears. Living with it right now
+                    itemCount: data.length,
+                    child: _buildPageView(
+                        data, _pageController, _currentPageNotifier,
+                        big: big));
+              } else {
+                return _buildLoader();
+              }
             } else {
-              return Padding(
-                  padding: EdgeInsets.symmetric(vertical: 13, horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.only(right: 5),
-                          child: CupertinoActivityIndicator()),
-                      Text("Getting fictions", style: TextStyle(fontSize: 15)),
-                    ],
-                  ));
+              return _buildLoader();
             }
           },
         ));
   }
+
+  _buildLoader() => Padding(
+      padding: EdgeInsets.symmetric(vertical: 13, horizontal: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 5),
+              child: CupertinoActivityIndicator()),
+          Text("Getting fictions", style: TextStyle(fontSize: 15)),
+        ],
+      ));
 }

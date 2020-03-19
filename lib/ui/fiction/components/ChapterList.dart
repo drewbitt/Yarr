@@ -34,57 +34,65 @@ class ChapterListState extends State<ChapterList> {
     return FutureBuilder<BookDetails>(
       future: chapterFuture,
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final chapterList = snapshot.data.chapterList;
-          minLength() => chapterList.length < 9 ? chapterList.length - 1 : 8;
-          final chapterListPreview = _reverseList
-              ? chapterList.reversed
-                  .toList()
-                  .sublist(0, minLength() + 1)
-                  .reversed
-                  .toList()
-              : chapterList.sublist(0, minLength() + 1);
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Text("Error getting chapters",
+                style: TextStyle(fontSize: 15));
+          } else if (snapshot.hasData) {
+            final chapterList = snapshot.data.chapterList;
+            minLength() => chapterList.length < 9 ? chapterList.length - 1 : 8;
+            final chapterListPreview = _reverseList
+                ? chapterList.reversed
+                    .toList()
+                    .sublist(0, minLength() + 1)
+                    .reversed
+                    .toList()
+                : chapterList.sublist(0, minLength() + 1);
 
-          // Bad way to do this - two listviews
-          return Padding(
-              padding: EdgeInsets.all(10),
-              child: ExpandablePanel(
-                header: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text('Chapters', style: TextStyle(fontSize: 16)),
-                      InkWell(
-                          onTap: _onReverseTapped,
-                          child: Icon(Icons.swap_vert,
-                              color: _theme.darkMode
-                                  ? Colors.white60
-                                  : Colors.black.withAlpha(170)))
-                    ]),
-                collapsed: _buildListView(chapterListPreview,
-                    fullChapterList: chapterList, reverse: _reverseList),
-                expanded: _buildListView(chapterList, reverse: _reverseList),
-                theme: ExpandableThemeData(
-                    headerAlignment: ExpandablePanelHeaderAlignment.center,
-                    iconColor:
-                        _theme.darkMode ? Colors.white54 : Colors.black54,
-                    tapHeaderToExpand: false),
-              ));
+            // Bad way to do this - two listviews
+            return Padding(
+                padding: EdgeInsets.all(10),
+                child: ExpandablePanel(
+                  header: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text('Chapters', style: TextStyle(fontSize: 16)),
+                        InkWell(
+                            onTap: _onReverseTapped,
+                            child: Icon(Icons.swap_vert,
+                                color: _theme.darkMode
+                                    ? Colors.white60
+                                    : Colors.black.withAlpha(170)))
+                      ]),
+                  collapsed: _buildListView(chapterListPreview,
+                      fullChapterList: chapterList, reverse: _reverseList),
+                  expanded: _buildListView(chapterList, reverse: _reverseList),
+                  theme: ExpandableThemeData(
+                      headerAlignment: ExpandablePanelHeaderAlignment.center,
+                      iconColor:
+                          _theme.darkMode ? Colors.white54 : Colors.black54,
+                      tapHeaderToExpand: false),
+                ));
+          } else {
+            return _buildLoader();
+          }
         } else {
-          // NOTE: This spinner will never time out
-          return Padding(
-              padding: EdgeInsets.symmetric(vertical: 13, horizontal: 10),
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.only(right: 5),
-                      child: CupertinoActivityIndicator()),
-                  Text("Getting chapters", style: TextStyle(fontSize: 15)),
-                ],
-              ));
+          return _buildLoader();
         }
       },
     );
   }
+
+  _buildLoader() => Padding(
+      padding: EdgeInsets.symmetric(vertical: 13, horizontal: 10),
+      child: Row(
+        children: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 5),
+              child: CupertinoActivityIndicator()),
+          Text("Getting chapters", style: TextStyle(fontSize: 15)),
+        ],
+      ));
 
   _buildChapterEntry(chapterList, {fullChapterList, index, context, reverse}) {
     // fullChapterList used for swiping between pages past the preview pages
