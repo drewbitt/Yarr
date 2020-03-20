@@ -22,8 +22,8 @@ class _ChapterPageState extends State<ChapterPage> {
   final Future<BookChapterContents> chapterContentsFuture;
   _ChapterPageState(this.chapterContentsFuture);
 
-  static var _fontSize;
-  static var _fontSizeTitle = _fontSize + 5;
+  int _fontSize;
+  int _fontSizeTitle;
   SharedPreferences _prefs;
 
   Future _showDialog(context) =>
@@ -44,11 +44,13 @@ class _ChapterPageState extends State<ChapterPage> {
     if (_prefs.containsKey('chapterFontSize')) {
       setState(() {
         _fontSize = _prefs.getInt('chapterFontSize');
+        _fontSizeTitle = _prefs.getInt('chapterFontSize') + 5;
       });
     } else {
       _prefs.setInt('chapterFontSize', 15);
       setState(() {
         _fontSize = 15;
+        _fontSizeTitle = 15 + 5;
       });
     }
   }

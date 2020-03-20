@@ -20,7 +20,9 @@ class _DialogContentState extends State<DialogContent> {
   }
 
   _loadSharedPreferences() async {
-    _prefs = await SharedPreferences.getInstance();
+    if (_prefs == null) {
+      _prefs = await SharedPreferences.getInstance();
+    }
     setState(() {
       _fontSize = _prefs.getInt('chapterFontSize');
     });
@@ -46,10 +48,10 @@ class _DialogContentState extends State<DialogContent> {
         inactiveTickMarkColor: Colors.red[100],
       ),
       child: Slider(
-        min: 10,
+        min: 12,
         max: 30,
         value: _fontSize.toDouble(),
-        divisions: 4,
+        divisions: 5,
         label: '$_fontSize',
         onChanged: (value) {
           setState(() {
