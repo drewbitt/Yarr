@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart' show Html;
 import 'package:flutter_html/style.dart';
+import 'package:flutterroad/ui/chapter/components/DialogContent.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:royalroad_api/models.dart' show AuthorNote, BookChapterContents;
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart';
 
 class ChapterPage extends StatefulWidget {
@@ -20,45 +22,36 @@ class _ChapterPageState extends State<ChapterPage> {
   final Future<BookChapterContents> chapterContentsFuture;
   _ChapterPageState(this.chapterContentsFuture);
 
-  static var _fontSize = 15;
+  static var _fontSize;
   static var _fontSizeTitle = _fontSize + 5;
+  SharedPreferences _prefs;
 
-  _showDialog(context) {
-    showSlideDialog(context: context, child: _buildDialog(context));
+  Future _showDialog(context) =>
+      showSlideDialog(context: context, child: DialogContent());
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadSharedPreferences();
+    });
   }
 
-  _buildDialog(context) {
-    return Column(children: <Widget>[
-      Text("Display settings", style: TextStyle(fontSize: 18)),
-      Row(
-        children: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(left: 25), // this will need adjusting
-              child: Text("Text size", style: TextStyle(fontSize: 16)))
-        ],
-      ),
-      _buildTextSizeSlider(context)
-    ]);
+  _loadSharedPreferences() async {
+    if (_prefs == null) {
+      _prefs = await SharedPreferences.getInstance();
+    }
+    if (_prefs.containsKey('chapterFontSize')) {
+      setState(() {
+        _fontSize = _prefs.getInt('chapterFontSize');
+      });
+    } else {
+      _prefs.setInt('chapterFontSize', 15);
+      setState(() {
+        _fontSize = 15;
+      });
+    }
   }
-
-  _buildTextSizeSlider(context) => SliderTheme(
-      data: SliderTheme.of(context).copyWith(
-        tickMarkShape: RoundSliderTickMarkShape(),
-        inactiveTickMarkColor: Colors.red[100],
-      ),
-      child: Slider(
-        min: 10,
-        max: 30,
-        value: _fontSize.toDouble(),
-        divisions: 4,
-        label: '$_fontSize',
-        onChanged: (value) {
-          setState(() {
-            _fontSize = value.toInt();
-            _fontSizeTitle = _fontSize + 5;
-          });
-        },
-      ));
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +72,8 @@ class _ChapterPageState extends State<ChapterPage> {
                     BackButton(),
                     _buildTitle(data.title, theme: _theme),
                     GestureDetector(
-                        onTap: () => _showDialog(context),
+                        onTap: () => _showDialog(context)
+                            .then((value) => _loadSharedPreferences()),
                         child: Padding(
                             padding:
                                 EdgeInsets.only(left: 15, right: 15, bottom: 5),
