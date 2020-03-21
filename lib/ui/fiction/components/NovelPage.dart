@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
 import 'package:flutterroad/ui/fiction/components/ChapterList.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
+import 'package:provider/provider.dart';
 import 'package:royalroad_api/models.dart' show BookListResult;
 import 'package:royalroad_api/royalroad_api.dart' show getFictionDetails;
-import 'package:provider/provider.dart';
 
 class NovelPage extends StatelessBookBase {
   final BookListResult book;

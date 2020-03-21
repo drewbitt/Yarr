@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterroad/ui/chapter/components/DialogRoundedItem.dart';
-import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:provider/provider.dart';
 
 class DialogContent extends StatefulWidget {
   @override
@@ -56,8 +54,8 @@ class _DialogContentState extends State<DialogContent> {
   }
 
   _buildTextSizeSlider() => SliderTheme(
-      data: SliderTheme.of(context)
-          .copyWith(tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 1.5)),
+      data: SliderTheme.of(context).copyWith(
+          tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 1.5)),
       child: Slider(
         min: 10,
         max: 30,
@@ -102,11 +100,9 @@ class _DialogContentState extends State<DialogContent> {
         children: <Widget>[
           Text(_listFonts[index].data),
           _listFonts[index].isSelected
-              /* Bug here: wanting to match the color of the slider. That's the theme's primary color.
-              // However, in dark mode, the slider still returns the primary color of light mode (Colors.blue)
-              // Forcing Colors.blue here for both modes
-              */
-              ? Icon(Icons.check, color: Colors.blue)
+              // Match color with slider
+              ? Icon(Icons.check,
+                  color: SliderTheme.of(context).activeTrackColor)
               : Container()
         ],
       ))));

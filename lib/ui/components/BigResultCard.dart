@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
 import 'package:intl/intl.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
-import 'package:royalroad_api/models.dart';
 import 'package:provider/provider.dart';
+import 'package:royalroad_api/models.dart';
 
 class BigResultCard extends StatelessBookBase {
   final BookListResult book;

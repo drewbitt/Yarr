@@ -4,8 +4,8 @@ import 'package:flutter_html/flutter_html.dart' show Html;
 import 'package:flutter_html/style.dart';
 import 'package:flutterroad/ui/chapter/components/DialogContent.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
-import 'package:royalroad_api/models.dart' show AuthorNote, BookChapterContents;
 import 'package:provider/provider.dart';
+import 'package:royalroad_api/models.dart' show AuthorNote, BookChapterContents;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart';
 
@@ -72,7 +72,7 @@ class _ChapterPageState extends State<ChapterPage> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
-              return _buildError(context);
+              return _buildError();
             }
             if (snapshot.hasData) {
               final data = snapshot.data;
@@ -83,7 +83,7 @@ class _ChapterPageState extends State<ChapterPage> {
                     BackButton(),
                     _buildTitle(data.title, theme: _theme),
                     GestureDetector(
-                        onTap: () => _showDialog(context)
+                        onTap: () => _showDialog()
                             .then((value) => _loadSharedPreferences()),
                         child: Padding(
                             padding:
@@ -104,15 +104,15 @@ class _ChapterPageState extends State<ChapterPage> {
                             )))
                   ]);
             } else {
-              return _buildLoader(context);
+              return _buildLoader();
             }
           } else {
-            return _buildLoader(context);
+            return _buildLoader();
           }
         });
   }
 
-  Future _showDialog(context) =>
+  Future _showDialog() =>
       showSlideDialog(context: context, child: DialogContent());
 
   _buildTitle(title, {theme}) => Flexible(
@@ -126,11 +126,11 @@ class _ChapterPageState extends State<ChapterPage> {
               maxLines: 3,
               overflow: TextOverflow.ellipsis)));
 
-  _buildLoader(context) => Container(
+  _buildLoader() => Container(
       height: MediaQuery.of(context).size.height,
       child: CupertinoActivityIndicator(radius: 15));
 
-  _buildError(context) => Container(
+  _buildError() => Container(
       height: MediaQuery.of(context).size.height,
       child: Center(
           child:

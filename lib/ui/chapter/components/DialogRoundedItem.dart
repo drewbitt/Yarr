@@ -39,7 +39,6 @@ class DialogRoundedItem extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(30.0))),
           child: child,
         ),
-        // _buildFontOptionList(context)
       ])
     ]);
   }
