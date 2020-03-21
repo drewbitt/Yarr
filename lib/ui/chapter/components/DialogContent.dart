@@ -57,7 +57,7 @@ class _DialogContentState extends State<DialogContent> {
 
   _buildTextSizeSlider() => SliderTheme(
       data: SliderTheme.of(context)
-          .copyWith(tickMarkShape: RoundSliderTickMarkShape()),
+          .copyWith(tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 1.5)),
       child: Slider(
         min: 10,
         max: 30,
