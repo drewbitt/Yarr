@@ -25,9 +25,7 @@ class _ChapterPageState extends State<ChapterPage> {
   int _fontSize;
   int _fontSizeTitle;
   SharedPreferences _prefs;
-
-  Future _showDialog(context) =>
-      showSlideDialog(context: context, child: DialogContent());
+  String _fontFamily;
 
   @override
   void initState() {
@@ -41,16 +39,26 @@ class _ChapterPageState extends State<ChapterPage> {
     if (_prefs == null) {
       _prefs = await SharedPreferences.getInstance();
     }
+
     if (_prefs.containsKey('chapterFontSize')) {
       setState(() {
         _fontSize = _prefs.getInt('chapterFontSize');
         _fontSizeTitle = _prefs.getInt('chapterFontSize') + 5;
       });
     } else {
-      _prefs.setInt('chapterFontSize', 15);
+      _prefs.setInt('chapterFontSize', 16);
       setState(() {
-        _fontSize = 15;
-        _fontSizeTitle = 15 + 5;
+        _fontSize = 16;
+        _fontSizeTitle = 16 + 5;
+      });
+    }
+
+    if (_prefs.containsKey('chapterFontFamily')) {
+      _fontFamily = _prefs.getString('chapterFontFamily');
+    } else {
+      _prefs.setString('chapterFontFamily', 'Lora');
+      setState(() {
+        _fontFamily = 'Lora';
       });
     }
   }
@@ -87,8 +95,9 @@ class _ChapterPageState extends State<ChapterPage> {
                                 Html(
                                   data: data.contents,
                                   useRichText: true,
-                                  defaultTextStyle:
-                                      TextStyle(fontSize: _fontSize.toDouble()),
+                                  defaultTextStyle: TextStyle(
+                                      fontSize: _fontSize.toDouble(),
+                                      fontFamily: _fontFamily),
                                 ),
                               ],
                             )))
@@ -101,6 +110,9 @@ class _ChapterPageState extends State<ChapterPage> {
           }
         });
   }
+
+  Future _showDialog(context) =>
+      showSlideDialog(context: context, child: DialogContent());
 
   _buildTitle(title, {theme}) => Flexible(
       child: Padding(

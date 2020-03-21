@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class DialogContent extends StatefulWidget {
   @override
@@ -45,13 +47,15 @@ class _DialogContentState extends State<DialogContent> {
   _buildTextSizeSlider(context) => SliderTheme(
       data: SliderTheme.of(context).copyWith(
         tickMarkShape: RoundSliderTickMarkShape(),
-        inactiveTickMarkColor: Colors.red[100],
+        inactiveTickMarkColor: Provider.of<ThemeModel>(context).darkMode
+            ? Colors.red[100]
+            : Colors.red[400],
       ),
       child: Slider(
-        min: 12,
+        min: 10,
         max: 30,
         value: _fontSize.toDouble(),
-        divisions: 5,
+        divisions: 6,
         label: '$_fontSize',
         onChanged: (value) {
           setState(() {
@@ -60,6 +64,8 @@ class _DialogContentState extends State<DialogContent> {
           });
         },
       ));
+
+  _buildFontOption(context)
 
   @override
   Widget build(BuildContext context) {
