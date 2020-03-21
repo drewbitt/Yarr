@@ -30,6 +30,7 @@ class _ChapterPageState extends State<ChapterPage> {
   @override
   void initState() {
     super.initState();
+    // Workaround to call an async function from initState()
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadSharedPreferences();
     });
@@ -120,7 +121,8 @@ class _ChapterPageState extends State<ChapterPage> {
           child: Text(title,
               style: TextStyle(
                   color: theme.darkMode ? Colors.white : Colors.black,
-                  fontSize: _fontSizeTitle.toDouble()),
+                  fontSize: _fontSizeTitle.toDouble(),
+                  fontFamily: _fontFamily),
               maxLines: 3,
               overflow: TextOverflow.ellipsis)));
 

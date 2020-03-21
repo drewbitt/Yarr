@@ -9,13 +9,20 @@ class DialogContent extends StatefulWidget {
 }
 
 class _DialogContentState extends State<DialogContent> {
-  var _fontSize = 15; // In testing this has been OK to set. Otherwise,
+  int _fontSize = 15; // In testing this has been OK to set. Otherwise,
   // get a toDouble() error if the dialog loads too fast
+  String _fontFamily = "Lora";
   SharedPreferences _prefs;
+  var _listFonts = [
+    FontListItem<String>("Default"),
+    FontListItem<String>("Lora"),
+    FontListItem<String>("Source Sans Pro")
+  ];
 
   @override
   void initState() {
     super.initState();
+    // Workaround to call an async function from initState()
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadSharedPreferences();
     });
@@ -25,22 +32,23 @@ class _DialogContentState extends State<DialogContent> {
     if (_prefs == null) {
       _prefs = await SharedPreferences.getInstance();
     }
+    // Load state from sharedPreferences tool
     setState(() {
       _fontSize = _prefs.getInt('chapterFontSize');
+      _fontFamily = _prefs.getString('chapterFontFamily');
+      // Set state on the _listFonts element of the chapter family from sharedPreferences
+      _listFonts
+          .singleWhere((element) =>
+              element.data == _prefs.getString('chapterFontFamily'))
+          .isSelected = true;
     });
   }
 
   _buildDialog(context) {
     return Column(children: <Widget>[
       Text("Display settings", style: TextStyle(fontSize: 18)),
-      Row(
-        children: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(left: 25), // this will need adjusting
-              child: Text("Text size", style: TextStyle(fontSize: 16)))
-        ],
-      ),
-      _buildTextSizeSlider(context)
+      _buildTextSizeSlider(context),
+      _buildFontOptionList(context)
     ]);
   }
 
@@ -58,6 +66,7 @@ class _DialogContentState extends State<DialogContent> {
         divisions: 6,
         label: '$_fontSize',
         onChanged: (value) {
+          // State allows the animation of it sliding to work
           setState(() {
             _fontSize = value.toInt();
             _prefs.setInt('chapterFontSize', value.toInt());
@@ -65,10 +74,41 @@ class _DialogContentState extends State<DialogContent> {
         },
       ));
 
-  _buildFontOption(context)
+  _buildFontOptionList(context) =>
+      ListView(shrinkWrap: true, children: <Widget>[
+        _buildFontListItem(0),
+        _buildFontListItem(1),
+        _buildFontListItem(2),
+      ]);
+
+  _buildFontListItem(index) => GestureDetector(
+      onTap: () {
+        // Remove isSelected on the previous font choice
+        _listFonts.asMap().forEach((index, element) {
+          if (element.isSelected) {
+            setState(() => _listFonts[index].isSelected = false);
+          }
+        });
+        setState(() {
+          _listFonts[index].isSelected = true;
+          _prefs.setString('chapterFontFamily', _listFonts[index].data);
+        });
+      },
+      child: Container(
+          color: _listFonts[index].isSelected
+              ? Theme.of(context).backgroundColor
+              : null,
+          child: ListTile(title: Text(_listFonts[index].data))));
 
   @override
   Widget build(BuildContext context) {
     return _buildDialog(context);
   }
+}
+
+/// Class used in fontList to have an isSelected property
+class FontListItem<String> {
+  bool isSelected = false;
+  String data;
+  FontListItem(this.data);
 }
