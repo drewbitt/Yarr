@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.3.0
+
+### Added
+
+- Reverse button for sorting a fiction's chapter list
+- API for author chapter comments
+- Display author chapter comments
+- Loading placeholder/spinnner for cover images
+- Show error placeholders if network is not available for cover images
+- Cache cover images
+- Add onTap option page popup in a chapter
+- Add new font assets
+- Ability to change text size and font group for reading a chapter
+- Add persistent local storage for text size and font group
+
+### Changed
+
+- Default font size for reader increased to 16 from 15
+- Default font changed to serif Lora
+- Removed scroll bar in chapter added in 0.2.0 due to it being distracting while reading
+
 ## 0.2.0
 
 ### Added
