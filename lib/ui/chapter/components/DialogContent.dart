@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterroad/ui/chapter/components/DialogRoundedItem.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
@@ -47,8 +48,11 @@ class _DialogContentState extends State<DialogContent> {
   _buildDialog(context) {
     return Column(children: <Widget>[
       Text("Display settings", style: TextStyle(fontSize: 18)),
-      _buildTextSizeSlider(context),
-      _buildFontOptionList(context)
+      DialogRoundedItem(
+          child: _buildTextSizeSlider(context), title: "Text size"),
+      SizedBox(height: 10),
+      DialogRoundedItem(
+          child: _buildFontOptionList(context), title: "Font family")
     ]);
   }
 
@@ -74,12 +78,14 @@ class _DialogContentState extends State<DialogContent> {
         },
       ));
 
-  _buildFontOptionList(context) =>
-      ListView(shrinkWrap: true, children: <Widget>[
+  _buildFontOptionList(context) => MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: ListView(shrinkWrap: true, children: <Widget>[
         _buildFontListItem(0),
         _buildFontListItem(1),
         _buildFontListItem(2),
-      ]);
+      ]));
 
   _buildFontListItem(index) => GestureDetector(
       onTap: () {
