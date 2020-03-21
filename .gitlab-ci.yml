@@ -16,7 +16,7 @@ build:
     - flutter build aot
 
   tags:
-    - shared
+    - docker
 
   only:
     - merge_requests
@@ -28,7 +28,7 @@ unit_test:
     - flutter test test/*
 
   tags:
-    - shared
+    - docker
 
   only:
     - merge_requests
@@ -39,7 +39,7 @@ analyze:
     - echo job excluded
 
   tags:
-  - shared
+  - docker
 
   only:
     - merge_requests
