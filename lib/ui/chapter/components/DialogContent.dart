@@ -14,6 +14,7 @@ class _DialogContentState extends State<DialogContent> {
   // get a toDouble() error if the dialog loads too fast
   String _fontFamily = "Lora";
   SharedPreferences _prefs;
+
   var _listFonts = [
     FontListItem<String>("Default"),
     FontListItem<String>("Lora"),
@@ -45,24 +46,18 @@ class _DialogContentState extends State<DialogContent> {
     });
   }
 
-  _buildDialog(context) {
+  _buildDialog() {
     return Column(children: <Widget>[
       Text("Display settings", style: TextStyle(fontSize: 18)),
-      DialogRoundedItem(
-          child: _buildTextSizeSlider(context), title: "Text size"),
+      DialogRoundedItem(child: _buildTextSizeSlider(), title: "Text size"),
       SizedBox(height: 10),
-      DialogRoundedItem(
-          child: _buildFontOptionList(context), title: "Font family")
+      DialogRoundedItem(child: _buildFontOptionList(), title: "Font family")
     ]);
   }
 
-  _buildTextSizeSlider(context) => SliderTheme(
-      data: SliderTheme.of(context).copyWith(
-        tickMarkShape: RoundSliderTickMarkShape(),
-        inactiveTickMarkColor: Provider.of<ThemeModel>(context).darkMode
-            ? Colors.red[100]
-            : Colors.red[400],
-      ),
+  _buildTextSizeSlider() => SliderTheme(
+      data: SliderTheme.of(context)
+          .copyWith(tickMarkShape: RoundSliderTickMarkShape()),
       child: Slider(
         min: 10,
         max: 30,
@@ -78,7 +73,7 @@ class _DialogContentState extends State<DialogContent> {
         },
       ));
 
-  _buildFontOptionList(context) => MediaQuery.removePadding(
+  _buildFontOptionList() => MediaQuery.removePadding(
       context: context,
       removeTop: true,
       child: ListView(shrinkWrap: true, children: <Widget>[
@@ -101,14 +96,24 @@ class _DialogContentState extends State<DialogContent> {
         });
       },
       child: Container(
-          color: _listFonts[index].isSelected
-              ? Theme.of(context).backgroundColor
-              : null,
-          child: ListTile(title: Text(_listFonts[index].data))));
+          child: ListTile(
+              title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(_listFonts[index].data),
+          _listFonts[index].isSelected
+              /* Bug here: wanting to match the color of the slider. That's the theme's primary color.
+              // However, in dark mode, the slider still returns the primary color of light mode (Colors.blue)
+              // Forcing Colors.blue here for both modes
+              */
+              ? Icon(Icons.check, color: Colors.blue)
+              : Container()
+        ],
+      ))));
 
   @override
   Widget build(BuildContext context) {
-    return _buildDialog(context);
+    return _buildDialog();
   }
 }
 
