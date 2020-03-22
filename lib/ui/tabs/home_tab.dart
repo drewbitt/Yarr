@@ -71,6 +71,7 @@ class HomeTab extends StatelessWidget {
     final _currentPageNotifier = ValueNotifier<int>(0);
 
     return Container(
+        // have to give height in a horizontal scrolling list
         height: big ? 320 : 165,
         child: FutureBuilder<List<BookListResult>>(
           future: func,

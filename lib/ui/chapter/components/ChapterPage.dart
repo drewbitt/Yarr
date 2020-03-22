@@ -92,7 +92,8 @@ class _ChapterPageState extends State<ChapterPage> {
                             // just waiting on a fix from the library
                             child: Column(
                               children: <Widget>[
-                                _htmlAuthorNote(data.note, theme: _theme),
+                                if (data.note != null)
+                                  _htmlAuthorNote(data.note, theme: _theme),
                                 Html(
                                   data: data.contents,
                                   useRichText: true,
@@ -120,6 +121,7 @@ class _ChapterPageState extends State<ChapterPage> {
           padding: EdgeInsets.fromLTRB(15, 3, 15, 15),
           child: Text(title,
               style: TextStyle(
+                  // color is to make title slighty darker than the text in light mode
                   color: theme.darkMode ? Colors.white : Colors.black,
                   fontSize: _fontSizeTitle.toDouble(),
                   fontFamily: _fontFamily),
@@ -136,16 +138,12 @@ class _ChapterPageState extends State<ChapterPage> {
           child:
               Text("Could not load chapter", style: TextStyle(fontSize: 15))));
 
-  /// Returns HTML display of the author note if present. Otherwise, an empty container.
-  _htmlAuthorNote(AuthorNote note, {theme}) {
-    if (note == null) {
-      return Container();
-    } else {
-      return Html(
+  /// Returns HTML display of the author note assuming one is present
+  _htmlAuthorNote(AuthorNote note, {theme}) => Html(
         data: '<b>' +
-            note.caption.toUpperCase() +
+            note?.caption?.toUpperCase() +
             '</b><br /><br />' +
-            note.noteBody,
+            note?.noteBody,
         style: {
           'html': Style(
               backgroundColor: theme.darkMode
@@ -153,6 +151,4 @@ class _ChapterPageState extends State<ChapterPage> {
                   : Color.fromRGBO(200, 200, 200, 1))
         },
       );
-    }
-  }
 }

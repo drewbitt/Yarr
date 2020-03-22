@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterroad/ui/constants.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
 
@@ -8,12 +9,9 @@ class DialogRoundedItem extends StatelessWidget {
 
   DialogRoundedItem({@required this.child, @required this.title});
 
-  final backgroundDark = Colors.black54;
-  final backgroundLight = Colors.grey[300];
-
   _getColor(context) => Provider.of<ThemeModel>(context).darkMode
-      ? backgroundDark
-      : backgroundLight;
+      ? dialogItemBackgroundDark
+      : dialogItemBackgroundLight;
 
   @override
   Widget build(BuildContext context) {

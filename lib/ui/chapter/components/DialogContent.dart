@@ -10,7 +10,6 @@ class DialogContent extends StatefulWidget {
 class _DialogContentState extends State<DialogContent> {
   int _fontSize = 15; // In testing this has been OK to set. Otherwise,
   // get a toDouble() error if the dialog loads too fast
-  String _fontFamily = "Lora";
   SharedPreferences _prefs;
 
   var _listFonts = [
@@ -30,12 +29,12 @@ class _DialogContentState extends State<DialogContent> {
 
   _loadSharedPreferences() async {
     if (_prefs == null) {
+      // this will always happen due to the dispose I think, but will leave the check in anyway
       _prefs = await SharedPreferences.getInstance();
     }
     // Load state from sharedPreferences tool
     setState(() {
       _fontSize = _prefs.getInt('chapterFontSize');
-      _fontFamily = _prefs.getString('chapterFontFamily');
       // Set state on the _listFonts element of the chapter family from sharedPreferences
       _listFonts
           .singleWhere((element) =>
@@ -99,11 +98,10 @@ class _DialogContentState extends State<DialogContent> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(_listFonts[index].data),
-          _listFonts[index].isSelected
-              // Match color with slider
-              ? Icon(Icons.check,
-                  color: SliderTheme.of(context).activeTrackColor)
-              : Container()
+          if (_listFonts[index].isSelected)
+            // Match color with slider
+            // Icon(Icons.check, color: SliderTheme.of(context).activeTrackColor)
+            Icon(Icons.check, color: Theme.of(context).toggleableActiveColor)
         ],
       ))));
 

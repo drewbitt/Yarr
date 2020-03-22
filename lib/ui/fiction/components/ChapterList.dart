@@ -2,6 +2,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/ui/chapter/chapter.dart';
+import 'package:flutterroad/ui/constants.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:royalroad_api/models.dart' show BookDetails, BookChapter;
 import 'package:provider/provider.dart';
@@ -21,6 +22,13 @@ class ChapterListState extends State<ChapterList> {
   ChapterListState(this.chapterFuture);
 
   var _reverseList = false;
+  PageController _pageController;
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController?.dispose();
+  }
 
   void _onReverseTapped() {
     setState(() {
@@ -69,8 +77,9 @@ class ChapterListState extends State<ChapterList> {
                   expanded: _buildListView(chapterList, reverse: _reverseList),
                   theme: ExpandableThemeData(
                       headerAlignment: ExpandablePanelHeaderAlignment.center,
-                      iconColor:
-                          _theme.darkMode ? Colors.white54 : Colors.black54,
+                      iconColor: _theme.darkMode
+                          ? darkModeIconColor
+                          : lightModeIconColor,
                       tapHeaderToExpand: false),
                 ));
           } else {
@@ -123,26 +132,25 @@ class ChapterListState extends State<ChapterList> {
   // I don't like this either
   // TODO: Fix this whole reverse list mumbo jumbo
   _translateIndex(index, fullChapterListLength) {
-    var rangeIndexList = Iterable<int>.generate(9).toList();
+    final rangeIndexList = Iterable<int>.generate(9).toList();
     final bumpVal = fullChapterListLength - 9;
     final indexOfIndex = rangeIndexList.indexOf(index);
     return rangeIndexList.map((e) => e + bumpVal).toList()[indexOfIndex];
   }
 
   _buildPageView(fullChapterList, {startChapterIndex}) {
-    var controller = PageController(initialPage: startChapterIndex);
+    _pageController = PageController(initialPage: startChapterIndex);
     return PageView.builder(
       itemBuilder: (context, index) {
         return Chapter(fullChapterList[index]);
       },
-      controller: controller,
+      controller: _pageController,
       itemCount: fullChapterList.length,
     );
   }
 
   _buildListView(List<BookChapter> chapterList,
       {bool reverse, List<BookChapter> fullChapterList}) {
-    // fullChapterList = fullChapterList == null? chapterList: fullChapterList;
     return ListView.builder(
         shrinkWrap: true,
         reverse: reverse,
@@ -150,8 +158,7 @@ class ChapterListState extends State<ChapterList> {
         itemCount: chapterList.length,
         itemBuilder: (context, index) {
           return _buildChapterEntry(chapterList,
-              fullChapterList:
-                  fullChapterList == null ? chapterList : fullChapterList,
+              fullChapterList: fullChapterList ?? chapterList,
               index: index,
               context: context,
               reverse: reverse);

@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutterroad/ui/constants.dart';
 import 'package:flutterroad/ui/settings.dart';
 import 'package:flutterroad/ui/tabs/home_tab.dart';
 import 'package:flutterroad/ui/tabs/search_tab.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
 
-final _model = ThemeModel();
+final _model = ThemeModel(
+    customDarkTheme: ThemeData(
+        brightness: Brightness.dark,
+        appBarTheme: AppBarTheme(color: darkModeAppBarColor)),
+    customLightTheme: ThemeData(
+        brightness: Brightness.light,
+        appBarTheme: AppBarTheme(color: lightModeAppBarColor)));
 
 void main() {
   runApp(ListenableProvider<ThemeModel>(
@@ -38,8 +45,8 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
     return Scaffold(
         appBar: AppBar(
           title: Text("FlutterRoad"),
-          backgroundColor:
-              _theme.darkMode ? Colors.black26 : Colors.blue.shade600,
+//          backgroundColor:
+//              _theme.darkMode ? darkModeAppBarColor : lightModeAppBarColor,
           actions: <Widget>[
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
+import 'package:flutterroad/ui/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
@@ -36,12 +37,13 @@ class ResultCard extends StatelessBookBase {
               Text(this.book.book.title,
                   style: TextStyle(
                       color: _theme.darkMode
-                          ? Colors.brown.shade300
-                          : Colors.brown,
+                          ? darkModeTitleColor
+                          : lightModeTitleColor,
                       fontSize: 17),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis),
               SizedBox(height: 7), // Padding
+              // Get first 3 genres, or however many genres listed if less than 3
               Text(this.book.info.genres.length <= 3
                   ? this.book.info.genres.join(", ")
                   : this.book.info.genres.sublist(0, 3).join(", ")),
@@ -76,6 +78,7 @@ class ResultCard extends StatelessBookBase {
                       ]),
                       Row(children: <Widget>[
                         Icon(Icons.visibility, size: 22),
+                        // List thousands with a k for size reasons
                         Text(NumberFormat.compact()
                                 .format(this.book.info.views)
                                 .toString() +

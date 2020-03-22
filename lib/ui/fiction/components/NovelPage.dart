@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
+import 'package:flutterroad/ui/constants.dart';
 import 'package:flutterroad/ui/fiction/components/ChapterList.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
@@ -31,8 +32,8 @@ class NovelPage extends StatelessBookBase {
                 child: Text(this.book.book.title,
                     style: TextStyle(
                         color: _theme.darkMode
-                            ? Colors.brown.shade300
-                            : Colors.brown,
+                            ? darkModeTitleColor
+                            : lightModeTitleColor,
                         fontSize: 19),
                     maxLines: 7,
                     overflow: TextOverflow.ellipsis),
@@ -40,13 +41,13 @@ class NovelPage extends StatelessBookBase {
             ],
           ),
           SizedBox(height: 6), // Padding
-          _buildDescription(_theme, book),
+          _buildDescription(book, theme: _theme),
           ChapterList(getFictionDetails(this.book.book.url)),
         ]);
   }
 }
 
-_buildDescription(_theme, book) => Container(
+_buildDescription(book, {theme}) => Container(
     padding: EdgeInsets.all(10),
     child: ExpandablePanel(
         header: Text('Description', style: TextStyle(fontSize: 16)),
@@ -55,11 +56,9 @@ _buildDescription(_theme, book) => Container(
         expanded: _buildDescriptionText(book.info.description),
         theme: ExpandableThemeData(
             headerAlignment: ExpandablePanelHeaderAlignment.center,
-            iconColor: _theme.darkMode ? Colors.white54 : Colors.black54)));
+            iconColor:
+                theme.darkMode ? darkModeIconColor : lightModeIconColor)));
 
 _buildDescriptionText(text, {TextOverflow overflow, int maxLines}) => Padding(
     padding: EdgeInsets.only(top: 10),
-    child: Text(text,
-        softWrap: true,
-        maxLines: maxLines != null ? maxLines : null,
-        overflow: overflow != null ? overflow : null));
+    child: Text(text, softWrap: true, maxLines: maxLines, overflow: overflow));

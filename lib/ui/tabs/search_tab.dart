@@ -5,15 +5,7 @@ import 'package:flutterroad/ui/fiction/novel_details.dart';
 import 'package:royalroad_api/models.dart' show BookListResult;
 import 'package:royalroad_api/royalroad_api.dart' show searchFiction;
 
-class SearchTab extends StatefulWidget {
-  @override
-  _SearchTabState createState() => _SearchTabState();
-}
-
-class _SearchTabState extends State<SearchTab> {
-  final SearchBarController<BookListResult> _searchBarController =
-      SearchBarController();
-
+class SearchTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +15,6 @@ class _SearchTabState extends State<SearchTab> {
           headerPadding: EdgeInsets.symmetric(horizontal: 10),
           listPadding: EdgeInsets.symmetric(horizontal: 10),
           onSearch: searchFiction,
-          searchBarController: _searchBarController,
           placeHolder: Center(child: Text('Search for a novel')),
           cancellationWidget: Text("Cancel"),
           emptyWidget: Center(child: Text('No results')),

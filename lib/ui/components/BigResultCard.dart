@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
+import 'package:flutterroad/ui/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,9 @@ class BigResultCard extends StatelessBookBase {
         children: <Widget>[
           Text('#' + (index + 1).toString() + ': ' + this.book.book.title,
               style: TextStyle(
-                  color: _theme.darkMode ? Colors.brown.shade300 : Colors.brown,
+                  color: _theme.darkMode
+                      ? darkModeTitleColor
+                      : lightModeTitleColor,
                   fontSize: 22),
               maxLines: 1,
               overflow: TextOverflow.ellipsis),
