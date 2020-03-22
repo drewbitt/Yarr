@@ -54,7 +54,13 @@ class _DialogContentState extends State<DialogContent> {
 
   _buildTextSizeSlider() => SliderTheme(
       data: SliderTheme.of(context).copyWith(
-          tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 1.5)),
+          tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 1.5),
+          // Manual color specification because it is always filling in these colors anyway on my devices
+          // despite me not knowing why. Not gonna leave color on other devices to chance due to checkmark color
+          activeTrackColor: Colors.blue,
+          activeTickMarkColor: Colors.blue,
+          inactiveTickMarkColor: Colors.blue.withAlpha(255 ~/ 2),
+          inactiveTrackColor: Colors.blue.withAlpha(255 ~/ 4)),
       child: Slider(
         min: 10,
         max: 30,
@@ -104,7 +110,6 @@ class _DialogContentState extends State<DialogContent> {
             Bug: I can never get the slider theme colors to ever return anything but null.
             When it's null in the SliderTheme in _buildTextSizeSlider, it eventually becomes Colors.blue,
             (but when accessing property, its null), and I have no idea why. Only found out with a color picker.
-            Will this be blue on all devices? No clue.
             */
             // SliderTheme.of(context).activeTrackColor
             Icon(Icons.check, color: Colors.blue)
