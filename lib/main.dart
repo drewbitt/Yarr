@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterroad/service_locator.dart';
 import 'package:flutterroad/ui/constants.dart';
 import 'package:flutterroad/ui/settings.dart';
 import 'package:flutterroad/ui/tabs/home_tab.dart';
@@ -15,6 +16,8 @@ final _model = ThemeModel(
         appBarTheme: AppBarTheme(color: lightModeAppBarColor)));
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupLocator();
   runApp(ListenableProvider<ThemeModel>(
       create: (_) => _model..init(),
       child: Consumer<ThemeModel>(builder: (context, model, child) {

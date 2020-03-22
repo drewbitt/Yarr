@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart' show Html;
 import 'package:flutter_html/style.dart';
+import 'package:flutterroad/service_locator.dart';
+import 'package:flutterroad/services/localstorge_service.dart';
 import 'package:flutterroad/ui/chapter/components/DialogContent.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
 import 'package:royalroad_api/models.dart' show AuthorNote, BookChapterContents;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slide_popup_dialog/slide_popup_dialog.dart';
 
 class ChapterPage extends StatefulWidget {
@@ -24,30 +25,25 @@ class _ChapterPageState extends State<ChapterPage> {
 
   int _fontSize;
   int _fontSizeTitle;
-  SharedPreferences _prefs;
+  LocalStorageService _prefs;
   String _fontFamily;
 
   @override
   void initState() {
     super.initState();
-    // Workaround to call an async function from initState()
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadSharedPreferences();
-    });
+    _loadSharedPreferences();
   }
 
   _loadSharedPreferences() async {
-    if (_prefs == null) {
-      _prefs = await SharedPreferences.getInstance();
-    }
+    _prefs = getIt.get<LocalStorageService>();
 
     if (_prefs.containsKey('chapterFontSize')) {
       setState(() {
-        _fontSize = _prefs.getInt('chapterFontSize');
-        _fontSizeTitle = _prefs.getInt('chapterFontSize') + 5;
+        _fontSize = _prefs.fontSize;
+        _fontSizeTitle = _prefs.fontSize + 5;
       });
     } else {
-      _prefs.setInt('chapterFontSize', 16);
+      _prefs.fontSize = 16;
       setState(() {
         _fontSize = 16;
         _fontSizeTitle = 16 + 5;
@@ -55,9 +51,9 @@ class _ChapterPageState extends State<ChapterPage> {
     }
 
     if (_prefs.containsKey('chapterFontFamily')) {
-      _fontFamily = _prefs.getString('chapterFontFamily');
+      _fontFamily = _prefs.fontFamily;
     } else {
-      _prefs.setString('chapterFontFamily', 'Lora');
+      _prefs.fontFamily = 'Lora';
       setState(() {
         _fontFamily = 'Lora';
       });

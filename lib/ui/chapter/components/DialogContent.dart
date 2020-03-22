@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutterroad/service_locator.dart';
+import 'package:flutterroad/services/localstorge_service.dart';
 import 'package:flutterroad/ui/chapter/components/DialogRoundedItem.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DialogContent extends StatefulWidget {
   @override
@@ -8,9 +9,8 @@ class DialogContent extends StatefulWidget {
 }
 
 class _DialogContentState extends State<DialogContent> {
-  int _fontSize = 15; // In testing this has been OK to set. Otherwise,
-  // get a toDouble() error if the dialog loads too fast
-  SharedPreferences _prefs;
+  double _fontSize;
+  LocalStorageService _prefs;
 
   var _listFonts = [
     FontListItem<String>("Default"),
@@ -21,24 +21,17 @@ class _DialogContentState extends State<DialogContent> {
   @override
   void initState() {
     super.initState();
-    // Workaround to call an async function from initState()
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadSharedPreferences();
-    });
+    _loadSharedPreferences();
   }
 
-  _loadSharedPreferences() async {
-    if (_prefs == null) {
-      // this will always happen due to the dispose I think, but will leave the check in anyway
-      _prefs = await SharedPreferences.getInstance();
-    }
-    // Load state from sharedPreferences tool
+  _loadSharedPreferences() {
+    // Load from sharedPreferences tool
+    _prefs = getIt.get<LocalStorageService>();
     setState(() {
-      _fontSize = _prefs.getInt('chapterFontSize');
+      _fontSize = _prefs.fontSize.toDouble();
       // Set state on the _listFonts element of the chapter family from sharedPreferences
       _listFonts
-          .singleWhere((element) =>
-              element.data == _prefs.getString('chapterFontFamily'))
+          .singleWhere((element) => element.data == _prefs.fontFamily)
           .isSelected = true;
     });
   }
@@ -63,15 +56,15 @@ class _DialogContentState extends State<DialogContent> {
           inactiveTrackColor: Colors.blue.withAlpha(255 ~/ 4)),
       child: Slider(
         min: 10,
-        max: 30,
-        value: _fontSize.toDouble(),
-        divisions: 6,
-        label: '$_fontSize',
+        max: 31,
+        value: _fontSize,
+        divisions: 7,
+        label: _fontSize.toInt().toString(),
         onChanged: (value) {
           // State allows the animation of it sliding to work
           setState(() {
-            _fontSize = value.toInt();
-            _prefs.setInt('chapterFontSize', value.toInt());
+            _fontSize = value;
+            _prefs.fontSize = value.toInt();
           });
         },
       ));
@@ -95,7 +88,7 @@ class _DialogContentState extends State<DialogContent> {
         });
         setState(() {
           _listFonts[index].isSelected = true;
-          _prefs.setString('chapterFontFamily', _listFonts[index].data);
+          _prefs.fontFamily = _listFonts[index].data;
         });
       },
       child: Container(
