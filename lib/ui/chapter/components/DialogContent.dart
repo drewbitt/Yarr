@@ -100,8 +100,14 @@ class _DialogContentState extends State<DialogContent> {
           Text(_listFonts[index].data),
           if (_listFonts[index].isSelected)
             // Match color with slider
-            // Icon(Icons.check, color: SliderTheme.of(context).activeTrackColor)
-            Icon(Icons.check, color: Theme.of(context).toggleableActiveColor)
+            /*
+            Bug: I can never get the slider theme colors to ever return anything but null.
+            When it's null in the SliderTheme in _buildTextSizeSlider, it eventually becomes Colors.blue,
+            (but when accessing property, its null), and I have no idea why. Only found out with a color picker.
+            Will this be blue on all devices? No clue.
+            */
+            // SliderTheme.of(context).activeTrackColor
+            Icon(Icons.check, color: Colors.blue)
         ],
       ))));
 
