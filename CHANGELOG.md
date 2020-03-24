@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.1
+
+### Changed
+
+- Fix check mark color in font selection
+- Fixed potential async bug where default value was used by making shared preferences a singleton
+
 ## 0.3.0
 
 ### Added
@@ -7,7 +14,7 @@
 - Reverse button for sorting a fiction's chapter list
 - API for author chapter comments
 - Display author chapter comments
-- Loading placeholder/spinnner for cover images
+- Loading placeholder/spinner for cover images
 - Show error placeholders if network is not available for cover images
 - Cache cover images
 - Add onTap option page popup in a chapter
