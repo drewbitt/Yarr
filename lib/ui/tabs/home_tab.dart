@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterroad/ui/components/BigResultCard.dart';
-import 'package:flutterroad/ui/components/ResultCard.dart';
+import 'package:flutterroad/ui/components/big_result_card.dart';
+import 'package:flutterroad/ui/components/result_card.dart';
+import 'package:flutterroad/ui/constants.dart';
 import 'package:flutterroad/ui/fiction/novel_details.dart';
 import 'package:no_scroll_glow/no_scroll_glow.dart';
 import 'package:page_view_indicators/arrow_page_indicator.dart';
@@ -24,12 +25,12 @@ class HomeTab extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.fromLTRB(10, 13, 10, 0),
                 child: Text("Trending Fictions: ",
-                    style: TextStyle(fontSize: 20))),
+                    style: TextStyle(fontSize: fontSizeHomeHeader))),
             _trendingList(),
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Text("Popular this week: ",
-                    style: TextStyle(fontSize: 20))),
+                    style: TextStyle(fontSize: fontSizeHomeHeader))),
             _popularList()
           ],
         ),
@@ -80,7 +81,7 @@ class HomeTab extends StatelessWidget {
               if (snapshot.hasError) {
                 return Center(
                     child: Text("Error getting fictions",
-                        style: TextStyle(fontSize: 15)));
+                        style: TextStyle(fontSize: fontSizeMain)));
               } else if (snapshot.hasData) {
                 final data = snapshot.data;
                 return ArrowPageIndicator(
@@ -110,7 +111,7 @@ class HomeTab extends StatelessWidget {
           Padding(
               padding: EdgeInsets.only(right: 5),
               child: CupertinoActivityIndicator()),
-          Text("Getting fictions", style: TextStyle(fontSize: 15)),
+          Text("Getting fictions", style: TextStyle(fontSize: fontSizeMain)),
         ],
       ));
 }

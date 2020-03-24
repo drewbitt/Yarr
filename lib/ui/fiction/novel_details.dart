@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
-import 'package:flutterroad/ui/fiction/components/NovelPage.dart';
+import 'package:flutterroad/ui/fiction/components/novel_page.dart';
 import 'package:royalroad_api/models.dart' show BookListResult;
 import 'package:url_launcher/url_launcher.dart';
 

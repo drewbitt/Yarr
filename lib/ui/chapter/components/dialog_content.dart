@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterroad/service_locator.dart';
 import 'package:flutterroad/services/localstorge_service.dart';
-import 'package:flutterroad/ui/chapter/components/DialogRoundedItem.dart';
+import 'package:flutterroad/ui/chapter/components/dialog_round_item.dart';
+import 'package:flutterroad/ui/constants.dart';
 
 class DialogContent extends StatefulWidget {
   @override
@@ -38,7 +39,8 @@ class _DialogContentState extends State<DialogContent> {
 
   _buildDialog() {
     return Column(children: <Widget>[
-      Text("Display settings", style: TextStyle(fontSize: 18)),
+      Text("Display settings",
+          style: TextStyle(fontSize: fontSizeNovelSlideUpTitle)),
       DialogRoundedItem(child: _buildTextSizeSlider(), title: "Text size"),
       SizedBox(height: 10),
       DialogRoundedItem(child: _buildFontOptionList(), title: "Font family")

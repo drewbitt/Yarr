@@ -4,7 +4,8 @@ import 'package:flutter_html/flutter_html.dart' show Html;
 import 'package:flutter_html/style.dart';
 import 'package:flutterroad/service_locator.dart';
 import 'package:flutterroad/services/localstorge_service.dart';
-import 'package:flutterroad/ui/chapter/components/DialogContent.dart';
+import 'package:flutterroad/ui/chapter/components/dialog_content.dart';
+import 'package:flutterroad/ui/constants.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
 import 'package:royalroad_api/models.dart' show AuthorNote, BookChapterContents;
@@ -131,8 +132,8 @@ class _ChapterPageState extends State<ChapterPage> {
   _buildError() => Container(
       height: MediaQuery.of(context).size.height,
       child: Center(
-          child:
-              Text("Could not load chapter", style: TextStyle(fontSize: 15))));
+          child: Text("Could not load chapter",
+              style: TextStyle(fontSize: fontSizeMain))));
 
   /// Returns HTML display of the author note assuming one is present
   _htmlAuthorNote(AuthorNote note, {theme}) => Html(

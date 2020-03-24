@@ -8,3 +8,9 @@ const darkModeIconColor = Colors.white54;
 const lightModeIconColor = Colors.black54;
 final dialogItemBackgroundDark = Colors.black54;
 final dialogItemBackgroundLight = Colors.grey[300];
+
+final fontSizeHeroNovelTitle = 22.0;
+final fontSizeHomeHeader = 20.0;
+final fontSizeMain = 15.0;
+final fontSizeNovelTitle = 19.0;
+final fontSizeNovelSlideUpTitle = 18.0;

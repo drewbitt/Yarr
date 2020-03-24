@@ -4,6 +4,9 @@ class LocalStorageService {
   static LocalStorageService _instance;
   static SharedPreferences _preferences;
 
+  final fontFamilyString = 'chapterFontFamily';
+  final fontSizeString = 'chapterFontSize';
+
   static Future<LocalStorageService> getInstance() async {
     if (_instance == null) {
       _instance = LocalStorageService();
@@ -14,23 +17,32 @@ class LocalStorageService {
     return _instance;
   }
 
-  String get fontFamily => _getFromDisk('chapterFontFamily');
-  int get fontSize => _getFromDisk('chapterFontSize');
+  String get fontFamily => _getFromDisk(fontFamilyString);
+  int get fontSize => _getFromDisk(fontSizeString);
 
-  set fontFamily(String value) => saveToDisk('chapterFontFamily', value);
-  set fontSize(int value) => saveToDisk('chapterFontSize', value);
+  set fontFamily(String value) => saveToDisk(fontFamilyString, value);
+  set fontSize(int value) => saveToDisk(fontSizeString, value);
 
   dynamic _getFromDisk(String key) => _preferences.get(key);
   void saveToDisk(String key, dynamic value) {
-    switch(value.runtimeType) {
-      case String: _preferences.setString(key, value); break;
-      case int: _preferences.setInt(key, value); break;
-      case bool: _preferences.setBool(key, value); break;
-      case double: _preferences.setBool(key, value); break;
+    switch (value.runtimeType) {
+      case String:
+        _preferences.setString(key, value);
+        break;
+      case int:
+        _preferences.setInt(key, value);
+        break;
+      case bool:
+        _preferences.setBool(key, value);
+        break;
+      case double:
+        _preferences.setBool(key, value);
+        break;
       // case List<String>: _preferences.setStringList(key, value);
       default:
-        throw("Getting invalid type from disk");
+        throw ("Setting invalid type to disk");
     }
   }
+
   bool containsKey(String key) => _preferences.containsKey(key);
 }

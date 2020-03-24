@@ -39,7 +39,7 @@ class ResultCard extends StatelessBookBase {
                       color: _theme.darkMode
                           ? darkModeTitleColor
                           : lightModeTitleColor,
-                      fontSize: 17),
+                      fontSize: fontSizeMain + 2),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis),
               SizedBox(height: 7), // Padding

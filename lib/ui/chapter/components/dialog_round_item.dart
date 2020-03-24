@@ -24,7 +24,7 @@ class DialogRoundedItem extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.9,
               child: Text(
                 title,
-                style: TextStyle(fontSize: 15),
+                style: TextStyle(fontSize: fontSizeMain),
               )),
         ],
       ),

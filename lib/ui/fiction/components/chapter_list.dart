@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/ui/chapter/chapter.dart';
 import 'package:flutterroad/ui/constants.dart';
+import 'package:flutterroad/data/viewmodels/fiction_view_model.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:royalroad_api/models.dart' show BookDetails, BookChapter;
 import 'package:provider/provider.dart';
@@ -45,17 +46,11 @@ class ChapterListState extends State<ChapterList> {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             return Text("Error getting chapters",
-                style: TextStyle(fontSize: 15));
+                style: TextStyle(fontSize: fontSizeMain));
           } else if (snapshot.hasData) {
             final chapterList = snapshot.data.chapterList;
-            minLength() => chapterList.length < 9 ? chapterList.length - 1 : 8;
-            final chapterListPreview = _reverseList
-                ? chapterList.reversed
-                    .toList()
-                    .sublist(0, minLength() + 1)
-                    .reversed
-                    .toList()
-                : chapterList.sublist(0, minLength() + 1);
+            final chapterListPreview =
+                getChapterListPreview(chapterList, _reverseList);
 
             // Bad way to do this - two listviews
             return Padding(
@@ -64,7 +59,8 @@ class ChapterListState extends State<ChapterList> {
                   header: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('Chapters', style: TextStyle(fontSize: 16)),
+                        Text('Chapters',
+                            style: TextStyle(fontSize: fontSizeMain + 1)),
                         InkWell(
                             onTap: _onReverseTapped,
                             child: Icon(Icons.swap_vert,
@@ -99,7 +95,7 @@ class ChapterListState extends State<ChapterList> {
           Padding(
               padding: EdgeInsets.only(right: 5),
               child: CupertinoActivityIndicator()),
-          Text("Getting chapters", style: TextStyle(fontSize: 15)),
+          Text("Getting chapters", style: TextStyle(fontSize: fontSizeMain)),
         ],
       ));
 
@@ -122,20 +118,10 @@ class ChapterListState extends State<ChapterList> {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => _buildPageView(fullChapterList,
                     startChapterIndex: isPreview
-                        ? _translateIndex(index, fullChapterList.length)
+                        ? translateListIndex(index, fullChapterList.length)
                         : index)));
           },
         ));
-  }
-
-  /// Method used for translating the index (used in onClick) when having a reverse preview list.
-  // I don't like this either
-  // TODO: Fix this whole reverse list mumbo jumbo
-  _translateIndex(index, fullChapterListLength) {
-    final rangeIndexList = Iterable<int>.generate(9).toList();
-    final bumpVal = fullChapterListLength - 9;
-    final indexOfIndex = rangeIndexList.indexOf(index);
-    return rangeIndexList.map((e) => e + bumpVal).toList()[indexOfIndex];
   }
 
   _buildPageView(fullChapterList, {startChapterIndex}) {

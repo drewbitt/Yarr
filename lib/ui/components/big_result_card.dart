@@ -23,7 +23,7 @@ class BigResultCard extends StatelessBookBase {
                   color: _theme.darkMode
                       ? darkModeTitleColor
                       : lightModeTitleColor,
-                  fontSize: 22),
+                  fontSize: fontSizeHeroNovelTitle),
               maxLines: 1,
               overflow: TextOverflow.ellipsis),
           Padding(

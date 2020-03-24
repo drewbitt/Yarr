@@ -2,7 +2,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
 import 'package:flutterroad/ui/constants.dart';
-import 'package:flutterroad/ui/fiction/components/ChapterList.dart';
+import 'package:flutterroad/ui/fiction/components/chapter_list.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
 import 'package:royalroad_api/models.dart' show BookListResult;
@@ -34,7 +34,7 @@ class NovelPage extends StatelessBookBase {
                         color: _theme.darkMode
                             ? darkModeTitleColor
                             : lightModeTitleColor,
-                        fontSize: 19),
+                        fontSize: fontSizeNovelTitle),
                     maxLines: 7,
                     overflow: TextOverflow.ellipsis),
               ))
@@ -50,7 +50,8 @@ class NovelPage extends StatelessBookBase {
 _buildDescription(book, {theme}) => Container(
     padding: EdgeInsets.all(10),
     child: ExpandablePanel(
-        header: Text('Description', style: TextStyle(fontSize: 16)),
+        header:
+            Text('Description', style: TextStyle(fontSize: fontSizeMain + 1)),
         collapsed: _buildDescriptionText(book.info.description,
             overflow: TextOverflow.ellipsis, maxLines: 7),
         expanded: _buildDescriptionText(book.info.description),
