@@ -5,11 +5,11 @@ import 'package:flutterroad/ui/chapter/chapter.dart';
 import 'package:flutterroad/ui/constants.dart';
 import 'package:flutterroad/data/viewmodels/fiction_view_model.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
-import 'package:royalroad_api/models.dart' show BookDetails, BookChapter;
+import 'package:royalroad_api/models.dart' show FictionDetails, ChapterDetails;
 import 'package:provider/provider.dart';
 
 class ChapterList extends StatefulWidget {
-  final Future<BookDetails> chapterFuture;
+  final Future<FictionDetails> chapterFuture;
 
   ChapterList(this.chapterFuture);
 
@@ -18,7 +18,7 @@ class ChapterList extends StatefulWidget {
 }
 
 class ChapterListState extends State<ChapterList> {
-  final Future<BookDetails> chapterFuture;
+  final Future<FictionDetails> chapterFuture;
 
   ChapterListState(this.chapterFuture);
 
@@ -40,7 +40,7 @@ class ChapterListState extends State<ChapterList> {
   @override
   Widget build(BuildContext context) {
     final _theme = Provider.of<ThemeModel>(context);
-    return FutureBuilder<BookDetails>(
+    return FutureBuilder<FictionDetails>(
       future: chapterFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
@@ -48,8 +48,8 @@ class ChapterListState extends State<ChapterList> {
             return Text("Error getting chapters",
                 style: TextStyle(fontSize: fontSizeMain));
           } else if (snapshot.hasData) {
-            final chapterList = snapshot.data.chapterList;
-            final chapterListPreview =
+            final List<ChapterDetails> chapterList = snapshot.data.chapterList;
+            final List<ChapterDetails> chapterListPreview =
                 getChapterListPreview(chapterList, _reverseList);
 
             // Bad way to do this - two listviews
@@ -99,7 +99,11 @@ class ChapterListState extends State<ChapterList> {
         ],
       ));
 
-  _buildChapterEntry(chapterList, {fullChapterList, index, context, reverse}) {
+  _buildChapterEntry(List<ChapterDetails> chapterList,
+      {List<ChapterDetails> fullChapterList,
+      int index,
+      context,
+      bool reverse}) {
     // fullChapterList used for swiping between pages past the preview pages
     final isPreview = chapterList.length != fullChapterList.length && reverse;
     return Padding(
@@ -124,7 +128,8 @@ class ChapterListState extends State<ChapterList> {
         ));
   }
 
-  _buildPageView(fullChapterList, {startChapterIndex}) {
+  _buildPageView(List<ChapterDetails> fullChapterList,
+      {int startChapterIndex}) {
     _pageController = PageController(initialPage: startChapterIndex);
     return PageView.builder(
       itemBuilder: (context, index) {
@@ -135,8 +140,8 @@ class ChapterListState extends State<ChapterList> {
     );
   }
 
-  _buildListView(List<BookChapter> chapterList,
-      {bool reverse, List<BookChapter> fullChapterList}) {
+  _buildListView(List<ChapterDetails> chapterList,
+      {bool reverse, List<ChapterDetails> fullChapterList}) {
     return ListView.builder(
         shrinkWrap: true,
         reverse: reverse,

@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:royalroad_api/models.dart';
 
 class BigResultCard extends StatelessBookBase {
-  final BookListResult book;
+  final FictionListResult book;
   final int index;
 
   BigResultCard(this.book, {@required this.index}) : super(book);

@@ -2,7 +2,7 @@ import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/ui/components/result_card.dart';
 import 'package:flutterroad/ui/fiction/novel_details.dart';
-import 'package:royalroad_api/models.dart' show BookListResult;
+import 'package:royalroad_api/models.dart' show FictionListResult;
 import 'package:royalroad_api/royalroad_api.dart' show searchFiction;
 
 class SearchTab extends StatelessWidget {
@@ -10,7 +10,7 @@ class SearchTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SearchBar<BookListResult>(
+        child: SearchBar<FictionListResult>(
           searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
           headerPadding: EdgeInsets.symmetric(horizontal: 10),
           listPadding: EdgeInsets.symmetric(horizontal: 10),
@@ -20,7 +20,7 @@ class SearchTab extends StatelessWidget {
           emptyWidget: Center(child: Text('No results')),
           debounceDuration: Duration(milliseconds: 800), // default is 500
           textStyle: TextStyle(), // fixes issue in dark mode
-          onItemFound: (BookListResult result, int index) {
+          onItemFound: (FictionListResult result, int index) {
             return InkWell(
                 child: ResultCard(result),
                 onTap: () {

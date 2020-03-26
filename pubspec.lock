@@ -360,7 +360,7 @@ packages:
       path: royalroad_api
       relative: true
     source: path
-    version: "0.2.1"
+    version: "0.2.2"
   screen:
     dependency: transitive
     description:
@@ -404,11 +404,9 @@ packages:
   slide_popup_dialog:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: e4ae2f30590d42533ea541b613fc56fd641ffab3
-      url: "git://github.com/drewbitt/slide_popup_dialog"
-    source: git
+      name: slide_popup_dialog
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.2"
   source_span:
     dependency: transitive

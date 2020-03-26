@@ -30,6 +30,15 @@ void main() {
         startsWith('<div class="chapter-inner chapter-content">'));
   });
 
+  test('Chapter note tests', () async {
+    final result = await getFictionDetails(
+        'https://www.royalroad.com/fiction/16946/azarinth-healer');
+    final chap_result = await getChapter(result.chapterList[3]);
+
+    expect(chap_result.beginNote, isNotNull);
+    expect(chap_result.endNote, isNotNull);
+  });
+
   test('Trending fictions test', () async {
     final result = await getTrendingFictions();
     expect(result.length, greaterThan(0));

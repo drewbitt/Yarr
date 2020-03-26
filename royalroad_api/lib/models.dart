@@ -1,51 +1,53 @@
-class Book {
+class Fiction {
   final String url, title;
   final String imageUrl;
 
-  Book(this.url, this.title, this.imageUrl);
+  Fiction(this.url, this.title, this.imageUrl);
 }
 
-class BookListResult {
-  final Book book;
-  final BookListInfo info;
+class FictionListResult {
+  final Fiction book;
+  final FictionListInfo info;
 
-  BookListResult(this.book, this.info);
+  FictionListResult(this.book, this.info);
 }
 
-class BookListInfo {
+class FictionListInfo {
   List<String> genres;
   String title, description, imageUrl;
   int followers, pages, chapters, views;
   double rating;
   DateTime lastUpdate;
 
-  BookListInfo(this.genres, this.followers, this.pages, this.chapters,
+  FictionListInfo(this.genres, this.followers, this.pages, this.chapters,
       this.views, this.rating, this.lastUpdate, this.description);
 }
 
-class BookDetails {
+class FictionDetails {
   String author;
   int numChapters;
-  List<BookChapter> chapterList;
+  List<ChapterDetails> chapterList;
 
-  BookDetails(this.author, this.numChapters, this.chapterList);
+  FictionDetails(this.author, this.numChapters, this.chapterList);
 }
 
-class BookChapter {
+// chapter when getting from a list
+class ChapterDetails {
   String name, url;
   DateTime releaseDate;
   String releaseDateString;
 
-  BookChapter(this.name, this.url, this.releaseDate, this.releaseDateString);
+  ChapterDetails(this.name, this.url, this.releaseDate, this.releaseDateString);
 }
 
-class BookChapterContents {
-  BookChapter chap;
+// chapter when actually in the chapter, re-using ChapterDetails
+class Chapter {
+  ChapterDetails chap;
   // title is title inside chapter in case it's different somehow?
   String title, contents;
-  AuthorNote note;
+  AuthorNote beginNote, endNote;
 
-  BookChapterContents(this.chap, this.title, this.contents, this.note);
+  Chapter(this.chap, this.title, this.contents, this.beginNote, this.endNote);
 }
 
 class AuthorNote {

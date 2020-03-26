@@ -1,11 +1,11 @@
 import 'package:html/dom.dart' show Element, Node;
 // import 'package:html/dom_parsing.dart' show isVoidElement;
-import 'package:royalroad_api/models.dart' show BookListInfo;
+import 'package:royalroad_api/models.dart' show FictionListInfo;
 import 'package:royalroad_api/src/royalroad_api_base.dart' show Base;
 
 class SearchInfo {
-  static BookListInfo getSearchInfo(parsed) {
-    return BookListInfo(
+  static FictionListInfo getSearchInfo(parsed) {
+    return FictionListInfo(
         [], // empty for now since not found in 'row stats', add elsewhere
         getFollowers(parsed),
         getPages(parsed),

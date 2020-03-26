@@ -1,9 +1,9 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:royalroad_api/models.dart' show BookListResult;
+import 'package:royalroad_api/models.dart' show FictionListResult;
 
 abstract class StatelessBookBase extends StatelessWidget {
-  final BookListResult book;
+  final FictionListResult book;
   StatelessBookBase(this.book);
 
   /// Returns book cover image from network resized to height, utilizing cache if available

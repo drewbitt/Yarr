@@ -44,7 +44,6 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final _theme = Provider.of<ThemeModel>(context);
     return Scaffold(
         appBar: AppBar(
           title: Text("FlutterRoad"),

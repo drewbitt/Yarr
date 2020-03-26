@@ -4,10 +4,10 @@ import 'package:flutterroad/ui/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
-import 'package:royalroad_api/models.dart' show BookListResult;
+import 'package:royalroad_api/models.dart' show FictionListResult;
 
 class ResultCard extends StatelessBookBase {
-  final BookListResult book;
+  final FictionListResult book;
   final bool showBorder;
 
   ResultCard(this.book, {this.showBorder = true}) : super(book);

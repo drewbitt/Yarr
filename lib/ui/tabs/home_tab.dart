@@ -6,7 +6,7 @@ import 'package:flutterroad/ui/constants.dart';
 import 'package:flutterroad/ui/fiction/novel_details.dart';
 import 'package:no_scroll_glow/no_scroll_glow.dart';
 import 'package:page_view_indicators/arrow_page_indicator.dart';
-import 'package:royalroad_api/models.dart' show BookListResult;
+import 'package:royalroad_api/models.dart' show FictionListResult;
 import 'package:royalroad_api/royalroad_api.dart';
 
 class HomeTab extends StatelessWidget {
@@ -38,8 +38,8 @@ class HomeTab extends StatelessWidget {
     )));
   }
 
-  _buildPageView(List<BookListResult> fictions, PageController pageController,
-          ValueNotifier currentPageNotifier,
+  _buildPageView(List<FictionListResult> fictions,
+          PageController pageController, ValueNotifier currentPageNotifier,
           {big = false}) =>
       PageView.builder(
           scrollDirection: Axis.horizontal,
@@ -74,7 +74,7 @@ class HomeTab extends StatelessWidget {
     return Container(
         // have to give height in a horizontal scrolling list
         height: big ? 320 : 165,
-        child: FutureBuilder<List<BookListResult>>(
+        child: FutureBuilder<List<FictionListResult>>(
           future: func,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {

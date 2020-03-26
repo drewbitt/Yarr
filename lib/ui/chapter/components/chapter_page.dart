@@ -8,11 +8,11 @@ import 'package:flutterroad/ui/chapter/components/dialog_content.dart';
 import 'package:flutterroad/ui/constants.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
-import 'package:royalroad_api/models.dart' show AuthorNote, BookChapterContents;
+import 'package:royalroad_api/models.dart' show AuthorNote, Chapter;
 import 'package:slide_popup_dialog/slide_popup_dialog.dart';
 
 class ChapterPage extends StatefulWidget {
-  final Future<BookChapterContents> chapterContentsFuture;
+  final Future<Chapter> chapterContentsFuture;
   ChapterPage(this.chapterContentsFuture);
 
   @override
@@ -21,7 +21,7 @@ class ChapterPage extends StatefulWidget {
 }
 
 class _ChapterPageState extends State<ChapterPage> {
-  final Future<BookChapterContents> chapterContentsFuture;
+  final Future<Chapter> chapterContentsFuture;
   _ChapterPageState(this.chapterContentsFuture);
 
   int _fontSize;
@@ -64,7 +64,7 @@ class _ChapterPageState extends State<ChapterPage> {
   @override
   Widget build(BuildContext context) {
     final _theme = Provider.of<ThemeModel>(context);
-    return FutureBuilder<BookChapterContents>(
+    return FutureBuilder<Chapter>(
         future: chapterContentsFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
@@ -83,14 +83,15 @@ class _ChapterPageState extends State<ChapterPage> {
                         onTap: () => _showDialog()
                             .then((value) => _loadSharedPreferences()),
                         child: Padding(
-                            padding:
-                                EdgeInsets.only(left: 15, right: 15, bottom: 5),
+                            padding: EdgeInsets.only(
+                                left: 15, right: 15, bottom: 15),
                             // useRichText fixes status screens, but is also ugly,
                             // just waiting on a fix from the library
                             child: Column(
                               children: <Widget>[
-                                if (data.note != null)
-                                  _htmlAuthorNote(data.note, theme: _theme),
+                                if (data.beginNote != null)
+                                  _htmlAuthorNote(data.beginNote,
+                                      theme: _theme),
                                 Html(
                                   data: data.contents,
                                   useRichText: true,
@@ -98,6 +99,8 @@ class _ChapterPageState extends State<ChapterPage> {
                                       fontSize: _fontSize.toDouble(),
                                       fontFamily: _fontFamily),
                                 ),
+                                if (data.endNote != null)
+                                  _htmlAuthorNote(data.endNote, theme: _theme)
                               ],
                             )))
                   ]);

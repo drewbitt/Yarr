@@ -9,8 +9,8 @@ int translateListIndex(int index, int fullChapterListLength) {
   return rangeIndexList.map((e) => e + bumpVal).toList()[indexOfIndex];
 }
 
-List<BookChapter> getChapterListPreview(
-    List<BookChapter> chapterList, bool reverseList) {
+List<ChapterDetails> getChapterListPreview(
+    List<ChapterDetails> chapterList, bool reverseList) {
   int minLength = chapterList.length < 9 ? chapterList.length - 1 : 8;
   return reverseList
       ? chapterList.reversed

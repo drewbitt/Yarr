@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutterroad/base/StatelessBookBase.dart';
 import 'package:flutterroad/ui/fiction/components/novel_page.dart';
-import 'package:royalroad_api/models.dart' show BookListResult;
+import 'package:royalroad_api/models.dart' show FictionListResult;
 import 'package:url_launcher/url_launcher.dart';
 
 class NovelDetails extends StatelessBookBase {
-  final BookListResult book;
+  final FictionListResult book;
 
   NovelDetails(this.book) : super(book);
 
