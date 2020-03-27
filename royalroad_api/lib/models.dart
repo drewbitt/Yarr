@@ -55,3 +55,21 @@ class AuthorNote {
 
   AuthorNote(this.caption, this.noteBody);
 }
+
+class ChapterComment {
+  int id;
+  DateTime postedDate;
+  String postedDateString;
+  String content;
+  CommentAuthor commentAuthor;
+
+  ChapterComment(this.id, this.postedDate, this.postedDateString, this.content, this.commentAuthor);
+}
+
+class CommentAuthor {
+  int id;
+  String name;
+  String avatar;
+
+  CommentAuthor(this.id, this.name, this.avatar);
+}

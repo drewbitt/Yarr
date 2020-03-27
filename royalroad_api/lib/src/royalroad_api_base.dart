@@ -2,14 +2,7 @@ import 'package:html/dom.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
 import 'package:intl/intl.dart';
-import 'package:royalroad_api/models.dart'
-    show
-        AuthorNote,
-        FictionListResult,
-        FictionDetails,
-        ChapterDetails,
-        Chapter,
-        Fiction;
+import 'package:royalroad_api/models.dart';
 import 'package:royalroad_api/src/util.dart'
     show SearchInfo, absolute_url, clean_contents;
 
@@ -189,6 +182,50 @@ Future<List<FictionListResult>> getBestRatedFictions() async {
     final listResult = _getBookList(parsed);
 
     return Future.value(listResult);
+  } else {
+    return Future.error('Could not access Royalroad');
+  }
+}
+
+/// Returns list of comments from a chapter id. Specify the page of comments
+/// using page. If the page has no comments, the function will return null.
+Future<List<ChapterComment>> getComments(int id, {int page = 1}) async {
+  final url = Base.baseUrl + '/fiction/chapter/$id/comments/$page';
+  final response = await http.get(url, headers: {'User-Agent': Base.userAgent});
+
+  if (response.statusCode == 200) {
+    final parsed = parse(response.body);
+
+    var comments = <ChapterComment>[];
+    parsed.querySelectorAll('div.media.media-v2').forEach((element) {
+      final id = int.parse(element.querySelector('a').id.split('-')[1]);
+      final postedDate = DateFormat('EEEE, d MMMM y H:m')
+          .parse(element.querySelector('time').attributes['title']);
+      final postedDateString = element.querySelector('time').text + 'ago';
+      final content = element
+          .querySelector('div.media-body')
+          .querySelectorAll('p')
+          .map((e) => e.text)
+          .join('\n')
+          .trim();
+
+      final commentAuthor = CommentAuthor(
+          int.parse(element
+              .querySelector('span.name')
+              .querySelector('a')
+              .attributes['href']
+              .split('/')[2]),
+          element
+              .querySelector('span.name')
+              .querySelector('a')
+              .text
+              .split('@')[0],
+          absolute_url(element.querySelector('img').attributes['src']));
+
+      comments.add(ChapterComment(
+          id, postedDate, postedDateString, content, commentAuthor));
+    });
+    return Future.value(comments.isNotEmpty ? comments : null);
   } else {
     return Future.error('Could not access Royalroad');
   }
