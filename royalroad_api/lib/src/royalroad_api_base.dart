@@ -200,8 +200,7 @@ int _commentsGetLastPageNum(Document parsed) {
   if (first != null && first.attributes.containsKey('onclick')) {
     return int.parse(
         first.attributes['onclick']?.split(', ')[1]?.split(')')[0]);
-  }
-  else {
+  } else {
     return 1;
   }
 }
@@ -223,12 +222,28 @@ Future<ChapterComments> getComments(int id, {int page = 1}) async {
       final postedDate = DateFormat('EEEE, d MMMM y H:m')
           .parse(element.querySelector('time').attributes['title']);
       final postedDateString = element.querySelector('time').text + 'ago';
-      final content = element
-          .querySelector('div.media-body')
-          .querySelectorAll('p')
-          .map((e) => e.text)
-          .join('\n')
-          .trim();
+
+      // clone so that doesn't effect comment author parsing
+      var contentChildren =
+          element.clone(true).querySelector('div.media-body').children;
+
+      // Remove extra children in content
+      contentChildren.removeAt(0); // remove h4
+      final numContentElements = contentChildren.length;
+      contentChildren.removeRange(
+          numContentElements - 4, numContentElements); // remove extras at end
+      // Remove empty tags (for empty p)
+      //contentChildren.removeWhere((element) => element.text.isEmpty);
+      // Throws unimplemented error for some reason. Alternative:
+      contentChildren.forEach((element) {
+        if (element.text.trim().isEmpty) {
+          element.remove();
+        }
+      });
+
+      final content =
+          contentChildren.map((e) => e.innerHtml.trim()).join('<br><br>');
+      print(content);
 
       final commentAuthor = CommentAuthor(
           int.parse(element

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
 import 'package:royalroad_api/models.dart';
@@ -127,7 +128,7 @@ class _CommentPageState extends State<CommentPage> {
                           )),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                        child: Text(comment.content),
+                        child: Html(data: comment.content, useRichText: true,), // useRichText fixes bullet points not displaying
                       ),
                     ],
                   )),
