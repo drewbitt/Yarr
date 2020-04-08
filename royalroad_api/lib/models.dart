@@ -42,12 +42,13 @@ class ChapterDetails {
 
 // chapter when actually in the chapter, re-using ChapterDetails
 class Chapter {
+  int id;
   ChapterDetails chap;
   // title is title inside chapter in case it's different somehow?
   String title, contents;
   AuthorNote beginNote, endNote;
 
-  Chapter(this.chap, this.title, this.contents, this.beginNote, this.endNote);
+  Chapter(this.id, this.chap, this.title, this.contents, this.beginNote, this.endNote);
 }
 
 class AuthorNote {

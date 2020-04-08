@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutterroad/service_locator.dart';
 import 'package:flutterroad/services/localstorge_service.dart';
+import 'package:flutterroad/ui/chapter/components/chapter_comments.dart';
 import 'package:flutterroad/ui/chapter/components/dialog_round_item.dart';
 import 'package:flutterroad/ui/constants.dart';
 
 class DialogContent extends StatefulWidget {
+  final int id;
+
+  DialogContent(this.id);
+
   @override
-  State<StatefulWidget> createState() => _DialogContentState();
+  State<StatefulWidget> createState() => _DialogContentState(id);
 }
 
 class _DialogContentState extends State<DialogContent> {
+  final int id;
   double _fontSize;
   LocalStorageService _prefs;
+
+  _DialogContentState(this.id);
 
   var _listFonts = [
     FontListItem<String>("Default"),
@@ -43,7 +51,12 @@ class _DialogContentState extends State<DialogContent> {
           style: TextStyle(fontSize: fontSizeNovelSlideUpTitle)),
       DialogRoundedItem(child: _buildTextSizeSlider(), title: "Text size"),
       SizedBox(height: 10),
-      DialogRoundedItem(child: _buildFontOptionList(), title: "Font family")
+      DialogRoundedItem(child: _buildFontOptionList(), title: "Font family"),
+      Padding(
+          padding: EdgeInsets.only(left: dialogListItemLeftPadding),
+          child: Column(
+            children: <Widget>[_buildCommentsOption(id)],
+          ))
     ]);
   }
 
@@ -110,6 +123,14 @@ class _DialogContentState extends State<DialogContent> {
             Icon(Icons.check, color: Colors.blue)
         ],
       ))));
+
+  _buildCommentsOption(int id) => ListTile(
+      leading: Icon(Icons.comment, size: dialogListItemIconSize),
+      title: Text('Chapter Comments'),
+      onTap: () => _goToChapterComments());
+
+  _goToChapterComments() => Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => ChapterComments(id)));
 
   @override
   Widget build(BuildContext context) {

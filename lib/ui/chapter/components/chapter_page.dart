@@ -80,7 +80,7 @@ class _ChapterPageState extends State<ChapterPage> {
                     BackButton(),
                     _buildTitle(data.title, theme: _theme),
                     GestureDetector(
-                        onTap: () => _showDialog()
+                        onTap: () => _showDialog(data.id)
                             .then((value) => _loadSharedPreferences()),
                         child: Padding(
                             padding: EdgeInsets.only(
@@ -113,8 +113,8 @@ class _ChapterPageState extends State<ChapterPage> {
         });
   }
 
-  Future _showDialog() =>
-      showSlideDialog(context: context, child: DialogContent());
+  Future _showDialog(int id) =>
+      showSlideDialog(context: context, child: DialogContent(id));
 
   _buildTitle(title, {theme}) => Flexible(
       child: Padding(

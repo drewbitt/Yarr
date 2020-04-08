@@ -26,8 +26,7 @@ void main() {
         'https://www.royalroad.com/fiction/5364/from-angel-to-vampire');
     final chap_result = await getChapter(result.chapterList[0]);
 
-    expect(chap_result.contents,
-        startsWith('<div class="chapter-inner chapter-content">'));
+    expect(chap_result.contents, isNotNull);
   });
 
   test('Chapter note tests', () async {

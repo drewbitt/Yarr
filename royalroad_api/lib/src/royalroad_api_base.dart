@@ -9,10 +9,13 @@ import 'package:royalroad_api/src/util.dart'
 class Base {
   static const baseUrl = 'https://www.royalroad.com';
   static const baseCdnUrl = 'https://www.royalroadcdn.com';
+  static const baseCdnUrl2 = 'https://cdn.royalroad.com';
 
   // RR doesn't sensor other scrapers but might as well be safe
   static const userAgent = 'Mozilla/5.0';
 }
+
+// TODO: Add logging, better future error messages
 
 /// Returns list of books from the generic fiction-list-item pages on RR
 List<FictionListResult> _getBookList(Document parsed) {
@@ -97,6 +100,7 @@ Future<Chapter> getChapter(ChapterDetails chap) async {
       title = chap.name;
     }
 
+    final id = int.parse(chap.url.split('/')[7]);
     final notes = _getChapterAuthorNotes(parsed);
     final beginNote = notes[0];
     final endNote = notes[1];
@@ -105,7 +109,7 @@ Future<Chapter> getChapter(ChapterDetails chap) async {
     final cleaned_contents = clean_contents(contents);
 
     return Future.value(
-        Chapter(chap, title, cleaned_contents, beginNote, endNote));
+        Chapter(id, chap, title, cleaned_contents, beginNote, endNote));
   } else {
     return Future.error('Could not access Royalroad');
   }
@@ -187,8 +191,25 @@ Future<List<FictionListResult>> getBestRatedFictions() async {
   }
 }
 
+// I wanted to write a method to get number of comments, but due to varying numbers of comments on pages,
+// it would be extremely inefficient to go to each page for the larger fictions
+
+bool _commentsHasNextPage(Document parsed) =>
+    parsed.querySelector('li.page-active').nextElementSibling.hasContent();
+
+int _commentsGetLastPageNum(Document parsed) => int.parse(parsed
+    .querySelector('li.page-active')
+    .nextElementSibling
+    .nextElementSibling
+    .querySelector('a')
+    .attributes['onclick']
+    .split(', ')[1]
+    .split(')')[0]);
+
 /// Returns list of comments from a chapter id. Specify the page of comments
 /// using page. If the page has no comments, the function will return null.
+// TODO: Track parent/children comments
+// TODO: Write test
 Future<List<ChapterComment>> getComments(int id, {int page = 1}) async {
   final url = Base.baseUrl + '/fiction/chapter/$id/comments/$page';
   final response = await http.get(url, headers: {'User-Agent': Base.userAgent});
@@ -229,4 +250,9 @@ Future<List<ChapterComment>> getComments(int id, {int page = 1}) async {
   } else {
     return Future.error('Could not access Royalroad');
   }
+}
+
+main() async {
+  final v = await getComments(301778);
+  print(v);
 }
