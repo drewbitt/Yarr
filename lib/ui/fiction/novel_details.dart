@@ -19,7 +19,7 @@ class NovelDetails extends StatelessBookBase {
             floating: true,
             actions: <Widget>[
               Padding(
-                  padding: EdgeInsets.only(right: 12),
+                  padding: const EdgeInsets.only(right: 12),
                   child: InkWell(
                       onTap: () => launch(this.book.book.url),
                       child: Icon(Icons.open_in_browser)))

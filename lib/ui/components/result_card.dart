@@ -24,7 +24,7 @@ class ResultCard extends StatelessBookBase {
           Column(
             children: <Widget>[
               Padding(
-                  padding: EdgeInsets.only(right: 8),
+                  padding: const EdgeInsets.only(right: 8),
                   child: getImage(height: 123.0)),
             ],
           ),

@@ -20,7 +20,7 @@ class DialogRoundedItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-              padding: EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(bottom: 8),
               width: MediaQuery.of(context).size.width * 0.9,
               child: Text(
                 title,

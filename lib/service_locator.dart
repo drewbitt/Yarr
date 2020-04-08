@@ -1,4 +1,4 @@
-import 'package:flutterroad/services/localstorge_service.dart';
+import 'package:flutterroad/services/localstorage_service.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;

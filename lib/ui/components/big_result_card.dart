@@ -27,7 +27,7 @@ class BigResultCard extends StatelessBookBase {
               maxLines: 1,
               overflow: TextOverflow.ellipsis),
           Padding(
-              padding: EdgeInsets.only(bottom: 5),
+              padding: const EdgeInsets.only(bottom: 5),
               child: getImage(height: 200.0)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

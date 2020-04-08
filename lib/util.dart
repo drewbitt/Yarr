@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 ExtendedImage getImageUtil(url, {height=100.0}) => ExtendedImage.network(
       url,
       height: height,
-      scale: 0.1,
+      scale: 0.1, // resizes images if too small
       cache: true,
       headers: {'User-Agent': 'Mozilla/5.0'},
       loadStateChanged: (state) {

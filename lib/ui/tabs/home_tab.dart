@@ -21,14 +21,14 @@ class HomeTab extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-                padding: EdgeInsets.only(top: 10), child: _bigFictionList()),
+                padding: const EdgeInsets.only(top: 10), child: _bigFictionList()),
             Padding(
-                padding: EdgeInsets.fromLTRB(10, 13, 10, 0),
+                padding: const EdgeInsets.fromLTRB(10, 13, 10, 0),
                 child: Text("Trending Fictions: ",
                     style: TextStyle(fontSize: fontSizeHomeHeader))),
             _trendingList(),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text("Popular this week: ",
                     style: TextStyle(fontSize: fontSizeHomeHeader))),
             _popularList()
@@ -47,7 +47,7 @@ class HomeTab extends StatelessWidget {
           controller: pageController,
           itemBuilder: (context, index) {
             return Padding(
-                padding: EdgeInsets.all(10), // not sure about value rn
+                padding: const EdgeInsets.all(10), // not sure about value rn
                 child: InkWell(
                     child: big
                         ? BigResultCard(fictions[index], index: index)
@@ -104,12 +104,12 @@ class HomeTab extends StatelessWidget {
   }
 
   _buildLoader() => Padding(
-      padding: EdgeInsets.symmetric(vertical: 13, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Padding(
-              padding: EdgeInsets.only(right: 5),
+              padding: const EdgeInsets.only(right: 5),
               child: CupertinoActivityIndicator()),
           Text("Getting fictions", style: TextStyle(fontSize: fontSizeMain)),
         ],

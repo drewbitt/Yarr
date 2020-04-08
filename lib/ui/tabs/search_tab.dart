@@ -11,9 +11,9 @@ class SearchTab extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SearchBar<FictionListResult>(
-          searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
-          headerPadding: EdgeInsets.symmetric(horizontal: 10),
-          listPadding: EdgeInsets.symmetric(horizontal: 10),
+          searchBarPadding: const EdgeInsets.symmetric(horizontal: 10),
+          headerPadding: const EdgeInsets.symmetric(horizontal: 10),
+          listPadding: const EdgeInsets.symmetric(horizontal: 10),
           onSearch: searchFiction,
           placeHolder: Center(child: Text('Search for a novel')),
           cancellationWidget: Text("Cancel"),

@@ -47,11 +47,9 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
     return Scaffold(
         appBar: AppBar(
           title: Text("FlutterRoad"),
-//          backgroundColor:
-//              _theme.darkMode ? darkModeAppBarColor : lightModeAppBarColor,
           actions: <Widget>[
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: InkWell(
                     child: Icon(Icons.settings),
                     onTap: () {

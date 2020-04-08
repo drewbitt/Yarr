@@ -54,7 +54,7 @@ class ChapterListState extends State<ChapterList> {
 
             // Bad way to do this - two listviews
             return Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: ExpandablePanel(
                   header: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,11 +89,11 @@ class ChapterListState extends State<ChapterList> {
   }
 
   _buildLoader() => Padding(
-      padding: EdgeInsets.symmetric(vertical: 13, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 10),
       child: Row(
         children: <Widget>[
           Padding(
-              padding: EdgeInsets.only(right: 5),
+              padding: const EdgeInsets.only(right: 5),
               child: CupertinoActivityIndicator()),
           Text("Getting chapters", style: TextStyle(fontSize: fontSizeMain)),
         ],
@@ -107,7 +107,7 @@ class ChapterListState extends State<ChapterList> {
     // fullChapterList used for swiping between pages past the preview pages
     final isPreview = chapterList.length != fullChapterList.length && reverse;
     return Padding(
-        padding: EdgeInsets.symmetric(vertical: 13),
+        padding: const EdgeInsets.symmetric(vertical: 13),
         child: InkWell(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

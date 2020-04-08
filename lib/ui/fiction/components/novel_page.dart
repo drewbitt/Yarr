@@ -22,13 +22,13 @@ class NovelPage extends StatelessBookBase {
           Row(
             children: <Widget>[
               Padding(
-                  padding: EdgeInsets.fromLTRB(10, 15, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 15, 0, 0),
                   child: Column(
                     children: <Widget>[getImage(height: 250.0)],
                   )),
               Flexible(
                   child: Padding(
-                padding: EdgeInsets.only(left: 15, right: 6),
+                padding: const EdgeInsets.only(left: 15, right: 6),
                 child: Text(this.book.book.title,
                     style: TextStyle(
                         color: _theme.darkMode
@@ -48,7 +48,7 @@ class NovelPage extends StatelessBookBase {
 }
 
 _buildDescription(book, {theme}) => Container(
-    padding: EdgeInsets.all(10),
+    padding: const EdgeInsets.all(10),
     child: ExpandablePanel(
         header:
             Text('Description', style: TextStyle(fontSize: fontSizeMain + 1)),
@@ -61,5 +61,5 @@ _buildDescription(book, {theme}) => Container(
                 theme.darkMode ? darkModeIconColor : lightModeIconColor)));
 
 _buildDescriptionText(text, {TextOverflow overflow, int maxLines}) => Padding(
-    padding: EdgeInsets.only(top: 10),
+    padding: const EdgeInsets.only(top: 10),
     child: Text(text, softWrap: true, maxLines: maxLines, overflow: overflow));

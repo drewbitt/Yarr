@@ -207,7 +207,7 @@ int _commentsGetLastPageNum(Document parsed) => int.parse(parsed
     .split(')')[0]);
 
 /// Returns list of comments from a chapter id. Specify the page of comments
-/// using page. If the page has no comments, the function will return null.
+/// using page. Returns empty list of no comments.
 // TODO: Track parent/children comments
 // TODO: Write test
 Future<List<ChapterComment>> getComments(int id, {int page = 1}) async {
@@ -246,13 +246,8 @@ Future<List<ChapterComment>> getComments(int id, {int page = 1}) async {
       comments.add(ChapterComment(
           id, postedDate, postedDateString, content, commentAuthor));
     });
-    return Future.value(comments.isNotEmpty ? comments : null);
+    return Future.value(comments);
   } else {
     return Future.error('Could not access Royalroad');
   }
-}
-
-main() async {
-  final v = await getComments(301778);
-  print(v);
 }

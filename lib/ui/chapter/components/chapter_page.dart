@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart' show Html;
 import 'package:flutter_html/style.dart';
 import 'package:flutterroad/service_locator.dart';
-import 'package:flutterroad/services/localstorge_service.dart';
+import 'package:flutterroad/services/localstorage_service.dart';
 import 'package:flutterroad/ui/chapter/components/dialog_content.dart';
 import 'package:flutterroad/ui/constants.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
@@ -83,7 +83,7 @@ class _ChapterPageState extends State<ChapterPage> {
                         onTap: () => _showDialog(data.id)
                             .then((value) => _loadSharedPreferences()),
                         child: Padding(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                                 left: 15, right: 15, bottom: 15),
                             // useRichText fixes status screens, but is also ugly,
                             // just waiting on a fix from the library
@@ -118,7 +118,7 @@ class _ChapterPageState extends State<ChapterPage> {
 
   _buildTitle(title, {theme}) => Flexible(
       child: Padding(
-          padding: EdgeInsets.fromLTRB(15, 3, 15, 15),
+          padding: const EdgeInsets.fromLTRB(15, 3, 15, 15),
           child: Text(title,
               style: TextStyle(
                   // color is to make title slighty darker than the text in light mode
