@@ -87,11 +87,14 @@ class _DialogContentState extends State<DialogContent> {
   _buildFontOptionList() => MediaQuery.removePadding(
       context: context,
       removeTop: true,
-      child: ListView(shrinkWrap: true, children: <Widget>[
-        _buildFontListItem(0),
-        _buildFontListItem(1),
-        _buildFontListItem(2),
-      ]));
+      child: ListView(
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            _buildFontListItem(0),
+            _buildFontListItem(1),
+            _buildFontListItem(2),
+          ]));
 
   _buildFontListItem(index) => GestureDetector(
       onTap: () {
