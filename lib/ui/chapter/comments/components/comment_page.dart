@@ -127,18 +127,40 @@ class _CommentPageState extends State<CommentPage> {
                 ]),
           ));
 
+  // TODO: This was done in a non-mobile way. Change later
   _buildPageNumbers(int numPages) {
     var listWidgets = List<Widget>();
-    Iterable<int>.generate(numPages).toList().forEach((number) {
-      if (number < 4) if (number + 1 == _currentPage)
+    if (_currentPage != 1) {
+      listWidgets.add(_tappablePageNumber(_squarePageButton("«First"), 1));
+      if (_currentPage > 2)
+        listWidgets.add(
+            _tappablePageNumber(_squarePageButton("«Prev"), _currentPage - 1));
+    }
+
+    int beginRange;
+    int maxCutOffPage;
+    if (_currentPage >= 4) {
+      beginRange = _currentPage - 3;
+      maxCutOffPage = _currentPage + 2;
+    } else {
+      maxCutOffPage = 5;
+      beginRange = 0;
+    }
+
+    [for (var i = beginRange; i < numPages; i += 1) i].forEach((number) {
+      if (number < maxCutOffPage) if (number + 1 == _currentPage)
         listWidgets.add(_tappablePageNumber(
             _squarePageButton(number + 1, currentPage: true), number + 1));
       else
         listWidgets.add(
             _tappablePageNumber(_squarePageButton(number + 1), number + 1));
     });
-    listWidgets.add(_squarePageButton("Next"));
-    listWidgets.add(_squarePageButton("Last"));
+    if (_currentPage != numPages) {
+      listWidgets.add(
+          _tappablePageNumber(_squarePageButton("Next»"), _currentPage + 1));
+      listWidgets
+          .add(_tappablePageNumber(_squarePageButton("Last»"), numPages));
+    }
 
     listWidgets = listWidgets
         .map((e) => Padding(
@@ -148,8 +170,11 @@ class _CommentPageState extends State<CommentPage> {
         .toList();
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 0, 0, 2),
-      child: Row(children: listWidgets),
+      padding: const EdgeInsets.only(bottom: 3),
+      child: Row(
+        children: listWidgets,
+        mainAxisAlignment: MainAxisAlignment.center,
+      ),
     );
   }
 
@@ -158,7 +183,7 @@ class _CommentPageState extends State<CommentPage> {
           border: Border.all(),
           color: currentPage ? Colors.blue : null,
         ),
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(7.0),
         child: Text(item.toString()),
       );
 
