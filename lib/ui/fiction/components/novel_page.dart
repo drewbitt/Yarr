@@ -22,7 +22,7 @@ class NovelPage extends StatelessBookBase {
           Row(
             children: <Widget>[
               Padding(
-                  padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  padding: EdgeInsets.fromLTRB(10, 15, 0, 0),
                   child: Column(
                     children: <Widget>[getImage(height: 250.0)],
                   )),
