@@ -243,7 +243,6 @@ Future<ChapterComments> getComments(int id, {int page = 1}) async {
 
       final content =
           contentChildren.map((e) => e.innerHtml.trim()).join('<br><br>');
-      print(content);
 
       final commentAuthor = CommentAuthor(
           int.parse(element
