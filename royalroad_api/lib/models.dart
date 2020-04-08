@@ -57,6 +57,13 @@ class AuthorNote {
   AuthorNote(this.caption, this.noteBody);
 }
 
+class ChapterComments {
+  List<ChapterComment> comments;
+  int numPages;
+
+  ChapterComments(this.comments, this.numPages);
+}
+
 class ChapterComment {
   int id;
   DateTime postedDate;

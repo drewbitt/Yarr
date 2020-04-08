@@ -8,22 +8,41 @@ import 'package:royalroad_api/royalroad_api.dart';
 import '../../../../util.dart';
 import '../../../constants.dart';
 
-class CommentPage extends StatelessWidget {
+class CommentPage extends StatefulWidget {
   final int id;
 
   CommentPage(this.id);
 
   @override
+  State createState() => _CommentPageState(id);
+}
+
+class _CommentPageState extends State<CommentPage> {
+  final int id;
+  Future<ChapterComments> _futureChapterComments;
+
+  _CommentPageState(this.id);
+
+  int _currentPage;
+
+  @override
+  void initState() {
+    super.initState();
+    _futureChapterComments = getComments(id);
+    _currentPage = 1;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _theme = Provider.of<ThemeModel>(context);
-    return FutureBuilder<List<ChapterComment>>(
-        future: getComments(id),
+    return FutureBuilder<ChapterComments>(
+        future: _futureChapterComments,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               return Text("Error getting comments");
             } else if (snapshot.hasData) {
-              if (snapshot.data.length == 0) {
+              if (snapshot.data.comments.length == 0) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -36,25 +55,29 @@ class CommentPage extends StatelessWidget {
                   ],
                 );
               } else {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    BackButton(),
-                    Expanded(
-                      child: ListView.builder(
-                        physics: ClampingScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) {
-                          return _buildCommentBlock(snapshot.data[index],
-                              context: context, theme: _theme);
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    )
-                  ],
+                return SingleChildScrollView(
+                  physics: ScrollPhysics(),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        BackButton(),
+                        ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.comments.length,
+                          itemBuilder: (context, index) {
+                            return _buildCommentBlock(
+                                snapshot.data.comments[index],
+                                context: context,
+                                theme: _theme);
+                          },
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        if (snapshot.data.numPages != 1)
+                          _buildPageNumbers(snapshot.data.numPages)
+                      ]),
                 );
               }
             } else {
@@ -98,15 +121,58 @@ class CommentPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
                         child: Text(comment.content),
-                      )
+                      ),
                     ],
-                  ))
+                  )),
                 ]),
           ));
 
+  _buildPageNumbers(int numPages) {
+    var listWidgets = List<Widget>();
+    Iterable<int>.generate(numPages).toList().forEach((number) {
+      if (number < 4) if (number + 1 == _currentPage)
+        listWidgets.add(_tappablePageNumber(
+            _squarePageButton(number + 1, currentPage: true), number + 1));
+      else
+        listWidgets.add(
+            _tappablePageNumber(_squarePageButton(number + 1), number + 1));
+    });
+    listWidgets.add(_squarePageButton("Next"));
+    listWidgets.add(_squarePageButton("Last"));
+
+    listWidgets = listWidgets
+        .map((e) => Padding(
+              padding: const EdgeInsets.only(right: 3),
+              child: e,
+            ))
+        .toList();
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 0, 0, 2),
+      child: Row(children: listWidgets),
+    );
+  }
+
+  _squarePageButton(item, {currentPage = false}) => Container(
+        decoration: BoxDecoration(
+          border: Border.all(),
+          color: currentPage ? Colors.blue : null,
+        ),
+        padding: const EdgeInsets.all(10.0),
+        child: Text(item.toString()),
+      );
+
+  _tappablePageNumber(Widget child, int pageNum) => InkWell(
+        child: child,
+        onTap: () => setState(() {
+          _futureChapterComments = getComments(id, page: pageNum);
+          _currentPage = pageNum;
+        }),
+      );
+
   _buildLoader() => Center(
           child: CupertinoActivityIndicator(
-        radius: 15,
+        radius: centerLoadingSpinnerRadius,
       ));
 
   _getImage(url, {@required height}) => getImageUtil(url, height: height);

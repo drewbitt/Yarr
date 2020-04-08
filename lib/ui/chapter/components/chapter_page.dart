@@ -130,7 +130,7 @@ class _ChapterPageState extends State<ChapterPage> {
 
   _buildLoader() => Container(
       height: MediaQuery.of(context).size.height,
-      child: CupertinoActivityIndicator(radius: 15));
+      child: CupertinoActivityIndicator(radius: centerLoadingSpinnerRadius));
 
   _buildError() => Container(
       height: MediaQuery.of(context).size.height,

@@ -19,3 +19,5 @@ final dialogListItemIconSize = 28.0;
 final dialogListItemLeftPadding = 3.0;
 
 final imageSizeCommentAuthorAvatar = 60.0;
+
+final centerLoadingSpinnerRadius = 15.0;

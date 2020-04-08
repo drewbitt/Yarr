@@ -191,26 +191,22 @@ Future<List<FictionListResult>> getBestRatedFictions() async {
   }
 }
 
-// I wanted to write a method to get number of comments, but due to varying numbers of comments on pages,
-// it would be extremely inefficient to go to each page for the larger fictions
-
 bool _commentsHasNextPage(Document parsed) =>
     parsed.querySelector('li.page-active').nextElementSibling.hasContent();
 
 int _commentsGetLastPageNum(Document parsed) => int.parse(parsed
-    .querySelector('li.page-active')
-    .nextElementSibling
-    .nextElementSibling
-    .querySelector('a')
-    .attributes['onclick']
-    .split(', ')[1]
-    .split(')')[0]);
+    .querySelectorAll('li')
+    ?.last
+    ?.querySelector('a')
+    ?.attributes['onclick']
+    ?.split(', ')[1]
+    ?.split(')')[0]);
 
 /// Returns list of comments from a chapter id. Specify the page of comments
 /// using page. Returns empty list of no comments.
 // TODO: Track parent/children comments
 // TODO: Write test
-Future<List<ChapterComment>> getComments(int id, {int page = 1}) async {
+Future<ChapterComments> getComments(int id, {int page = 1}) async {
   final url = Base.baseUrl + '/fiction/chapter/$id/comments/$page';
   final response = await http.get(url, headers: {'User-Agent': Base.userAgent});
 
@@ -246,7 +242,9 @@ Future<List<ChapterComment>> getComments(int id, {int page = 1}) async {
       comments.add(ChapterComment(
           id, postedDate, postedDateString, content, commentAuthor));
     });
-    return Future.value(comments);
+
+    final numPages = _commentsGetLastPageNum(parsed);
+    return Future.value(ChapterComments(comments, numPages));
   } else {
     return Future.error('Could not access Royalroad');
   }
