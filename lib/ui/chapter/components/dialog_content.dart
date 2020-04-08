@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterroad/service_locator.dart';
 import 'package:flutterroad/services/localstorage_service.dart';
-import 'file:///C:/Users/andys-pc/GitHub/FlutterRoad/flutter_road/lib/ui/chapter/comments/chapter_comments.dart';
+import 'package:flutterroad/ui/chapter/comments/chapter_comments.dart';
 import 'package:flutterroad/ui/chapter/components/dialog_round_item.dart';
 import 'package:flutterroad/ui/constants.dart';
 
