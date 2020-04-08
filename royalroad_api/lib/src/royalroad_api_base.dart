@@ -194,13 +194,17 @@ Future<List<FictionListResult>> getBestRatedFictions() async {
 bool _commentsHasNextPage(Document parsed) =>
     parsed.querySelector('li.page-active').nextElementSibling.hasContent();
 
-int _commentsGetLastPageNum(Document parsed) => int.parse(parsed
-    .querySelectorAll('li')
-    ?.last
-    ?.querySelector('a')
-    ?.attributes['onclick']
-    ?.split(', ')[1]
-    ?.split(')')[0]);
+int _commentsGetLastPageNum(Document parsed) {
+  final first = parsed.querySelectorAll('li')?.last?.querySelector('a');
+
+  if (first != null && first.attributes.containsKey('onclick')) {
+    return int.parse(
+        first.attributes['onclick']?.split(', ')[1]?.split(')')[0]);
+  }
+  else {
+    return 1;
+  }
+}
 
 /// Returns list of comments from a chapter id. Specify the page of comments
 /// using page. Returns empty list of no comments.

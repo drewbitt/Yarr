@@ -109,15 +109,22 @@ class _CommentPageState extends State<CommentPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          comment.commentAuthor.name,
-                          style: TextStyle(
-                              color: theme.darkMode
-                                  ? darkModeTitleColor
-                                  : lightModeTitleColor),
-                        ),
-                      ),
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Flexible(
+                                child: Text(
+                                  comment.commentAuthor.name,
+                                  style: TextStyle(
+                                      color: theme.darkMode
+                                          ? darkModeTitleColor
+                                          : lightModeTitleColor),
+                                ),
+                              ),
+                              Text(comment.postedDateString, style: TextStyle(color: theme.darkMode ? darkModeIconColor: lightModeIconColor),)
+                            ],
+                          )),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
                         child: Text(comment.content),
