@@ -24,7 +24,7 @@ void main() {
       create: (_) => _model..init(),
       child: Consumer<ThemeModel>(builder: (context, model, child) {
         return MaterialApp(
-            title: "FlutterRoad", theme: model.theme, home: MyHome());
+            title: "Yarr", theme: model.theme, home: MyHome());
       })));
 }
 
@@ -48,7 +48,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("FlutterRoad"),
+          title: Text("Yarr"),
           actions: <Widget>[
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),

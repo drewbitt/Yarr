@@ -1,14 +1,10 @@
-# FlutterRoad
+# Yarr
 
 Unofficial RoyalRoad client for iOS and Android.
 
 ## Introduction
 
-This started as a first project for me in Flutter, going in blind. RR doesn't have an app (yet), so it was a great opportunity. You can browse the top trending, popular, and highly rated fictions as well as search for fictions, as well as change the font size, type, and dark/light mode. Further development will be to convert the project to use proper design patterns. An app-based library and progress feature may be in scope in the future, but I am unsure if login/follow list/reading progress updates with a RR account are in scope.
-
-### Built With
-
-[Flutter](https://github.com/flutter/flutter)
+This started as a first project for me in Flutter, going in blind. RR doesn't have an app (yet), so it was a great opportunity. You can browse the top trending, popular, and highly rated fictions, read chapter comments, search for fictions, and even change the font size, type, and dark/light mode. Further development will be to convert the project to use proper design patterns. An app-based library and progress feature may be in scope in the future, but I am unsure if login/follow list/reading progress updates with a RR account are in scope.
 
 ## Getting Started
 
@@ -39,7 +35,7 @@ flutter run
 
 ## Roadmap
 
-See the [open issues](https://gitgud.io/drewbitt/flutterroad/issues) for a list of proposed features and known issues.
+See the [open issues](https://gitgud.io/drewbitt/Yarr/issues) for a list of proposed features and known issues.
 
 ## Contributing
 
@@ -49,6 +45,6 @@ Run dartfmt on all code
 
 ## Contact
 
-Project Link: [https://gitgud.io/drewbitt/flutterroad](https://gitgud.io/drewbitt/flutterroad)
+Project Link: [https://gitgud.io/drewbitt/yarr](https://gitgud.io/drewbitt/yarr)
 
-Mirrored to: [https://github.com/drewbitt/FlutterRoad](https://github.com/drewbitt/FlutterRoad)
+Mirrored to: [https://github.com/drewbitt/Yarr](https://github.com/drewbitt/Yarr)
