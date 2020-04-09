@@ -35,7 +35,7 @@ flutter run
 
 ## License
 
-[MIT](LICENSE)
+[MPL 2.0](LICENSE)
 
 ## Roadmap
 
