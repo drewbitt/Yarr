@@ -9,5 +9,6 @@ abstract class StatelessBookBase extends StatelessWidget {
 
   /// Returns book cover image from network resized to height, utilizing cache if available
   /// Returns loading spinner while loading. If error, returns error icon with onTap to retry.
-  ExtendedImage getImage({height=100.0}) => getImageUtil(this.book.book.imageUrl, height: height);
+  ExtendedImage getImage({height = 100.0}) =>
+      getImageUtil(this.book.book.imageUrl, height: height);
 }

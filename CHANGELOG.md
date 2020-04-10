@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.5
+
+### Added
+
+- App icon
+- Chapter comments in API & UI
+
+### Changed
+- Fixed iOS related bugs:
+  - Fixed too much padding at bottom of font list
+  - Fixed cupertino widgets (spinner) not being light enough in dark mode
+- Change app name to Yarr
+- Tapping on item's padding in chapter list now goes to chapter
+
 ## 0.3.1
 
 ### Changed

@@ -106,26 +106,25 @@ class ChapterListState extends State<ChapterList> {
       bool reverse}) {
     // fullChapterList used for swiping between pages past the preview pages
     final isPreview = chapterList.length != fullChapterList.length && reverse;
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 13),
-        child: InkWell(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Flexible(
-                  child: Text(chapterList[index].name,
-                      overflow: TextOverflow.ellipsis)),
-              Text(chapterList[index].releaseDateString + "ago")
-            ],
-          ),
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => _buildPageView(fullChapterList,
-                    startChapterIndex: isPreview
-                        ? translateListIndex(index, fullChapterList.length)
-                        : index)));
-          },
-        ));
+    return InkWell(
+        child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 13),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                    child: Text(chapterList[index].name,
+                        overflow: TextOverflow.ellipsis)),
+                Text(chapterList[index].releaseDateString + "ago")
+              ],
+            )),
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => _buildPageView(fullChapterList,
+                  startChapterIndex: isPreview
+                      ? translateListIndex(index, fullChapterList.length)
+                      : index)));
+        });
   }
 
   _buildPageView(List<ChapterDetails> fullChapterList,

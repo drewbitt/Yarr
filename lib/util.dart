@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 /// Utilizes cache if available
 /// Returns loading spinner while loading. If error, returns error icon with onTap to retry.
-ExtendedImage getImageUtil(url, {height=100.0}) => ExtendedImage.network(
+ExtendedImage getImageUtil(url, {height = 100.0}) => ExtendedImage.network(
       url,
       height: height,
       scale: 0.1, // resizes images if too small

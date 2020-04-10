@@ -21,7 +21,8 @@ class HomeTab extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-                padding: const EdgeInsets.only(top: 10), child: _bigFictionList()),
+                padding: const EdgeInsets.only(top: 10),
+                child: _bigFictionList()),
             Padding(
                 padding: const EdgeInsets.fromLTRB(10, 13, 10, 0),
                 child: Text("Trending Fictions: ",

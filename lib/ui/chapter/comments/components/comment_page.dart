@@ -123,12 +123,21 @@ class _CommentPageState extends State<CommentPage> {
                                           : lightModeTitleColor),
                                 ),
                               ),
-                              Text(comment.postedDateString, style: TextStyle(color: theme.darkMode ? darkModeIconColor: lightModeIconColor),)
+                              Text(
+                                comment.postedDateString,
+                                style: TextStyle(
+                                    color: theme.darkMode
+                                        ? darkModeIconColor
+                                        : lightModeIconColor),
+                              )
                             ],
                           )),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                        child: Html(data: comment.content, useRichText: true,), // useRichText fixes bullet points not displaying
+                        child: Html(
+                          data: comment.content,
+                          useRichText: true,
+                        ), // useRichText fixes bullet points not displaying
                       ),
                     ],
                   )),
@@ -172,7 +181,7 @@ class _CommentPageState extends State<CommentPage> {
 
     listWidgets = listWidgets
         .map((e) => Padding(
-              padding: const EdgeInsets.only(right: 3),
+              padding: const EdgeInsets.only(right: 4.0),
               child: e,
             ))
         .toList();
@@ -191,7 +200,7 @@ class _CommentPageState extends State<CommentPage> {
           border: Border.all(),
           color: currentPage ? Colors.blue : null,
         ),
-        padding: const EdgeInsets.all(7.0),
+        padding: const EdgeInsets.all(9.0),
         child: Text(item.toString()),
       );
 

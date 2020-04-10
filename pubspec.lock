@@ -369,7 +369,7 @@ packages:
       path: royalroad_api
       relative: true
     source: path
-    version: "0.2.2"
+    version: "0.3.0"
   screen:
     dependency: transitive
     description:
