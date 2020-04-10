@@ -200,7 +200,7 @@ class _CommentPageState extends State<CommentPage> {
           border: Border.all(),
           color: currentPage ? Colors.blue : null,
         ),
-        padding: const EdgeInsets.all(9.0),
+        padding: const EdgeInsets.all(8.2),
         child: Text(item.toString()),
       );
 

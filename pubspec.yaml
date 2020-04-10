@@ -15,7 +15,7 @@ version: 0.3.5
 
 environment:
   sdk: ">=2.5.2 <3.0.0"
-  flutter: ^0.17.0  # temporary requirement due to workaround for animation depreciation
+  flutter: ^1.17.0  # temporary requirement due to workaround for animation depreciation
 
 dependencies:
   flutter:
