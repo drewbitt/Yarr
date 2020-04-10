@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.6
+
+### Changed
+
+- Fixed typo of minimum flutter version in pubspec.yaml
+- Fixed border in iOS app icon
+- Reduced padding of chapter comment page numbers to not overflow on smaller devices
+
 ## 0.3.5
 
 ### Added
@@ -8,6 +16,7 @@
 - Chapter comments in API & UI
 
 ### Changed
+
 - Fixed iOS related bugs:
   - Fixed too much padding at bottom of font list
   - Fixed cupertino widgets (spinner) not being light enough in dark mode
