@@ -17,7 +17,7 @@ devices:
   ios:
     iPhone Xs Max:
   android:
-    Pixel_3a_API_29_x86:
+    Nexus 6P:
       frame: false
 
 # Frame screenshots

@@ -27,6 +27,11 @@ void main() {
       }
     });
 
+    test('check flutter driver extension', () async {
+      final health = await driver.checkHealth();
+      print(health.status);
+    });
+
     test('Scr home light', () async {
       await Future.delayed(const Duration(seconds: 2), (){});
       await screenshot(driver, config, 'HomeScrLight');
