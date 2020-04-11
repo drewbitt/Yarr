@@ -90,6 +90,8 @@ class _DialogContentState extends State<DialogContent> {
       child: ListView(
           shrinkWrap: true,
           padding: EdgeInsets.zero,
+          // TODO: Since not scrollable, convert to Column?
+          physics: NeverScrollableScrollPhysics(),
           children: <Widget>[
             _buildFontListItem(0),
             _buildFontListItem(1),
