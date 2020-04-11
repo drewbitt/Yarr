@@ -54,7 +54,7 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: InkWell(
-                    child: Icon(Icons.settings),
+                    child: Icon(Icons.settings, key: Key("settings"),),
                     onTap: () {
                       Navigator.of(context).push(
                           MaterialPageRoute(builder: (context) => Settings()));

@@ -51,6 +51,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.7.3"
+  test: any
+  screenshots: "^2.1.1"
+  flutter_driver:
+    sdk: flutter
 
 dependency_overrides:
   flutter_svg: '^0.17.2'  # have to manually override for flutter ^1.6.7 because it's not
