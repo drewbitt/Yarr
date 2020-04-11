@@ -15,7 +15,7 @@ class SearchTab extends StatelessWidget {
           headerPadding: const EdgeInsets.symmetric(horizontal: 10),
           listPadding: const EdgeInsets.symmetric(horizontal: 10),
           onSearch: searchFiction,
-          placeHolder: Center(child: Text('Search for a novel')),
+          placeHolder: Center(child: Text('Search for a fiction')),
           cancellationWidget: Text("Cancel"),
           emptyWidget: Center(child: Text('No results')),
           debounceDuration: Duration(milliseconds: 800), // default is 500

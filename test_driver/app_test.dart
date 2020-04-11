@@ -63,10 +63,12 @@ void main() {
       await screenshot(driver, config, 'SearchScrResultDark');
     });
 
-    test('Navigate search & screenshot dark', () async {
+    test('Navigate to search & screenshot dark', () async {
       // Cancel search to get to default screen
       final cancelButton = find.text('Cancel');
       await driver.tap(cancelButton);
+      // On Android, this screenshot does not look good due to
+      // the textfield being focused
       await screenshot(driver, config, 'SearchScrDark');
     });
 
