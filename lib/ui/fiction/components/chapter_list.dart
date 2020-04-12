@@ -107,6 +107,7 @@ class ChapterListState extends State<ChapterList> {
     // fullChapterList used for swiping between pages past the preview pages
     final isPreview = chapterList.length != fullChapterList.length && reverse;
     return InkWell(
+        key: Key('chapterList_item_$index'),
         child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 13),
             child: Row(
@@ -145,6 +146,7 @@ class ChapterListState extends State<ChapterList> {
         shrinkWrap: true,
         reverse: reverse,
         physics: ClampingScrollPhysics(),
+        key: Key("chapterList"),
         itemCount: chapterList.length,
         itemBuilder: (context, index) {
           return _buildChapterEntry(chapterList,

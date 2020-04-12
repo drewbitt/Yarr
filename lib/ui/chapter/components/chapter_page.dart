@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' show CupertinoActivityIndicator;
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart' show Html;
 import 'package:flutter_html/style.dart';
@@ -93,6 +93,7 @@ class _ChapterPageState extends State<ChapterPage> {
                                   _htmlAuthorNote(data.beginNote,
                                       theme: _theme),
                                 Html(
+                                  key: Key("chapter_contents"),
                                   data: data.contents,
                                   useRichText: true,
                                   defaultTextStyle: TextStyle(

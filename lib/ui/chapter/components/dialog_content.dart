@@ -130,6 +130,7 @@ class _DialogContentState extends State<DialogContent> {
       ))));
 
   _buildCommentsOption(int id) => ListTile(
+      key: Key("chapter_comments_btn"),
       leading: Icon(Icons.comment, size: dialogListItemIconSize),
       title: Text('Chapter Comments'),
       onTap: () => _goToChapterComments());
