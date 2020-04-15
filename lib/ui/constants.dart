@@ -12,9 +12,10 @@ final dialogItemBackgroundLight = Colors.grey[300];
 final fontSizeHeroNovelTitle = 22.0;
 final fontSizeHomeHeader = 20.0;
 final fontSizeMain = 15.0;
+final fontSizeChapterReader = 19.0;
 final fontSizeNovelTitle = 19.0;
 final fontSizeNovelSlideUpTitle = 18.0;
-final fontSizeChapterLineHeight = 5.0; // this is a modifier
+final fontSizeChapterLineHeight = 1.75; // this is a modifier
 
 final dialogListItemIconSize = 28.0;
 final dialogListItemLeftPadding = 3.0;

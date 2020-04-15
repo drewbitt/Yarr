@@ -44,10 +44,10 @@ class _ChapterPageState extends State<ChapterPage> {
         _fontSizeTitle = _prefs.fontSize + 5;
       });
     } else {
-      _prefs.fontSize = 16;
+      _prefs.fontSize = fontSizeChapterReader.toInt();
       setState(() {
-        _fontSize = 16;
-        _fontSizeTitle = 16 + 5;
+        _fontSize = fontSizeChapterReader.toInt();
+        _fontSizeTitle = fontSizeChapterReader.toInt() + 5;
       });
     }
 
