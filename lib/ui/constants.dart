@@ -14,6 +14,7 @@ final fontSizeHomeHeader = 20.0;
 final fontSizeMain = 15.0;
 final fontSizeNovelTitle = 19.0;
 final fontSizeNovelSlideUpTitle = 18.0;
+final fontSizeChapterLineHeight = 5.0; // this is a modifier
 
 final dialogListItemIconSize = 28.0;
 final dialogListItemLeftPadding = 3.0;
@@ -21,3 +22,5 @@ final dialogListItemLeftPadding = 3.0;
 final imageSizeCommentAuthorAvatar = 60.0;
 
 final centerLoadingSpinnerRadius = 15.0;
+
+final chapterSidePadding = 20.0;

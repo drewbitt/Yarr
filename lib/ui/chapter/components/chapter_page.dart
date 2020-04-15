@@ -83,8 +83,8 @@ class _ChapterPageState extends State<ChapterPage> {
                         onTap: () => _showDialog(data.id)
                             .then((value) => _loadSharedPreferences()),
                         child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 15, right: 15, bottom: 15),
+                            padding: EdgeInsets.only(
+                                left: chapterSidePadding, right: chapterSidePadding, bottom: 15),
                             // useRichText fixes status screens, but is also ugly,
                             // just waiting on a fix from the library
                             child: Column(
@@ -98,6 +98,7 @@ class _ChapterPageState extends State<ChapterPage> {
                                   useRichText: true,
                                   defaultTextStyle: TextStyle(
                                       fontSize: _fontSize.toDouble(),
+                                      height: fontSizeChapterLineHeight,
                                       fontFamily: _fontFamily),
                                 ),
                                 if (data.endNote != null)
@@ -119,7 +120,7 @@ class _ChapterPageState extends State<ChapterPage> {
 
   _buildTitle(title, {theme}) => Flexible(
       child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 3, 15, 15),
+          padding: EdgeInsets.fromLTRB(chapterSidePadding, 3, 15, chapterSidePadding),
           child: Text(title,
               style: TextStyle(
                   // color is to make title slighty darker than the text in light mode

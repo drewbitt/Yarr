@@ -12,6 +12,10 @@ Home -> Search Empty -> Search completed -> Fiction -> Chapter ->
 Tap (bring up options) -> Chapter comments -> Back x3 -> Settings ->
 Settings go Dark Mode -> Back -> Home -> Cancel search -> Search completed ->
 Fiction -> Chapter -> Tap (bring up options) -> Chapter comments
+
+Note: Does not work. Issues with tapping html to bring up options.
+That only works if scrolling manually. Scroll command does not actually scroll.
+Then, bug when dismissing options popup.
  */
 
 void main() {
@@ -80,14 +84,15 @@ void main() {
     });
 
     test('Open chapter options & screenshot', () async {
-      final html = find.byValueKey('chapter_contents');
-      // tap taps on center, so have to move to center
-      final center = await driver.getCenter(html);
-      print(center.dx);
-      print(center.dy);
-      await driver.scroll(html, 0, -center.dy, Duration(seconds: 2));
-      await driver.tap(html);
-      await screenshot(driver, config, 'ChapterOptionsScrLight');
+      driver.runUnsynchronized(() async {
+        final html = find.byValueKey('chapter_contents');
+        await driver.waitFor(html).then((value) => "Found HTML");
+        // tap taps on center, so have to move to center
+        final center = await driver.getCenter(html);
+        await driver.scroll(html, 0, -center.dy, Duration(milliseconds: 200)).then((value) => print("Scrolled"));
+        await driver.tap(html);
+        await screenshot(driver, config, 'ChapterOptionsScrLight');
+      });
     });
 
     test('Chapter comments & screenshot', () async {
@@ -99,6 +104,10 @@ void main() {
 
     test('Go back to main tabs', () async {
       await driver.tap(find.byTooltip('Back'));
+      // close alert dialog - does not work
+      await driver.tap(find.byType('ModalBarrier'));
+      // scroll up to back button
+      await driver.scrollIntoView(find.byTooltip('Back'));
       await driver.tap(find.byTooltip('Back'));
       await driver.tap(find.byTooltip('Back'));
     });
@@ -157,7 +166,25 @@ void main() {
       await screenshot(driver, config, 'ChapterScrTextLight');
     });
 
-    // Rest go here after I fix options dialog bug
+    // Broken below
+    test('Open chapter options & screenshot', () async {
+      driver.runUnsynchronized(() async {
+        final html = find.byValueKey('chapter_contents');
+        await driver.waitFor(html).then((value) => "Found HTML");
+        // tap taps on center, so have to move to center
+        final center = await driver.getCenter(html);
+        await driver.scroll(html, 0, -center.dy, Duration(milliseconds: 200)).then((value) => print("Scrolled"));
+        await driver.tap(html);
+        await screenshot(driver, config, 'ChapterOptionsScrLight');
+      });
+    });
+
+    test('Chapter comments & screenshot', () async {
+      final commentButton = find.byValueKey('chapter_comments_btn');
+      await driver.tap(commentButton);
+      await Future.delayed(const Duration(seconds: 2), () {});
+      await screenshot(driver, config, 'ChapterCommentsScrLight');
+    });
 
     /*
     test('', () async {
