@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.3.7
+
+### Changed
+
+- Increase default font size on reader
+- Increase line height on reader
+- Increase side padding on reader
+- Remove scrolling in font list
+
+### Added
+
+- Added clear cache button
+- Add some integration tests that take screenshots (broken without manual intervention)
+- Added proguard rules on Android (did not decrease size AFAIK)
+
 ## 0.3.6
 
 ### Changed

@@ -11,7 +11,7 @@ description: Unofficial Royalroad client
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.3.6
+version: 0.3.7
 
 environment:
   sdk: ">=2.5.2 <3.0.0"
@@ -35,9 +35,7 @@ dependencies:
   no_scroll_glow: ^0.1.0
   url_launcher: ^5.4.2
   # temporary fix https://github.com/fluttercandies/extended_image/issues/160
-  extended_image:
-    git:
-      url: git://github.com/jonataslaw/extended_image.git
+  extended_image: ^0.7.3-dev
   slide_popup_dialog: ^0.0.2
   shared_preferences: ^0.5.6+3
   get_it: ^4.0.1

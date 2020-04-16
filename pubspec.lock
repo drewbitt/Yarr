@@ -7,14 +7,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.39.6"
+    version: "0.39.7"
   archive:
     dependency: transitive
     description:
@@ -123,12 +123,10 @@ packages:
   extended_image:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "188e1cb3081c63a25c2d9560e985c01099fc0447"
-      url: "git://github.com/jonataslaw/extended_image.git"
-    source: git
-    version: "0.7.2"
+      name: extended_image
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.3-dev"
   extended_image_library:
     dependency: transitive
     description:
@@ -165,7 +163,7 @@ packages:
     description:
       path: "."
       ref: new-parser
-      resolved-ref: b5046d9dbed099b89ccb5b022dddf0c3f05063a5
+      resolved-ref: "77bd4604492652fcd77eda718ec5ff739c11a085"
       url: "git://github.com/Sub6Resources/flutter_html"
     source: git
     version: "1.0.0-pre.1"
@@ -776,7 +774,7 @@ packages:
       name: vm_service
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "4.0.1"
   vm_service_client:
     dependency: transitive
     description:
