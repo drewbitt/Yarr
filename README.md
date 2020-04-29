@@ -1,5 +1,8 @@
 # Yarr
 
+[<img src="https://raw.githubusercontent.com/steverichey/google-play-badge-svg/master/img/en_get.svg" alt="Google Play Logo" width="250">
+](https://play.google.com/store/apps/details?id=com.drewbitt.yarr&hl=en_US)
+
 Unofficial RoyalRoad client for iOS and Android.
 
 ## Introduction
