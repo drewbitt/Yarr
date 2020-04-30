@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.3.8
+
+### Fixed
+
+- Now adding a fixed category! Fixed
+- Fixed date errors preventing chapters from loading and now preventing that from happening again
+
+### Changed
+
+- Using hacky provider implementation for a single future in order to get author
+
+### Added
+
+- Show author on fiction page
+
 ## 0.3.7
 
 ### Changed
