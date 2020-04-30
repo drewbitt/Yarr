@@ -71,7 +71,7 @@ Future<FictionDetails> getFictionDetails(String book_url) async {
     for (var i in entry) {
       var chapter = i.querySelector('a[href]');
 
-      final dFormat = DateFormat('EEEE, d MMMM y H:m');
+      final dFormat = DateFormat('EEEE, MMMM d, y H:m');
       final date = dFormat.parse(i.querySelector('time').attributes['title']);
       final dateToString = i.querySelector('time').text;
 

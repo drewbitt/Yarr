@@ -9,19 +9,11 @@ import 'package:royalroad_api/models.dart' show FictionDetails, ChapterDetails;
 import 'package:provider/provider.dart';
 
 class ChapterList extends StatefulWidget {
-  final Future<FictionDetails> chapterFuture;
-
-  ChapterList(this.chapterFuture);
-
   @override
-  State<StatefulWidget> createState() => _ChapterListState(this.chapterFuture);
+  State<StatefulWidget> createState() => _ChapterListState();
 }
 
 class _ChapterListState extends State<ChapterList> {
-  final Future<FictionDetails> chapterFuture;
-
-  _ChapterListState(this.chapterFuture);
-
   var _reverseList = false;
   PageController _pageController;
 
@@ -41,7 +33,7 @@ class _ChapterListState extends State<ChapterList> {
   Widget build(BuildContext context) {
     final _theme = Provider.of<ThemeModel>(context);
     return FutureBuilder<FictionDetails>(
-      future: chapterFuture,
+      future: Future.value(Provider.of<FictionDetails>(context)),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {

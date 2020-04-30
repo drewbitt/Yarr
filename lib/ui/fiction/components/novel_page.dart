@@ -5,7 +5,8 @@ import 'package:flutterroad/ui/constants.dart';
 import 'package:flutterroad/ui/fiction/components/chapter_list.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
-import 'package:royalroad_api/models.dart' show FictionListResult;
+import 'package:royalroad_api/models.dart'
+    show FictionListResult, FictionDetails;
 import 'package:royalroad_api/royalroad_api.dart' show getFictionDetails;
 
 class NovelPage extends StatelessBookBase {
@@ -16,26 +17,29 @@ class NovelPage extends StatelessBookBase {
   @override
   Widget build(BuildContext context) {
     final _theme = Provider.of<ThemeModel>(context);
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 15, 0, 0),
-                  child: Column(
-                    children: <Widget>[getImage(height: 250.0)],
-                  )),
-              _buildTitleAuthor(theme: _theme)
-            ],
-          ),
-          SizedBox(height: 6), // Padding
-          _buildDescription(book, theme: _theme),
-          ChapterList(getFictionDetails(this.book.book.url)),
-        ]);
+    return FutureProvider<FictionDetails>(
+      create: (_) => getFictionDetails(this.book.book.url),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 15, 0, 0),
+                    child: Column(
+                      children: <Widget>[getImage(height: 250.0)],
+                    )),
+                _buildTitleAuthor(theme: _theme, context: context)
+              ],
+            ),
+            SizedBox(height: 6), // Padding
+            _buildDescription(book, theme: _theme),
+            ChapterList(),
+          ]),
+    );
   }
 
-  _buildTitleAuthor({theme}) => Flexible(
+  _buildTitleAuthor({theme, context}) => Flexible(
           child: Padding(
         padding: const EdgeInsets.only(left: 15, right: 6),
         child: Column(
@@ -48,7 +52,19 @@ class NovelPage extends StatelessBookBase {
                     fontSize: fontSizeNovelTitle),
                 maxLines: 7,
                 overflow: TextOverflow.ellipsis),
-            // add author here
+            SizedBox(height: 5),
+            Consumer<FictionDetails>(builder: (context, value, child) {
+              if (value != null)
+                return Text("Author: " + value.author,
+                    style: TextStyle(
+                        color: theme.darkMode
+                            ? darkModeTitleColor
+                            : lightModeTitleColor,
+                        fontSize: fontSizeMain),
+                    maxLines: 7,
+                    overflow: TextOverflow.ellipsis);
+              return SizedBox.shrink();
+            })
           ],
         ),
       ));

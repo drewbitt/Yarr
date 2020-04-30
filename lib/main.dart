@@ -2,12 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterroad/providers.dart';
 import 'package:flutterroad/service_locator.dart';
-import 'package:flutterroad/ui/constants.dart';
 import 'package:flutterroad/ui/settings.dart';
 import 'package:flutterroad/ui/tabs/home_tab.dart';
 import 'package:flutterroad/ui/tabs/search_tab.dart';
-import 'package:persist_theme/data/models/theme_model.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
