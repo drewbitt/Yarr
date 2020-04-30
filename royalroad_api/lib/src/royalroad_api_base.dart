@@ -4,7 +4,7 @@ import 'package:html/parser.dart' show parse;
 import 'package:intl/intl.dart';
 import 'package:royalroad_api/models.dart';
 import 'package:royalroad_api/src/util.dart'
-    show SearchInfo, absolute_url, clean_contents;
+    show SearchInfo, absolute_url, clean_contents, tryAndDefault;
 
 class Base {
   static const baseUrl = 'https://www.royalroad.com';
@@ -72,7 +72,9 @@ Future<FictionDetails> getFictionDetails(String book_url) async {
       var chapter = i.querySelector('a[href]');
 
       final dFormat = DateFormat('EEEE, MMMM d, y H:m');
-      final date = dFormat.parse(i.querySelector('time').attributes['title']);
+      final date = tryAndDefault(
+          () => dFormat.parse(i.querySelector('time').attributes['title']),
+          DateTime.now());
       final dateToString = i.querySelector('time').text;
 
       listChapters.add(ChapterDetails(chapter.text.trim(),
@@ -219,8 +221,10 @@ Future<ChapterComments> getComments(int id, {int page = 1}) async {
     var comments = <ChapterComment>[];
     parsed.querySelectorAll('div.media.media-v2').forEach((element) {
       final id = int.parse(element.querySelector('a').id.split('-')[1]);
-      final postedDate = DateFormat('EEEE, d MMMM y H:m')
-          .parse(element.querySelector('time').attributes['title']);
+      final postedDate = tryAndDefault(
+          () => DateFormat('EEEE, MMMM d, y H:m')
+              .parse(element.querySelector('time').attributes['title']),
+          DateTime.now());
       final postedDateString = element.querySelector('time').text + 'ago';
 
       // clone so that doesn't effect comment author parsing

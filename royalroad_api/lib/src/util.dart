@@ -97,3 +97,13 @@ String clean_contents(Element div) {
   // Remove the div reference
   return strElements.toString();
 }
+
+dynamic tryAndDefault(dynamic Function() ele, dynamic defaultValue) {
+  try {
+    return ele();
+  }
+  catch (err){
+    print(err);
+    return defaultValue;
+  }
+}
