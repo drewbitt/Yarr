@@ -15,7 +15,7 @@ version: 0.3.8
 
 environment:
   sdk: ">=2.5.2 <3.0.0"
-  flutter: ^1.17.0  # temporary requirement due to workaround for animation depreciation
+  flutter: ^1.6.0
 
 dependencies:
   flutter:
@@ -53,10 +53,6 @@ dev_dependencies:
   screenshots: "^2.1.1"
   flutter_driver:
     sdk: flutter
-
-dependency_overrides:
-  flutter_svg: '^0.17.2'  # have to manually override for flutter ^1.6.7 because it's not
-  # recognizing 0.17.2 as valid with flutter_html specifying ^0.14.4 for some reason
 
 flutter_icons:
   android: "launcher_icon"
