@@ -43,6 +43,7 @@ class NovelPage extends StatelessBookBase {
           child: Padding(
         padding: const EdgeInsets.only(left: 15, right: 6),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(this.book.book.title,
                 style: TextStyle(
