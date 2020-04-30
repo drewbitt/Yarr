@@ -16,6 +16,23 @@ class ChapterList extends StatefulWidget {
 class _ChapterListState extends State<ChapterList> {
   var _reverseList = false;
   PageController _pageController;
+  FictionDetails _fictionDetails;
+  Future<FictionDetails> _fictionDetailsFuture;
+
+  // Provider made this terrible, mainly because it doesn't give you a future
+  // and I had already wrote loading/error code that I didn't want to rewrite
+  // Avoid in future and just use FutureBuilder on a future in state
+
+  // Can't access Provider in initState, have to have future in state else
+  // FutureBuilder reloads too often, you see where this is going
+  didChangeDependencies() {
+    super.didChangeDependencies();
+    final value = Provider.of<FictionDetails>(context);
+    if (value != this._fictionDetails) {
+      this._fictionDetails = value;
+      this._fictionDetailsFuture = Future.sync(() => this._fictionDetails);
+    }
+  }
 
   @override
   void dispose() {
@@ -33,7 +50,7 @@ class _ChapterListState extends State<ChapterList> {
   Widget build(BuildContext context) {
     final _theme = Provider.of<ThemeModel>(context);
     return FutureBuilder<FictionDetails>(
-      future: Future.value(Provider.of<FictionDetails>(context)),
+      future: _fictionDetailsFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
