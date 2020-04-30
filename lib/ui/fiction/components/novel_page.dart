@@ -26,18 +26,7 @@ class NovelPage extends StatelessBookBase {
                   child: Column(
                     children: <Widget>[getImage(height: 250.0)],
                   )),
-              Flexible(
-                  child: Padding(
-                padding: const EdgeInsets.only(left: 15, right: 6),
-                child: Text(this.book.book.title,
-                    style: TextStyle(
-                        color: _theme.darkMode
-                            ? darkModeTitleColor
-                            : lightModeTitleColor,
-                        fontSize: fontSizeNovelTitle),
-                    maxLines: 7,
-                    overflow: TextOverflow.ellipsis),
-              ))
+              _buildTitleAuthor(theme: _theme)
             ],
           ),
           SizedBox(height: 6), // Padding
@@ -45,21 +34,40 @@ class NovelPage extends StatelessBookBase {
           ChapterList(getFictionDetails(this.book.book.url)),
         ]);
   }
+
+  _buildTitleAuthor({theme}) => Flexible(
+          child: Padding(
+        padding: const EdgeInsets.only(left: 15, right: 6),
+        child: Column(
+          children: <Widget>[
+            Text(this.book.book.title,
+                style: TextStyle(
+                    color: theme.darkMode
+                        ? darkModeTitleColor
+                        : lightModeTitleColor,
+                    fontSize: fontSizeNovelTitle),
+                maxLines: 7,
+                overflow: TextOverflow.ellipsis),
+            // add author here
+          ],
+        ),
+      ));
+
+  _buildDescription(book, {theme}) => Container(
+      padding: const EdgeInsets.all(10),
+      child: ExpandablePanel(
+          header:
+              Text('Description', style: TextStyle(fontSize: fontSizeMain + 1)),
+          collapsed: _buildDescriptionText(book.info.description,
+              overflow: TextOverflow.ellipsis, maxLines: 7),
+          expanded: _buildDescriptionText(book.info.description),
+          theme: ExpandableThemeData(
+              headerAlignment: ExpandablePanelHeaderAlignment.center,
+              iconColor:
+                  theme.darkMode ? darkModeIconColor : lightModeIconColor)));
+
+  _buildDescriptionText(text, {TextOverflow overflow, int maxLines}) => Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child:
+          Text(text, softWrap: true, maxLines: maxLines, overflow: overflow));
 }
-
-_buildDescription(book, {theme}) => Container(
-    padding: const EdgeInsets.all(10),
-    child: ExpandablePanel(
-        header:
-            Text('Description', style: TextStyle(fontSize: fontSizeMain + 1)),
-        collapsed: _buildDescriptionText(book.info.description,
-            overflow: TextOverflow.ellipsis, maxLines: 7),
-        expanded: _buildDescriptionText(book.info.description),
-        theme: ExpandableThemeData(
-            headerAlignment: ExpandablePanelHeaderAlignment.center,
-            iconColor:
-                theme.darkMode ? darkModeIconColor : lightModeIconColor)));
-
-_buildDescriptionText(text, {TextOverflow overflow, int maxLines}) => Padding(
-    padding: const EdgeInsets.only(top: 10),
-    child: Text(text, softWrap: true, maxLines: maxLines, overflow: overflow));

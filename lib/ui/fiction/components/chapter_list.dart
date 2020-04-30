@@ -14,13 +14,13 @@ class ChapterList extends StatefulWidget {
   ChapterList(this.chapterFuture);
 
   @override
-  State<StatefulWidget> createState() => ChapterListState(this.chapterFuture);
+  State<StatefulWidget> createState() => _ChapterListState(this.chapterFuture);
 }
 
-class ChapterListState extends State<ChapterList> {
+class _ChapterListState extends State<ChapterList> {
   final Future<FictionDetails> chapterFuture;
 
-  ChapterListState(this.chapterFuture);
+  _ChapterListState(this.chapterFuture);
 
   var _reverseList = false;
   PageController _pageController;
