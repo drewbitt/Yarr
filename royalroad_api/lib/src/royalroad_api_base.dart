@@ -41,7 +41,7 @@ List<FictionListResult> _getBookList(Document parsed) {
 }
 
 Future<List<FictionListResult>> searchFiction(String searchTerm) async {
-  searchTerm = searchTerm.replaceAll(' ', '+');
+  searchTerm = searchTerm.trim().replaceAll(' ', '+');
   // Can also search for keyword instead of title?
   final url = Base.baseUrl + '/fictions/search?title=' + searchTerm;
 
@@ -210,7 +210,6 @@ int _commentsGetLastPageNum(Document parsed) {
 /// Returns list of comments from a chapter id. Specify the page of comments
 /// using page. Returns empty list of no comments.
 // TODO: Track parent/children comments
-// TODO: Write test
 Future<ChapterComments> getComments(int id, {int page = 1}) async {
   final url = Base.baseUrl + '/fiction/chapter/$id/comments/$page';
   final response = await http.get(url, headers: {'User-Agent': Base.userAgent});
@@ -241,7 +240,9 @@ Future<ChapterComments> getComments(int id, {int page = 1}) async {
       // Throws unimplemented error for some reason. Alternative:
       contentChildren.forEach((element) {
         if (element.text.trim().isEmpty) {
-          element.remove();
+          if (element.children.isEmpty) {
+            element.remove();
+          }
         }
       });
 
