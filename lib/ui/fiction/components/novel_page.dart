@@ -1,18 +1,36 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterroad/base/StatelessBookBase.dart';
+import 'package:flutterroad/base/BookBaseState.dart';
 import 'package:flutterroad/ui/constants.dart';
 import 'package:flutterroad/ui/fiction/components/chapter_list.dart';
+import 'package:flutterroad/util.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
 import 'package:royalroad_api/models.dart'
     show FictionListResult, FictionDetails;
 import 'package:royalroad_api/royalroad_api.dart' show getFictionDetails;
 
-class NovelPage extends StatelessBookBase {
+class NovelPage extends StatefulWidget {
   final FictionListResult book;
 
-  NovelPage(this.book) : super(book);
+  NovelPage(this.book);
+
+  @override
+  _NovelPageState createState() => _NovelPageState(book);
+}
+
+class _NovelPageState extends BookBaseState<NovelPage> {
+  final FictionListResult book;
+  _NovelPageState(this.book) : super(book);
+
+  bool _isInLibrary;
+
+  @override
+  void initState() {
+    super.initState();
+    _isInLibrary = isInLibrary(this.book);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +57,43 @@ class NovelPage extends StatelessBookBase {
     );
   }
 
-  Widget _libraryStar() => Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10, 12, 0),
-        child: Icon(
-          Icons.star_border,
-          size: itemIconSize,
+  Widget _libraryStar() {
+    if (_isInLibrary) {
+      return GestureDetector(
+        onTap: () {
+          removeFromLibrary(this.book);
+          setState(() {
+            _isInLibrary = false;
+          });
+          Fluttertoast.showToast(msg: "Removed from library");
+        },
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 10, 12, 0),
+          child: Icon(
+            Icons.star,
+            size: itemIconSize,
+          ),
         ),
       );
+    } else {
+      return GestureDetector(
+        onTap: () {
+          addToLibrary(this.book);
+          setState(() {
+            _isInLibrary = true;
+          });
+          Fluttertoast.showToast(msg: "Added to library");
+        },
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 10, 12, 0),
+          child: Icon(
+            Icons.star_border,
+            size: itemIconSize,
+          ),
+        ),
+      );
+    }
+  }
 
   Widget _titleAuthorBlock({theme, context}) => Flexible(
           child: Padding(

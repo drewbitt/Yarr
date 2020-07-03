@@ -1,8 +1,15 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'models.g.dart';
+
+@JsonSerializable()
 class Fiction {
-  final String url, title;
-  final String imageUrl;
+  final String url, title, imageUrl;
 
   Fiction(this.url, this.title, this.imageUrl);
+
+  factory Fiction.fromJson(Map<String, dynamic> json) => _$FictionFromJson(json);
+  Map<String, dynamic> toJson() => _$FictionToJson(this);
 }
 
 class FictionListResult {
@@ -14,7 +21,7 @@ class FictionListResult {
 
 class FictionListInfo {
   List<String> genres;
-  String title, description, imageUrl;
+  String description;
   int followers, pages, chapters, views;
   double rating;
   DateTime lastUpdate;

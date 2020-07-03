@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutterroad/service_locator.dart';
 import 'package:flutterroad/services/localstorage_service.dart';
+import 'package:flutterroad/ui/components/library_card.dart';
+import 'package:flutterroad/ui/components/result_card.dart';
+import 'package:flutterroad/ui/fiction/novel_details.dart';
+import 'package:royalroad_api/models.dart';
 
 class LibraryTab extends StatefulWidget {
   @override
@@ -27,13 +33,37 @@ class LibraryTabState extends State<LibraryTab> {
     } else {
       _prefs.library = [];
       setState(() {
-        _library = [];
+        setState(() {
+          _library = [];
+        });
       });
     }
+    _prefs.addListener(() {
+      setState(() {
+        _library = _prefs.library;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Text(_library.toString());
+    return GridView.builder(
+        itemCount: _library.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, childAspectRatio: 0.9),
+        itemBuilder: (BuildContext context, int index) {
+          final jsonBook = json.decode(_library[index]);
+          final book = Fiction.fromJson(jsonBook);
+          final bookListResult = FictionListResult(book, FictionListInfo([], 0, 0, 0, 0, 0, null, ""));
+          return InkWell(
+            child: LibraryCard(
+              book: bookListResult,
+            ),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => NovelDetails(bookListResult)));
+            },
+          );
+        });
   }
 }

@@ -32,14 +32,20 @@ ExtendedImage getImageUtil(url, {height = 100.0}) => ExtendedImage.network(
       },
     );
 
+bool isInLibrary(FictionListResult book) {
+  final prefs = getIt.get<LocalStorageService>();
+  final bookJson = jsonEncode(book.book);
+  return prefs.library.contains(bookJson);
+}
+
 void addToLibrary(FictionListResult book) {
   final prefs = getIt.get<LocalStorageService>();
   final bookJson = jsonEncode(book.book);
-  prefs.library.add(bookJson);
+  prefs.library = new List.from(prefs.library)..add(bookJson);
 }
 
 void removeFromLibrary(FictionListResult book) {
   final prefs = getIt.get<LocalStorageService>();
   final bookJson = jsonEncode(book.book);
-  prefs.library.remove(bookJson);
+  prefs.library = new List.from(prefs.library)..remove(bookJson);
 }

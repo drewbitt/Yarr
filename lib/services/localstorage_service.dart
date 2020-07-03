@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LocalStorageService {
+class LocalStorageService extends ChangeNotifier {
   static LocalStorageService _instance;
   static SharedPreferences _preferences;
 
@@ -22,12 +23,17 @@ class LocalStorageService {
   int get fontSize => _getFromDisk(fontSizeString);
   List<String> get library => List<String>.from(_getFromDisk('library'));
 
-  set fontFamily(String value) => saveToDisk(fontFamilyString, value);
-  set fontSize(int value) => saveToDisk(fontSizeString, value);
-  set library(List<String> values) => saveListToDisk(libraryString, values);
+  set fontFamily(String value) => _saveToDisk(fontFamilyString, value);
+  set fontSize(int value) => _saveToDisk(fontSizeString, value);
+  set library(List<String> values) {
+    _saveListToDisk(libraryString, values);
+    // TODO: This would notify for ALL prefs.values to update when really we only
+    // want to update _prefs.library listeners, we just have to listen to _prefs
+    notifyListeners();
+  }
 
   dynamic _getFromDisk(String key) => _preferences.get(key);
-  void saveToDisk(String key, dynamic value) {
+  void _saveToDisk(String key, dynamic value) {
     switch (value.runtimeType) {
       case String:
         _preferences.setString(key, value);
@@ -46,7 +52,7 @@ class LocalStorageService {
     }
   }
 
-  void saveListToDisk(String key, List<String> values) {
+  void _saveListToDisk(String key, List<String> values) {
     _preferences.setStringList(key, values);
   }
 
