@@ -77,9 +77,9 @@ class _ChapterListState extends State<ChapterList> {
                                     ? Colors.white60
                                     : Colors.black.withAlpha(170)))
                       ]),
-                  collapsed: _buildListView(chapterListPreview,
+                  collapsed: _listView(chapterListPreview,
                       fullChapterList: chapterList, reverse: _reverseList),
-                  expanded: _buildListView(chapterList, reverse: _reverseList),
+                  expanded: _listView(chapterList, reverse: _reverseList),
                   theme: ExpandableThemeData(
                       headerAlignment: ExpandablePanelHeaderAlignment.center,
                       iconColor: _theme.darkMode
@@ -88,16 +88,16 @@ class _ChapterListState extends State<ChapterList> {
                       tapHeaderToExpand: false),
                 ));
           } else {
-            return _buildLoader();
+            return _loader();
           }
         } else {
-          return _buildLoader();
+          return _loader();
         }
       },
     );
   }
 
-  _buildLoader() => Padding(
+  _loader() => Padding(
       padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 10),
       child: Row(
         children: <Widget>[
@@ -108,7 +108,7 @@ class _ChapterListState extends State<ChapterList> {
         ],
       ));
 
-  _buildChapterEntry(List<ChapterDetails> chapterList,
+  _chapterEntry(List<ChapterDetails> chapterList,
       {List<ChapterDetails> fullChapterList,
       int index,
       context,
@@ -130,15 +130,14 @@ class _ChapterListState extends State<ChapterList> {
             )),
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => _buildPageView(fullChapterList,
+              builder: (context) => _pageView(fullChapterList,
                   startChapterIndex: isPreview
                       ? translateListIndex(index, fullChapterList.length)
                       : index)));
         });
   }
 
-  _buildPageView(List<ChapterDetails> fullChapterList,
-      {int startChapterIndex}) {
+  _pageView(List<ChapterDetails> fullChapterList, {int startChapterIndex}) {
     _pageController = PageController(initialPage: startChapterIndex);
     return PageView.builder(
       itemBuilder: (context, index) {
@@ -149,7 +148,7 @@ class _ChapterListState extends State<ChapterList> {
     );
   }
 
-  _buildListView(List<ChapterDetails> chapterList,
+  _listView(List<ChapterDetails> chapterList,
       {bool reverse, List<ChapterDetails> fullChapterList}) {
     return ListView.builder(
         shrinkWrap: true,
@@ -158,7 +157,7 @@ class _ChapterListState extends State<ChapterList> {
         key: Key("chapterList"),
         itemCount: chapterList.length,
         itemBuilder: (context, index) {
-          return _buildChapterEntry(chapterList,
+          return _chapterEntry(chapterList,
               fullChapterList: fullChapterList ?? chapterList,
               index: index,
               context: context,

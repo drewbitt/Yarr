@@ -45,22 +45,22 @@ class _DialogContentState extends State<DialogContent> {
     });
   }
 
-  _buildDialog() {
+  Widget _dialog() {
     return Column(children: <Widget>[
       Text("Display settings",
           style: TextStyle(fontSize: fontSizeNovelSlideUpTitle)),
-      DialogRoundedItem(child: _buildTextSizeSlider(), title: "Text size"),
+      DialogRoundedItem(child: _textSizeSlider(), title: "Text size"),
       SizedBox(height: 10),
-      DialogRoundedItem(child: _buildFontOptionList(), title: "Font family"),
+      DialogRoundedItem(child: _fontOptionList(), title: "Font family"),
       Padding(
           padding: EdgeInsets.only(left: dialogListItemLeftPadding),
           child: Column(
-            children: <Widget>[_buildCommentsOption(id)],
+            children: <Widget>[_commentsOption(id)],
           ))
     ]);
   }
 
-  _buildTextSizeSlider() => SliderTheme(
+  _textSizeSlider() => SliderTheme(
       data: SliderTheme.of(context).copyWith(
           tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 1.5),
           // Manual color specification because it is always filling in these colors anyway on my devices
@@ -84,7 +84,7 @@ class _DialogContentState extends State<DialogContent> {
         },
       ));
 
-  _buildFontOptionList() => MediaQuery.removePadding(
+  Widget _fontOptionList() => MediaQuery.removePadding(
       context: context,
       removeTop: true,
       child: ListView(
@@ -93,12 +93,12 @@ class _DialogContentState extends State<DialogContent> {
           // TODO: Since not scrollable, convert to Column?
           physics: NeverScrollableScrollPhysics(),
           children: <Widget>[
-            _buildFontListItem(0),
-            _buildFontListItem(1),
-            _buildFontListItem(2),
+            _fontListItem(0),
+            _fontListItem(1),
+            _fontListItem(2),
           ]));
 
-  _buildFontListItem(index) => GestureDetector(
+  Widget _fontListItem(index) => GestureDetector(
       onTap: () {
         // Remove isSelected on the previous font choice
         _listFonts.asMap().forEach((index, element) {
@@ -129,9 +129,9 @@ class _DialogContentState extends State<DialogContent> {
         ],
       ))));
 
-  _buildCommentsOption(int id) => ListTile(
+  Widget _commentsOption(int id) => ListTile(
       key: Key("chapter_comments_btn"),
-      leading: Icon(Icons.comment, size: dialogListItemIconSize),
+      leading: Icon(Icons.comment, size: itemIconSize),
       title: Text('Chapter Comments'),
       onTap: () => _goToChapterComments());
 
@@ -140,7 +140,7 @@ class _DialogContentState extends State<DialogContent> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildDialog();
+    return _dialog();
   }
 }
 

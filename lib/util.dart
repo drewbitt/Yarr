@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterroad/service_locator.dart';
+import 'package:flutterroad/services/localstorage_service.dart';
+import 'package:royalroad_api/models.dart';
 
 /// Utilizes cache if available
 /// Returns loading spinner while loading. If error, returns error icon with onTap to retry.
@@ -26,3 +31,15 @@ ExtendedImage getImageUtil(url, {height = 100.0}) => ExtendedImage.network(
         }
       },
     );
+
+void addToLibrary(FictionListResult book) {
+  final prefs = getIt.get<LocalStorageService>();
+  final bookJson = jsonEncode(book.book);
+  prefs.library.add(bookJson);
+}
+
+void removeFromLibrary(FictionListResult book) {
+  final prefs = getIt.get<LocalStorageService>();
+  final bookJson = jsonEncode(book.book);
+  prefs.library.remove(bookJson);
+}

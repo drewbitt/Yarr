@@ -4,12 +4,12 @@ import 'package:flutterroad/providers.dart';
 import 'package:flutterroad/service_locator.dart';
 import 'package:flutterroad/ui/settings.dart';
 import 'package:flutterroad/ui/tabs/home_tab.dart';
+import 'package:flutterroad/ui/tabs/library_tab.dart';
 import 'package:flutterroad/ui/tabs/search_tab.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  setupLocator();
-  runApp(providers());
+  setupLocator().then((_) => runApp(providers()));
 }
 
 class MyHome extends StatefulWidget {
@@ -20,7 +20,11 @@ class MyHome extends StatefulWidget {
 // SingleTickerProviderStateMixin is used for animation
 class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
   int _selectedIndex = 0;
-  static List<Widget> _widgetOptions = <Widget>[HomeTab(), SearchTab()];
+  static List<Widget> _widgetOptions = <Widget>[
+    HomeTab(),
+    LibraryTab(),
+    SearchTab()
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -52,6 +56,8 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
           items: [
             BottomNavigationBarItem(
                 icon: Icon(Icons.home), title: Text('Home')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.book), title: Text('Library')),
             BottomNavigationBarItem(
                 icon: Icon(Icons.search), title: Text('Search'))
           ],

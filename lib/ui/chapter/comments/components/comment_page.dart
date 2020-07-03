@@ -68,30 +68,28 @@ class _CommentPageState extends State<CommentPage> {
                           shrinkWrap: true,
                           itemCount: snapshot.data.comments.length,
                           itemBuilder: (context, index) {
-                            return _buildCommentBlock(
-                                snapshot.data.comments[index],
-                                context: context,
-                                theme: _theme);
+                            return _commentBlock(snapshot.data.comments[index],
+                                context: context, theme: _theme);
                           },
                         ),
                         SizedBox(
                           height: 15,
                         ),
                         if (snapshot.data.numPages != 1)
-                          _buildPageNumbers(snapshot.data.numPages)
+                          _pageNumbers(snapshot.data.numPages)
                       ]),
                 );
               }
             } else {
-              return _buildLoader();
+              return _loader();
             }
           } else {
-            return _buildLoader();
+            return _loader();
           }
         });
   }
 
-  _buildCommentBlock(ChapterComment comment,
+  Widget _commentBlock(ChapterComment comment,
           {@required context, @required theme}) =>
       Container(
           width: MediaQuery.of(context).size.width,
@@ -150,7 +148,7 @@ class _CommentPageState extends State<CommentPage> {
           ));
 
   // TODO: This was done in a non-mobile way. Change later
-  _buildPageNumbers(int numPages) {
+  Widget _pageNumbers(int numPages) {
     var listWidgets = List<Widget>();
     if (_currentPage != 1) {
       listWidgets.add(_tappablePageNumber(_squarePageButton("«First"), 1));
@@ -200,7 +198,7 @@ class _CommentPageState extends State<CommentPage> {
     );
   }
 
-  _squarePageButton(item, {currentPage = false}) => Container(
+  Widget _squarePageButton(item, {currentPage = false}) => Container(
         decoration: BoxDecoration(
           border: Border.all(),
           color: currentPage ? Colors.blue : null,
@@ -209,7 +207,7 @@ class _CommentPageState extends State<CommentPage> {
         child: Text(item.toString()),
       );
 
-  _tappablePageNumber(Widget child, int pageNum) => InkWell(
+  Widget _tappablePageNumber(Widget child, int pageNum) => InkWell(
         child: child,
         onTap: () => setState(() {
           _futureChapterComments = getComments(id, page: pageNum);
@@ -217,10 +215,11 @@ class _CommentPageState extends State<CommentPage> {
         }),
       );
 
-  _buildLoader() => Center(
+  Widget _loader() => Center(
           child: CupertinoActivityIndicator(
         radius: centerLoadingSpinnerRadius,
       ));
 
-  _getImage(url, {@required height}) => getImageUtil(url, height: height);
+  Widget _getImage(url, {@required height}) =>
+      getImageUtil(url, height: height);
 }

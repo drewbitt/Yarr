@@ -69,7 +69,7 @@ class _ChapterPageState extends State<ChapterPage> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
-              return _buildError();
+              return _error();
             }
             if (snapshot.hasData) {
               final data = snapshot.data;
@@ -78,7 +78,7 @@ class _ChapterPageState extends State<ChapterPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     BackButton(),
-                    _buildTitle(data.title, theme: _theme),
+                    _title(data.title, theme: _theme),
                     GestureDetector(
                         onTap: () => _showDialog(data.id)
                             .then((value) => _loadSharedPreferences()),
@@ -107,10 +107,10 @@ class _ChapterPageState extends State<ChapterPage> {
                             )))
                   ]);
             } else {
-              return _buildLoader();
+              return _loader();
             }
           } else {
-            return _buildLoader();
+            return _loader();
           }
         });
   }
@@ -118,7 +118,7 @@ class _ChapterPageState extends State<ChapterPage> {
   Future _showDialog(int id) =>
       showSlideDialog(context: context, child: DialogContent(id));
 
-  _buildTitle(title, {theme}) => Flexible(
+  Widget _title(title, {theme}) => Flexible(
       child: Padding(
           padding: EdgeInsets.fromLTRB(chapterSidePadding, 3, 15, chapterSidePadding),
           child: Text(title,
@@ -130,18 +130,18 @@ class _ChapterPageState extends State<ChapterPage> {
               maxLines: 3,
               overflow: TextOverflow.ellipsis)));
 
-  _buildLoader() => Container(
+  Widget _loader() => Container(
       height: MediaQuery.of(context).size.height,
       child: CupertinoActivityIndicator(radius: centerLoadingSpinnerRadius));
 
-  _buildError() => Container(
+  Widget _error() => Container(
       height: MediaQuery.of(context).size.height,
       child: Center(
           child: Text("Could not load chapter",
               style: TextStyle(fontSize: fontSizeMain))));
 
   /// Returns HTML display of the author note assuming one is present
-  _htmlAuthorNote(AuthorNote note, {theme}) => Html(
+  Widget _htmlAuthorNote(AuthorNote note, {theme}) => Html(
         data: '<b>' +
             note?.caption?.toUpperCase() +
             '</b><br /><br />' +

@@ -39,7 +39,7 @@ class HomeTab extends StatelessWidget {
     )));
   }
 
-  _buildPageView(List<FictionListResult> fictions,
+  Widget _pageView(List<FictionListResult> fictions,
           PageController pageController, ValueNotifier currentPageNotifier,
           {big = false}) =>
       PageView.builder(
@@ -62,13 +62,13 @@ class HomeTab extends StatelessWidget {
             currentPageNotifier.value = index;
           });
 
-  _bigFictionList() => _buildList(getBestRatedFictions(), big: true);
+  Widget _bigFictionList() => _fictionList(getBestRatedFictions(), big: true);
 
-  _trendingList() => _buildList(getTrendingFictions());
+  Widget _trendingList() => _fictionList(getTrendingFictions());
 
-  _popularList() => _buildList(getWeeksPopularFictions());
+  Widget _popularList() => _fictionList(getWeeksPopularFictions());
 
-  _buildList(func, {big = false}) {
+  Widget _fictionList(func, {big = false}) {
     final _pageController = PageController();
     final _currentPageNotifier = ValueNotifier<int>(0);
 
@@ -91,20 +91,20 @@ class HomeTab extends StatelessWidget {
                     currentPageNotifier: _currentPageNotifier,
                     // not a fan that on black covers, the left icon disappears. Living with it right now
                     itemCount: data.length,
-                    child: _buildPageView(
+                    child: _pageView(
                         data, _pageController, _currentPageNotifier,
                         big: big));
               } else {
-                return _buildLoader();
+                return _loader();
               }
             } else {
-              return _buildLoader();
+              return _loader();
             }
           },
         ));
   }
 
-  _buildLoader() => Padding(
+  Widget _loader() => Padding(
       padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -19,27 +19,35 @@ class NovelPage extends StatelessBookBase {
     final _theme = Provider.of<ThemeModel>(context);
     return FutureProvider<FictionDetails>(
       create: (_) => getFictionDetails(this.book.book.url),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      child:
+          Column(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
+        _libraryStar(),
+        Row(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 15, 0, 0),
-                    child: Column(
-                      children: <Widget>[getImage(height: 250.0)],
-                    )),
-                _buildTitleAuthor(theme: _theme, context: context)
-              ],
-            ),
-            SizedBox(height: 6), // Padding
-            _buildDescription(book, theme: _theme),
-            ChapterList(),
-          ]),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(10, 6, 0, 0),
+                child: Column(
+                  children: <Widget>[getImage(height: 250.0)],
+                )),
+            _titleAuthorBlock(theme: _theme, context: context),
+          ],
+        ),
+        SizedBox(height: 6), // Padding
+        _description(book, theme: _theme),
+        ChapterList(),
+      ]),
     );
   }
 
-  _buildTitleAuthor({theme, context}) => Flexible(
+  Widget _libraryStar() => Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 12, 0),
+        child: Icon(
+          Icons.star_border,
+          size: itemIconSize,
+        ),
+      );
+
+  Widget _titleAuthorBlock({theme, context}) => Flexible(
           child: Padding(
         padding: const EdgeInsets.only(left: 15, right: 6),
         child: Column(
@@ -70,21 +78,22 @@ class NovelPage extends StatelessBookBase {
         ),
       ));
 
-  _buildDescription(book, {theme}) => Container(
+  Widget _description(book, {theme}) => Container(
       padding: const EdgeInsets.all(10),
       child: ExpandablePanel(
           header:
               Text('Description', style: TextStyle(fontSize: fontSizeMain + 1)),
-          collapsed: _buildDescriptionText(book.info.description,
+          collapsed: _descriptionText(book.info.description,
               overflow: TextOverflow.ellipsis, maxLines: 7),
-          expanded: _buildDescriptionText(book.info.description),
+          expanded: _descriptionText(book.info.description),
           theme: ExpandableThemeData(
               headerAlignment: ExpandablePanelHeaderAlignment.center,
               iconColor:
                   theme.darkMode ? darkModeIconColor : lightModeIconColor)));
 
-  _buildDescriptionText(text, {TextOverflow overflow, int maxLines}) => Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child:
-          Text(text, softWrap: true, maxLines: maxLines, overflow: overflow));
+  Widget _descriptionText(text, {TextOverflow overflow, int maxLines}) =>
+      Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Text(text,
+              softWrap: true, maxLines: maxLines, overflow: overflow));
 }
