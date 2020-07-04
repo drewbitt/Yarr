@@ -80,11 +80,14 @@ class _ChapterPageState extends State<ChapterPage> {
                     BackButton(),
                     _title(data.title, theme: _theme),
                     GestureDetector(
-                        onTap: () => _showDialog(data.id)
-                            .then((value) => _loadSharedPreferences()),
+                        onTap: () =>
+                            _showDialog(id: data.id, chapUrl: data.chap.url)
+                                .then((value) => _loadSharedPreferences()),
                         child: Padding(
                             padding: EdgeInsets.only(
-                                left: chapterSidePadding, right: chapterSidePadding, bottom: 15),
+                                left: chapterSidePadding,
+                                right: chapterSidePadding,
+                                bottom: 15),
                             // useRichText fixes status screens, but is also ugly,
                             // just waiting on a fix from the library
                             child: Column(
@@ -115,15 +118,20 @@ class _ChapterPageState extends State<ChapterPage> {
         });
   }
 
-  Future _showDialog(int id) =>
-      showSlideDialog(context: context, child: DialogContent(id));
+  Future _showDialog({int id, String chapUrl}) => showSlideDialog(
+      context: context,
+      child: DialogContent(
+        id: id,
+        chapUrl: chapUrl,
+      ));
 
   Widget _title(title, {theme}) => Flexible(
       child: Padding(
-          padding: EdgeInsets.fromLTRB(chapterSidePadding, 3, 15, chapterSidePadding),
+          padding: EdgeInsets.fromLTRB(
+              chapterSidePadding, 3, 15, chapterSidePadding),
           child: Text(title,
               style: TextStyle(
-                  // color is to make title slighty darker than the text in light mode
+                  // color is to make title slightly darker than the text in light mode
                   color: theme.darkMode ? Colors.white : Colors.black,
                   fontSize: _fontSizeTitle.toDouble(),
                   fontFamily: _fontFamily),

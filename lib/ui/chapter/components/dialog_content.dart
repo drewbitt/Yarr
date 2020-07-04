@@ -4,22 +4,26 @@ import 'package:flutterroad/services/localstorage_service.dart';
 import 'package:flutterroad/ui/chapter/comments/chapter_comments.dart';
 import 'package:flutterroad/ui/chapter/components/dialog_round_item.dart';
 import 'package:flutterroad/ui/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DialogContent extends StatefulWidget {
   final int id;
+  final String chapUrl;
 
-  DialogContent(this.id);
+  DialogContent({this.id, this.chapUrl});
 
   @override
-  State<StatefulWidget> createState() => _DialogContentState(id);
+  State<StatefulWidget> createState() =>
+      _DialogContentState(id: id, chapUrl: chapUrl);
 }
 
 class _DialogContentState extends State<DialogContent> {
   final int id;
+  final String chapUrl;
   double _fontSize;
   LocalStorageService _prefs;
 
-  _DialogContentState(this.id);
+  _DialogContentState({this.id, this.chapUrl});
 
   var _listFonts = [
     FontListItem<String>("Default"),
@@ -46,18 +50,27 @@ class _DialogContentState extends State<DialogContent> {
   }
 
   Widget _dialog() {
-    return Column(children: <Widget>[
-      Text("Display settings",
-          style: TextStyle(fontSize: fontSizeNovelSlideUpTitle)),
-      DialogRoundedItem(child: _textSizeSlider(), title: "Text size"),
-      SizedBox(height: 10),
-      DialogRoundedItem(child: _fontOptionList(), title: "Font family"),
-      Padding(
-          padding: EdgeInsets.only(left: dialogListItemLeftPadding),
-          child: Column(
-            children: <Widget>[_commentsOption(id)],
-          ))
-    ]);
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(children: <Widget>[
+          Text("Display settings",
+              style: TextStyle(fontSize: fontSizeNovelSlideUpTitle)),
+          DialogRoundedItem(child: _textSizeSlider(), title: "Text size"),
+          SizedBox(height: 10),
+          DialogRoundedItem(child: _fontOptionList(), title: "Font family"),
+          Padding(
+              padding: EdgeInsets.only(left: dialogListItemLeftPadding),
+              child: Column(
+                children: <Widget>[_commentsOption(id)],
+              )),
+          Padding(
+              padding: EdgeInsets.only(left: dialogListItemLeftPadding),
+              child: Column(
+                children: <Widget>[_chapterLink()],
+              )),
+        ]),
+      ),
+    );
   }
 
   _textSizeSlider() => SliderTheme(
@@ -133,10 +146,13 @@ class _DialogContentState extends State<DialogContent> {
       key: Key("chapter_comments_btn"),
       leading: Icon(Icons.comment, size: itemIconSize),
       title: Text('Chapter Comments'),
-      onTap: () => _goToChapterComments());
+      onTap: () => Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => ChapterComments(id))));
 
-  _goToChapterComments() => Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => ChapterComments(id)));
+  Widget _chapterLink() => ListTile(
+      leading: Icon(Icons.open_in_browser, size: itemIconSize),
+      title: Text('Open chapter in browser'),
+      onTap: () => launch(chapUrl));
 
   @override
   Widget build(BuildContext context) {
