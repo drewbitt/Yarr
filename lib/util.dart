@@ -50,8 +50,10 @@ void addToLibrary(FictionListResult book) {
 
 void removeFromLibrary(FictionListResult book) {
   final prefs = getIt.get<LocalStorageService>();
-  final bookJson = jsonEncode(book.book);
-  prefs.library = new List.from(prefs.library)..remove(bookJson);
+  prefs.library = new List.from(prefs.library)..removeWhere((element) {
+    final libraryBook = convertFictionJsonToFiction(element);
+    return libraryBook.id == book.book.id;
+  });
 }
 
 Fiction convertFictionJsonToFiction(String fictionJson) {

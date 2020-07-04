@@ -16,44 +16,56 @@ class SearchInfo {
         descriptionText: getDescription(parsed));
   }
 
-  static int getFollowers(Element parsed) => int.parse(parsed
-      .querySelector('i.fa.fa-users')
-      .nextElementSibling
-      .text
-      .split(' Followers')[0]
-      .replaceAll(',', ''));
+  static int getFollowers(Element parsed) => tryAndDefault(
+      () => int.parse(parsed
+          .querySelector('i.fa.fa-users')
+          .nextElementSibling
+          .text
+          .split(' Followers')[0]
+          .replaceAll(',', '')),
+      0);
 
-  static int getPages(Element parsed) => int.parse(parsed
-      .querySelector('i.fa.fa-book')
-      .nextElementSibling
-      .text
-      .split(' Pages')[0]
-      .replaceAll(',', ''));
+  static int getPages(Element parsed) => tryAndDefault(
+      () => int.parse(parsed
+          .querySelector('i.fa.fa-book')
+          .nextElementSibling
+          .text
+          .split(' Pages')[0]
+          .replaceAll(',', '')),
+      0);
 
-  static double getRating(Element parsed) => double.parse(parsed
-      .querySelector('i.fa.fa-star')
-      .nextElementSibling
-      .attributes['title']);
+  static double getRating(Element parsed) => tryAndDefault(
+      () => double.parse(parsed
+          .querySelector('i.fa.fa-star')
+          .nextElementSibling
+          .attributes['title']),
+      0.0);
 
-  static int getViews(Element parsed) => int.parse(parsed
-      .querySelector('i.fa.fa-eye')
-      .nextElementSibling
-      .text
-      .split(' Views')[0]
-      .replaceAll(',', ''));
+  static int getViews(Element parsed) => tryAndDefault(
+      () => int.parse(parsed
+          .querySelector('i.fa.fa-eye')
+          .nextElementSibling
+          .text
+          .split(' Views')[0]
+          .replaceAll(',', '')),
+      0);
 
-  static int getChapters(Element parsed) => int.parse(parsed
-      .querySelector('i.fa.fa-list')
-      .nextElementSibling
-      .text
-      .split(' Chapters')[0]
-      .replaceAll(',', ''));
+  static int getChapters(Element parsed) => tryAndDefault(
+      () => int.parse(parsed
+          .querySelector('i.fa.fa-list')
+          .nextElementSibling
+          .text
+          .split(' Chapters')[0]
+          .replaceAll(',', '')),
+      0);
 
-  static DateTime getLastUpdate(Element parsed) => DateTime.parse(parsed
-      .querySelector('i.fa.fa-calendar')
-      .nextElementSibling
-      .querySelector('time')
-      .attributes['datetime']);
+  static DateTime getLastUpdate(Element parsed) => tryAndDefault(
+      () => DateTime.parse(parsed
+          .querySelector('i.fa.fa-calendar')
+          .nextElementSibling
+          .querySelector('time')
+          .attributes['datetime']),
+      DateTime.utc(1970));
 
   static String getDescription(Element parsed) {
     var descriptionList = [];

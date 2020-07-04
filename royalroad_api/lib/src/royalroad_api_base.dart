@@ -4,11 +4,7 @@ import 'package:html/parser.dart' show parse;
 import 'package:intl/intl.dart';
 import 'package:royalroad_api/models.dart';
 import 'package:royalroad_api/src/util.dart'
-    show
-        SearchInfo,
-        absolute_url,
-        clean_contents,
-        tryAndDefault;
+    show SearchInfo, absolute_url, clean_contents, tryAndDefault;
 
 class Base {
   static const baseUrl = 'https://www.royalroad.com';
@@ -41,7 +37,8 @@ List<FictionListResult> _getBookList(Document parsed) {
     var url = absolute_url(link.attributes['href']);
     url = url.substring(0, url.lastIndexOf('/'));
 
-    final id = int.parse(url.substring(url.lastIndexOf('/') + 1));
+    final id = tryAndDefault(
+        () => int.parse(url.substring(url.lastIndexOf('/') + 1)), 0);
 
     listResults.add(FictionListResult(
         book: Fiction(id: id, url: url, title: link.text, imageUrl: imageUrl),
@@ -87,7 +84,7 @@ Future<FictionDetails> getFictionDetails(String book_url) async {
       final dFormat = DateFormat('EEEE, MMMM d, y H:m');
       final date = tryAndDefault(
           () => dFormat.parse(i.querySelector('time').attributes['title']),
-          DateTime.now());
+          DateTime.utc(1970));
       final dateToString = i.querySelector('time').text;
 
       listChapters.add(ChapterDetails(
@@ -122,7 +119,7 @@ Future<Chapter> getChapter(ChapterDetails chap) async {
       title = chap.name;
     }
 
-    final id = int.parse(chap.url.split('/')[7]);
+    final id = tryAndDefault(() => int.parse(chap.url.split('/')[7]), 0);
     final notes = _getChapterAuthorNotes(parsed);
     final beginNote = notes[0];
     final endNote = notes[1];
@@ -244,11 +241,12 @@ Future<ChapterComments> getComments(int id, {int page = 1}) async {
 
     var comments = <ChapterComment>[];
     parsed.querySelectorAll('div.media.media-v2').forEach((element) {
-      final id = int.parse(element.querySelector('a').id.split('-')[1]);
+      final id = tryAndDefault(
+          () => int.parse(element.querySelector('a').id.split('-')[1]), 0);
       final postedDate = tryAndDefault(
           () => DateFormat('EEEE, MMMM d, y H:m')
               .parse(element.querySelector('time').attributes['title']),
-          DateTime.now());
+          DateTime.utc(1970));
       final postedDateString = element.querySelector('time').text + 'ago';
 
       // clone so that doesn't effect comment author parsing
@@ -275,11 +273,13 @@ Future<ChapterComments> getComments(int id, {int page = 1}) async {
           contentChildren.map((e) => e.innerHtml.trim()).join('<br><br>');
 
       final commentAuthor = CommentAuthor(
-          id: int.parse(element
-              .querySelector('span.name')
-              .querySelector('a')
-              .attributes['href']
-              .split('/')[2]),
+          id: tryAndDefault(
+              () => int.parse(element
+                  .querySelector('span.name')
+                  .querySelector('a')
+                  .attributes['href']
+                  .split('/')[2]),
+              0),
           name: element
               .querySelector('span.name')
               .querySelector('a')
