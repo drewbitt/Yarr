@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:royalroad_api/models.dart'
     show FictionListResult, FictionDetails;
 import 'package:royalroad_api/royalroad_api.dart' show getFictionDetails;
+import 'package:url_launcher/url_launcher.dart';
 
 class NovelPage extends StatefulWidget {
   final FictionListResult book;
@@ -158,6 +159,7 @@ class _NovelPageState extends BookBaseState<NovelPage> {
               // Flutter_html does not allow max lines like Text/RichText does
               // implement some type of inconsistent version
               child: Html(
+                onLinkTap: (url) => launch(url),
                 data: maxLines != null
                     ? value.descriptionHtml.substring(
                             0,
@@ -171,7 +173,6 @@ class _NovelPageState extends BookBaseState<NovelPage> {
                             : "")
                     : value.descriptionHtml,
                 useRichText: true,
-                shrinkWrap: true,
               ));
         return SizedBox.shrink();
       });

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Local storage service that can be listened to. Notifies all listeners
+/// for any property change.
 class LocalStorageService extends ChangeNotifier {
   static LocalStorageService _instance;
   static SharedPreferences _preferences;
@@ -27,8 +29,6 @@ class LocalStorageService extends ChangeNotifier {
   set fontSize(int value) => _saveToDisk(fontSizeString, value);
   set library(List<String> values) {
     _saveListToDisk(libraryString, values);
-    // TODO: This would notify for ALL prefs.values to update when really we only
-    // want to update _prefs.library listeners, we just have to listen to _prefs
     notifyListeners();
   }
 

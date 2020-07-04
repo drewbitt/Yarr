@@ -49,26 +49,31 @@ class LibraryTabState extends State<LibraryTab> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-      child: GridView.builder(
-          itemCount: _library.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3, childAspectRatio: 0.6),
-          itemBuilder: (BuildContext context, int index) {
-            final book = convertFictionJsonToFiction(_library[index]);
-            final bookListResult = FictionListResult(book: book, info: null);
-            return Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: InkWell(
-                child: LibraryCard(
-                  book: bookListResult,
-                ),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => NovelDetails(bookListResult)));
-                },
-              ),
-            );
-          }),
+      child: _library.length == 0
+          ? _emptyText()
+          : GridView.builder(
+              itemCount: _library.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, childAspectRatio: 0.6),
+              itemBuilder: (BuildContext context, int index) {
+                final book = convertFictionJsonToFiction(_library[index]);
+                final bookListResult =
+                    FictionListResult(book: book, info: null);
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: InkWell(
+                    child: LibraryCard(
+                      book: bookListResult,
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => NovelDetails(bookListResult)));
+                    },
+                  ),
+                );
+              }),
     );
   }
+
+  Widget _emptyText() => Center(child: Text("No fictions in library"));
 }

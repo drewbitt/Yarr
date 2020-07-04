@@ -35,7 +35,6 @@ class BigResultCard extends StatelessBookBase {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  // TODO: Use IconTheme if not doing multiple sizes later
                   Row(children: <Widget>[
                     Icon(Icons.people, size: 22),
                     Text(this.book.info.followers.toString() + " Followers")
