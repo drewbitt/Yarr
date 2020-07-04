@@ -6,9 +6,10 @@ part 'models.g.dart';
 class Fiction {
   final String url, title, imageUrl;
 
-  Fiction(this.url, this.title, this.imageUrl);
+  Fiction({this.url, this.title, this.imageUrl});
 
-  factory Fiction.fromJson(Map<String, dynamic> json) => _$FictionFromJson(json);
+  factory Fiction.fromJson(Map<String, dynamic> json) =>
+      _$FictionFromJson(json);
   Map<String, dynamic> toJson() => _$FictionToJson(this);
 }
 
@@ -16,26 +17,34 @@ class FictionListResult {
   final Fiction book;
   final FictionListInfo info;
 
-  FictionListResult(this.book, this.info);
+  FictionListResult({this.book, this.info});
 }
 
+// Info appearing in a search/display card for each fiction without visiting page
 class FictionListInfo {
   List<String> genres;
-  String description;
+  String descriptionText;
   int followers, pages, chapters, views;
   double rating;
   DateTime lastUpdate;
 
-  FictionListInfo(this.genres, this.followers, this.pages, this.chapters,
-      this.views, this.rating, this.lastUpdate, this.description);
+  FictionListInfo(
+      {this.genres,
+      this.followers,
+      this.pages,
+      this.chapters,
+      this.views,
+      this.rating,
+      this.lastUpdate,
+      this.descriptionText});
 }
 
 class FictionDetails {
-  String author;
+  String author, descriptionHtml;
   int numChapters;
   List<ChapterDetails> chapterList;
 
-  FictionDetails(this.author, this.numChapters, this.chapterList);
+  FictionDetails({this.author, this.descriptionHtml, this.numChapters, this.chapterList});
 }
 
 // chapter when getting from a list
@@ -44,7 +53,8 @@ class ChapterDetails {
   DateTime releaseDate;
   String releaseDateString;
 
-  ChapterDetails(this.name, this.url, this.releaseDate, this.releaseDateString);
+  ChapterDetails(
+      {this.name, this.url, this.releaseDate, this.releaseDateString});
 }
 
 // chapter when actually in the chapter, re-using ChapterDetails
@@ -55,20 +65,26 @@ class Chapter {
   String title, contents;
   AuthorNote beginNote, endNote;
 
-  Chapter(this.id, this.chap, this.title, this.contents, this.beginNote, this.endNote);
+  Chapter(
+      {this.id,
+      this.chap,
+      this.title,
+      this.contents,
+      this.beginNote,
+      this.endNote});
 }
 
 class AuthorNote {
   String caption, noteBody;
 
-  AuthorNote(this.caption, this.noteBody);
+  AuthorNote({this.caption, this.noteBody});
 }
 
 class ChapterComments {
   List<ChapterComment> comments;
   int numPages;
 
-  ChapterComments(this.comments, this.numPages);
+  ChapterComments({this.comments, this.numPages});
 }
 
 class ChapterComment {
@@ -78,7 +94,12 @@ class ChapterComment {
   String content;
   CommentAuthor commentAuthor;
 
-  ChapterComment(this.id, this.postedDate, this.postedDateString, this.content, this.commentAuthor);
+  ChapterComment(
+      {this.id,
+      this.postedDate,
+      this.postedDateString,
+      this.content,
+      this.commentAuthor});
 }
 
 class CommentAuthor {
@@ -86,5 +107,5 @@ class CommentAuthor {
   String name;
   String avatar;
 
-  CommentAuthor(this.id, this.name, this.avatar);
+  CommentAuthor({this.id, this.name, this.avatar});
 }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutterroad/service_locator.dart';
 import 'package:flutterroad/services/localstorage_service.dart';
 import 'package:flutterroad/ui/components/library_card.dart';
-import 'package:flutterroad/ui/components/result_card.dart';
 import 'package:flutterroad/ui/fiction/novel_details.dart';
 import 'package:royalroad_api/models.dart';
 
@@ -54,7 +53,17 @@ class LibraryTabState extends State<LibraryTab> {
         itemBuilder: (BuildContext context, int index) {
           final jsonBook = json.decode(_library[index]);
           final book = Fiction.fromJson(jsonBook);
-          final bookListResult = FictionListResult(book, FictionListInfo([], 0, 0, 0, 0, 0, null, ""));
+          final bookListResult = FictionListResult(
+              book: book,
+              info: FictionListInfo(
+                  genres: [],
+                  followers: 0,
+                  pages: 0,
+                  chapters: 0,
+                  views: 0,
+                  rating: 0,
+                  lastUpdate: null,
+                  descriptionText: ""));
           return InkWell(
             child: LibraryCard(
               book: bookListResult,

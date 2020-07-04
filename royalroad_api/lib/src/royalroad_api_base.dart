@@ -4,7 +4,7 @@ import 'package:html/parser.dart' show parse;
 import 'package:intl/intl.dart';
 import 'package:royalroad_api/models.dart';
 import 'package:royalroad_api/src/util.dart'
-    show SearchInfo, absolute_url, clean_contents, tryAndDefault;
+    show SearchInfo, absolute_url, clean_contents, clean_description, tryAndDefault;
 
 class Base {
   static const baseUrl = 'https://www.royalroad.com';
@@ -34,8 +34,11 @@ List<FictionListResult> _getBookList(Document parsed) {
     info.genres = genres;
 
     listResults.add(FictionListResult(
-        Fiction(absolute_url(link.attributes['href']), link.text, imageUrl),
-        info));
+        book: Fiction(
+            url: absolute_url(link.attributes['href']),
+            title: link.text,
+            imageUrl: imageUrl),
+        info: info));
   }
   return listResults;
 }
@@ -67,6 +70,9 @@ Future<FictionDetails> getFictionDetails(String book_url) async {
         parsed.querySelector('tbody').querySelectorAll('a[href]').length;
     final author =
         parsed.querySelector('h3.mt-card-name').querySelector('a').text;
+    final chapterDescription =
+        parsed.querySelector('div[property=description]');
+    final cleanedChapterDescription = clean_contents(chapterDescription);
 
     for (var i in entry) {
       var chapter = i.querySelector('a[href]');
@@ -77,12 +83,19 @@ Future<FictionDetails> getFictionDetails(String book_url) async {
           DateTime.now());
       final dateToString = i.querySelector('time').text;
 
-      listChapters.add(ChapterDetails(chapter.text.trim(),
-          absolute_url(chapter.attributes['href']), date, dateToString));
+      listChapters.add(ChapterDetails(
+          name: chapter.text.trim(),
+          url: absolute_url(chapter.attributes['href']),
+          releaseDate: date,
+          releaseDateString: dateToString));
     }
     assert(listChapters.length == numChapters);
 
-    return Future.value(FictionDetails(author, numChapters, listChapters));
+    return Future.value(FictionDetails(
+        author: author,
+        descriptionHtml: cleanedChapterDescription.trim(),
+        numChapters: numChapters,
+        chapterList: listChapters));
   } else {
     return Future.error('Could not access Royalroad');
   }
@@ -110,8 +123,13 @@ Future<Chapter> getChapter(ChapterDetails chap) async {
     final contents = parsed.querySelector('div.chapter-content');
     final cleaned_contents = clean_contents(contents);
 
-    return Future.value(
-        Chapter(id, chap, title, cleaned_contents, beginNote, endNote));
+    return Future.value(Chapter(
+        id: id,
+        chap: chap,
+        title: title,
+        contents: cleaned_contents,
+        beginNote: beginNote,
+        endNote: endNote));
   } else {
     return Future.error('Could not access Royalroad');
   }
@@ -127,15 +145,15 @@ List<AuthorNote> _getChapterAuthorNotes(parsed) {
   if (notesText.isNotEmpty) {
     if (notesText[0].parent.nextElementSibling.localName == 'hr') {
       endNote = AuthorNote(
-          notesTitle[0].text,
-          notesText[0]
+          caption: notesTitle[0].text,
+          noteBody: notesText[0]
               .querySelectorAll('p')
               .map((e) => e.text)
               .join('<br /><br />'));
     } else {
       beginNote = AuthorNote(
-          notesTitle[0].text,
-          notesText[0]
+          caption: notesTitle[0].text,
+          noteBody: notesText[0]
               .querySelectorAll('p')
               .map((e) => e.text)
               .join('<br /><br />'));
@@ -144,8 +162,8 @@ List<AuthorNote> _getChapterAuthorNotes(parsed) {
   // has both begin note and end note
   if (notesText.length > 1) {
     endNote = AuthorNote(
-        notesTitle[1].text,
-        notesText[1]
+        caption: notesTitle[1].text,
+        noteBody: notesText[1]
             .querySelectorAll('p')
             .map((e) => e.text)
             .join('<br /><br />'));
@@ -250,24 +268,29 @@ Future<ChapterComments> getComments(int id, {int page = 1}) async {
           contentChildren.map((e) => e.innerHtml.trim()).join('<br><br>');
 
       final commentAuthor = CommentAuthor(
-          int.parse(element
+          id: int.parse(element
               .querySelector('span.name')
               .querySelector('a')
               .attributes['href']
               .split('/')[2]),
-          element
+          name: element
               .querySelector('span.name')
               .querySelector('a')
               .text
               .split('@')[0],
-          absolute_url(element.querySelector('img').attributes['src']));
+          avatar: absolute_url(element.querySelector('img').attributes['src']));
 
       comments.add(ChapterComment(
-          id, postedDate, postedDateString, content, commentAuthor));
+          id: id,
+          postedDate: postedDate,
+          postedDateString: postedDateString,
+          content: content,
+          commentAuthor: commentAuthor));
     });
 
     final numPages = _commentsGetLastPageNum(parsed);
-    return Future.value(ChapterComments(comments, numPages));
+    return Future.value(
+        ChapterComments(comments: comments, numPages: numPages));
   } else {
     return Future.error('Could not access Royalroad');
   }

@@ -1,5 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutterroad/base/BookBaseState.dart';
 import 'package:flutterroad/ui/constants.dart';
 import 'package:flutterroad/ui/fiction/components/chapter_list.dart';
@@ -131,17 +132,37 @@ class _NovelPageState extends BookBaseState<NovelPage> {
       child: ExpandablePanel(
           header:
               Text('Description', style: TextStyle(fontSize: fontSizeMain + 1)),
-          collapsed: _descriptionText(book.info.description,
-              overflow: TextOverflow.ellipsis, maxLines: 7),
-          expanded: _descriptionText(book.info.description),
+          collapsed:
+              _descriptionText(overflow: TextOverflow.ellipsis, maxLines: 7),
+          expanded: _descriptionText(),
           theme: ExpandableThemeData(
               headerAlignment: ExpandablePanelHeaderAlignment.center,
               iconColor:
                   theme.darkMode ? darkModeIconColor : lightModeIconColor)));
 
-  Widget _descriptionText(text, {TextOverflow overflow, int maxLines}) =>
-      Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Text(text,
-              softWrap: true, maxLines: maxLines, overflow: overflow));
+  Widget _descriptionText({TextOverflow overflow, int maxLines}) =>
+      Consumer<FictionDetails>(builder: (context, value, child) {
+        if (value != null)
+          return Padding(
+              padding: const EdgeInsets.only(top: 10),
+              // Flutter_html does not allow max lines like Text/RichText does
+              // implement some type of inconsistent version
+              child: Html(
+                data: maxLines != null
+                    ? value.descriptionHtml.substring(
+                            0,
+                            (60 * maxLines) + 1 > value.descriptionHtml.length
+                                ? value.descriptionHtml.length
+                                : 60 * maxLines) +
+                        (overflow == TextOverflow.ellipsis &&
+                                (60 * maxLines) + 1 <
+                                    value.descriptionHtml.length
+                            ? "..."
+                            : "")
+                    : value.descriptionHtml,
+                useRichText: true,
+                shrinkWrap: true,
+              ));
+        return SizedBox.shrink();
+      });
 }

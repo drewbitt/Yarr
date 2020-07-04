@@ -6,14 +6,14 @@ import 'package:royalroad_api/src/royalroad_api_base.dart' show Base;
 class SearchInfo {
   static FictionListInfo getSearchInfo(parsed) {
     return FictionListInfo(
-        [], // empty for now since not found in 'row stats', add elsewhere
-        getFollowers(parsed),
-        getPages(parsed),
-        getChapters(parsed),
-        getViews(parsed),
-        getRating(parsed),
-        getLastUpdate(parsed),
-        getDescription(parsed));
+        genres: [], // empty for now since not found in 'row stats', add elsewhere
+        followers: getFollowers(parsed),
+        pages: getPages(parsed),
+        chapters: getChapters(parsed),
+        views: getViews(parsed),
+        rating: getRating(parsed),
+        lastUpdate: getLastUpdate(parsed),
+        descriptionText: getDescription(parsed));
   }
 
   static int getFollowers(Element parsed) => int.parse(parsed
@@ -69,7 +69,9 @@ class SearchInfo {
 }
 
 String absolute_url(String url) {
-  if (url.contains(Base.baseUrl) || url.contains(Base.baseCdnUrl) || url.contains(Base.baseCdnUrl2)) {
+  if (url.contains(Base.baseUrl) ||
+      url.contains(Base.baseCdnUrl) ||
+      url.contains(Base.baseCdnUrl2)) {
     return url;
   } else if (url[0] == '/') {
     // Only images of existing book covers use baseCdnUrl it seems
@@ -79,6 +81,7 @@ String absolute_url(String url) {
   }
 }
 
+/// Cleans html by removing the outer div element and returning the inner nodes innerHtml strings
 String clean_contents(Element div) {
   var strElements = StringBuffer();
 
@@ -101,8 +104,7 @@ String clean_contents(Element div) {
 dynamic tryAndDefault(dynamic Function() ele, dynamic defaultValue) {
   try {
     return ele();
-  }
-  catch (err){
+  } catch (err) {
     print(err);
     return defaultValue;
   }
