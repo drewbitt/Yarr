@@ -5,6 +5,7 @@ import 'package:flutterroad/service_locator.dart';
 import 'package:flutterroad/services/localstorage_service.dart';
 import 'package:flutterroad/ui/components/library_card.dart';
 import 'package:flutterroad/ui/fiction/novel_details.dart';
+import 'package:flutterroad/util.dart';
 import 'package:royalroad_api/models.dart';
 
 class LibraryTab extends StatefulWidget {
@@ -46,33 +47,28 @@ class LibraryTabState extends State<LibraryTab> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-        itemCount: _library.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, childAspectRatio: 0.9),
-        itemBuilder: (BuildContext context, int index) {
-          final jsonBook = json.decode(_library[index]);
-          final book = Fiction.fromJson(jsonBook);
-          final bookListResult = FictionListResult(
-              book: book,
-              info: FictionListInfo(
-                  genres: [],
-                  followers: 0,
-                  pages: 0,
-                  chapters: 0,
-                  views: 0,
-                  rating: 0,
-                  lastUpdate: null,
-                  descriptionText: ""));
-          return InkWell(
-            child: LibraryCard(
-              book: bookListResult,
-            ),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => NovelDetails(bookListResult)));
-            },
-          );
-        });
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+      child: GridView.builder(
+          itemCount: _library.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, childAspectRatio: 0.6),
+          itemBuilder: (BuildContext context, int index) {
+            final book = convertFictionJsonToFiction(_library[index]);
+            final bookListResult = FictionListResult(book: book, info: null);
+            return Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: InkWell(
+                child: LibraryCard(
+                  book: bookListResult,
+                ),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => NovelDetails(bookListResult)));
+                },
+              ),
+            );
+          }),
+    );
   }
 }

@@ -26,8 +26,9 @@ class LibraryCard extends StatelessBookBase {
                   color: _theme.darkMode
                       ? darkModeTitleColor
                       : lightModeTitleColor,
-                  fontSize: fontSizeMain),
-              maxLines: 1,
+                  fontSize: fontSizeMain,),
+              maxLines: 2,
+              textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis),
         ]);
   }

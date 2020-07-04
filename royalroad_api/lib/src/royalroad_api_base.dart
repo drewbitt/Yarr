@@ -4,7 +4,11 @@ import 'package:html/parser.dart' show parse;
 import 'package:intl/intl.dart';
 import 'package:royalroad_api/models.dart';
 import 'package:royalroad_api/src/util.dart'
-    show SearchInfo, absolute_url, clean_contents, clean_description, tryAndDefault;
+    show
+        SearchInfo,
+        absolute_url,
+        clean_contents,
+        tryAndDefault;
 
 class Base {
   static const baseUrl = 'https://www.royalroad.com';
@@ -33,11 +37,14 @@ List<FictionListResult> _getBookList(Document parsed) {
     });
     info.genres = genres;
 
+    // Remove name portion of novel url as this could change
+    var url = absolute_url(link.attributes['href']);
+    url = url.substring(0, url.lastIndexOf('/'));
+
+    final id = int.parse(url.substring(url.lastIndexOf('/') + 1));
+
     listResults.add(FictionListResult(
-        book: Fiction(
-            url: absolute_url(link.attributes['href']),
-            title: link.text,
-            imageUrl: imageUrl),
+        book: Fiction(id: id, url: url, title: link.text, imageUrl: imageUrl),
         info: info));
   }
   return listResults;

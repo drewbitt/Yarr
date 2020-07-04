@@ -72,6 +72,7 @@ class _NovelPageState extends BookBaseState<NovelPage> {
           padding: const EdgeInsets.fromLTRB(0, 10, 12, 0),
           child: Icon(
             Icons.star,
+            color: Colors.amber,
             size: itemIconSize,
           ),
         ),
@@ -111,21 +112,30 @@ class _NovelPageState extends BookBaseState<NovelPage> {
                 maxLines: 7,
                 overflow: TextOverflow.ellipsis),
             SizedBox(height: 5),
-            Consumer<FictionDetails>(builder: (context, value, child) {
-              if (value != null)
-                return Text("Author: " + value.author,
-                    style: TextStyle(
-                        color: theme.darkMode
-                            ? darkModeTitleColor
-                            : lightModeTitleColor,
-                        fontSize: fontSizeMain),
-                    maxLines: 7,
-                    overflow: TextOverflow.ellipsis);
-              return SizedBox.shrink();
-            })
+            Consumer<FictionDetails>(
+                builder: (context, value, child) =>
+                    _authorText(value?.author, theme: theme))
           ],
         ),
       ));
+
+  Widget _authorText(String authorName, {theme}) {
+    if (authorName != null) {
+      return Text("Author: " + authorName,
+          style: TextStyle(
+              color: theme.darkMode ? darkModeTitleColor : lightModeTitleColor,
+              fontSize: fontSizeMain),
+          maxLines: 7,
+          overflow: TextOverflow.ellipsis);
+    } else {
+      return Text("Author: ",
+          style: TextStyle(
+              color: theme.darkMode ? darkModeTitleColor : lightModeTitleColor,
+              fontSize: fontSizeMain),
+          maxLines: 7,
+          overflow: TextOverflow.ellipsis);
+    }
+  }
 
   Widget _description(book, {theme}) => Container(
       padding: const EdgeInsets.all(10),

@@ -32,10 +32,14 @@ ExtendedImage getImageUtil(url, {height = 100.0}) => ExtendedImage.network(
       },
     );
 
+/// Checks if book is in library by comparing ids
 bool isInLibrary(FictionListResult book) {
   final prefs = getIt.get<LocalStorageService>();
-  final bookJson = jsonEncode(book.book);
-  return prefs.library.contains(bookJson);
+  return prefs.library.singleWhere((element) {
+        final libraryBook = convertFictionJsonToFiction(element);
+        return libraryBook.id == book.book.id;
+      }, orElse: () => null) !=
+      null;
 }
 
 void addToLibrary(FictionListResult book) {
@@ -48,4 +52,9 @@ void removeFromLibrary(FictionListResult book) {
   final prefs = getIt.get<LocalStorageService>();
   final bookJson = jsonEncode(book.book);
   prefs.library = new List.from(prefs.library)..remove(bookJson);
+}
+
+Fiction convertFictionJsonToFiction(String fictionJson) {
+  final jsonBook = json.decode(fictionJson);
+  return Fiction.fromJson(jsonBook);
 }

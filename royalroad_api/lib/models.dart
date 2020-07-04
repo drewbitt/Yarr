@@ -4,9 +4,10 @@ part 'models.g.dart';
 
 @JsonSerializable()
 class Fiction {
+  final int id;
   final String url, title, imageUrl;
 
-  Fiction({this.url, this.title, this.imageUrl});
+  Fiction({this.id, this.url, this.title, this.imageUrl});
 
   factory Fiction.fromJson(Map<String, dynamic> json) =>
       _$FictionFromJson(json);
@@ -44,7 +45,8 @@ class FictionDetails {
   int numChapters;
   List<ChapterDetails> chapterList;
 
-  FictionDetails({this.author, this.descriptionHtml, this.numChapters, this.chapterList});
+  FictionDetails(
+      {this.author, this.descriptionHtml, this.numChapters, this.chapterList});
 }
 
 // chapter when getting from a list
