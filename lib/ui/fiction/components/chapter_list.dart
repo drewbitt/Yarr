@@ -61,7 +61,6 @@ class _ChapterListState extends State<ChapterList> {
             final List<ChapterDetails> chapterListPreview =
                 getChapterListPreview(chapterList, _reverseList);
 
-            // Bad way to do this - two listviews
             return Padding(
                 padding: const EdgeInsets.all(10),
                 child: ExpandablePanel(
@@ -125,7 +124,7 @@ class _ChapterListState extends State<ChapterList> {
                 Flexible(
                     child: Text(chapterList[index].name,
                         overflow: TextOverflow.ellipsis)),
-                Text(chapterList[index].releaseDateString + "ago")
+                Text(chapterList[index].releaseDateString + " ago")
               ],
             )),
         onTap: () {

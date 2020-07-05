@@ -85,7 +85,7 @@ Future<FictionDetails> getFictionDetails(String book_url) async {
       final date = tryAndDefault(
           () => dFormat.parse(i.querySelector('time').attributes['title']),
           DateTime.utc(1970));
-      final dateToString = i.querySelector('time').text;
+      final dateToString = i.querySelector('time').text.trim();
 
       listChapters.add(ChapterDetails(
           name: chapter.text.trim(),

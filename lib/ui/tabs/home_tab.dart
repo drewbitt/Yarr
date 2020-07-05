@@ -15,7 +15,6 @@ class HomeTab extends StatelessWidget {
     return Scaffold(
         body: NoScrollGlow(
             child: ListView(
-      shrinkWrap: true,
       children: <Widget>[
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

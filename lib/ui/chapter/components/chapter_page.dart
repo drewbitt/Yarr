@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart' show CupertinoActivityIndicator;
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart' show Html;
-import 'package:flutter_html/style.dart';
 import 'package:flutterroad/service_locator.dart';
 import 'package:flutterroad/services/localstorage_service.dart';
 import 'package:flutterroad/ui/chapter/components/dialog_content.dart';
@@ -10,6 +9,7 @@ import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:provider/provider.dart';
 import 'package:royalroad_api/models.dart' show AuthorNote, Chapter;
 import 'package:slide_popup_dialog/slide_popup_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChapterPage extends StatefulWidget {
   final Future<Chapter> chapterContentsFuture;
@@ -150,15 +150,13 @@ class _ChapterPageState extends State<ChapterPage> {
 
   /// Returns HTML display of the author note assuming one is present
   Widget _htmlAuthorNote(AuthorNote note, {theme}) => Html(
-        data: '<b>' +
-            note?.caption?.toUpperCase() +
-            '</b><br /><br />' +
-            note?.noteBody,
-        style: {
-          'html': Style(
-              backgroundColor: theme.darkMode
-                  ? Color.fromRGBO(35, 35, 35, 1)
-                  : Color.fromRGBO(200, 200, 200, 1))
-        },
-      );
+      useRichText: true,
+      data: '<b>' +
+          note?.caption?.toUpperCase() +
+          '</b><br /><br />' +
+          note?.noteBody,
+      onLinkTap: (url) => launch(url),
+      backgroundColor: theme.darkMode
+          ? Color.fromRGBO(35, 35, 35, 1)
+          : Color.fromRGBO(200, 200, 200, 1));
 }

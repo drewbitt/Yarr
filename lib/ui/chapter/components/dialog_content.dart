@@ -100,16 +100,11 @@ class _DialogContentState extends State<DialogContent> {
   Widget _fontOptionList() => MediaQuery.removePadding(
       context: context,
       removeTop: true,
-      child: ListView(
-          shrinkWrap: true,
-          padding: EdgeInsets.zero,
-          // TODO: Since not scrollable, convert to Column?
-          physics: NeverScrollableScrollPhysics(),
-          children: <Widget>[
-            _fontListItem(0),
-            _fontListItem(1),
-            _fontListItem(2),
-          ]));
+      child: Column(children: <Widget>[
+        _fontListItem(0),
+        _fontListItem(1),
+        _fontListItem(2),
+      ]));
 
   Widget _fontListItem(index) => GestureDetector(
       onTap: () {
