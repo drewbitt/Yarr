@@ -62,6 +62,28 @@ Future<List<FictionListResult>> searchFiction(String searchTerm) async {
   return Future.error('Could not access Royalroad');
 }
 
+Future<FictionListResult> getFictionResultById(int book_id) async {
+  final book_url = Base.baseUrl + '/fiction/' + book_id.toString();
+  return getFictionResult(book_url);
+}
+
+/// Get FictionListResult object by url. Does not include FictionDetails
+Future<FictionListResult> getFictionResult(String book_url) async {
+  final response =
+  await http.get(book_url, headers: {'User-Agent': Base.userAgent});
+
+  if (response.statusCode == 200) {
+    FictionListResult(
+        book: Fiction(id: id, url: book_url, title: link.text, imageUrl: imageUrl),
+        info: info));
+  }
+}
+
+Future<FictionDetails> getFictionDetailsById(int book_id) async {
+  final book_url = Base.baseUrl + '/fiction/' + book_id.toString();
+  return getFictionDetails(book_url);
+}
+
 Future<FictionDetails> getFictionDetails(String book_url) async {
   final response =
       await http.get(book_url, headers: {'User-Agent': Base.userAgent});

@@ -2,6 +2,13 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'models.g.dart';
 
+class FictionAllDetails {
+  final FictionListResult fictionResult;
+  final FictionDetails fictionDetails;
+
+  FictionAllDetails({this.fictionResult, this.fictionDetails});
+}
+
 @JsonSerializable()
 class Fiction {
   final int id;
